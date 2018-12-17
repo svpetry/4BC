@@ -1,0 +1,51 @@
+#include display.inc
+#include utils.inc
+#include keyboard.inc
+
+#include bootscreen.inc
+#include clock.inc
+
+// -----------------------------------------------------------------------------
+
+procedure MainMenu;
+begin
+  printlen := 20;
+  col := 0;
+  
+  row := 0;
+  str := '1. clock        ';
+  call PrintStringPos;
+  
+  row := 1;
+  str := '2.              ';
+  call PrintStringPos;
+  
+  row := 2;
+  str := '3.              ';
+  call PrintStringPos;
+  
+  row := 3;
+  str := '4.              ';
+  call PrintStringPos;
+
+  while 0 = 0 do
+  begin
+    call ReadKey;
+    
+    if key = '1' then
+      call RunClock;
+
+
+
+  end;
+end;
+
+// -----------------------------------------------------------------------------
+
+begin
+  call InitDisplay;
+
+  call ShowBootScreen;
+  call MainMenu;
+
+end.

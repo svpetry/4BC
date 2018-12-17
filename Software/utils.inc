@@ -35,3 +35,46 @@ begin
     str[2] := '0' + a;
   str[3] := '0' + numWord - a * 10;
 end;
+
+// -----------------------------------------------------------------------------
+
+procedure Delay10ms;
+var
+  i: word;
+begin
+  i := 150;
+  while i > 0 do // 32 instructions per loop = 64 µs
+    dec i;
+end;
+
+// -----------------------------------------------------------------------------
+// 2 µs per instruction
+
+procedure Delay50us;
+begin
+  asm 
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+  end;
+end;
+
+// -----------------------------------------------------------------------------

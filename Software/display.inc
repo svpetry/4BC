@@ -3,7 +3,8 @@ var
   cmd: byte,
   str: byte[20], 
   printlen: byte,
-  row: nibble, col: byte;
+  row: nibble, col: byte,
+  light: nibble;
 
 // -----------------------------------------------------------------------------
 
@@ -32,15 +33,23 @@ end;
 // -----------------------------------------------------------------------------
 
 procedure LcdCmd;
+var
+  l: nibble;
+
 begin
+  if light # 0 then
+    l := %1000
+  else
+    l := 0;
+
   // %(light)(E)(RW)(RS)
   outp 3, hi(cmd);
-  outp 2, %1100;
-  outp 2, %1000;
+  outp 2, %0100 | l;
+  outp 2, %0000 | l;
 
   outp 3, lo(cmd);
-  outp 2, %1100;
-  outp 2, %1000;
+  outp 2, %0100 | l;
+  outp 2, %0000 | l;
 
   call LcdDelayShort;
 end;
@@ -49,6 +58,8 @@ end;
 
 procedure InitDisplay;
 begin
+  light := 0;
+
   call LcdDelayLong;
   call LcdDelayLong;
   call LcdDelayLong;
@@ -56,22 +67,22 @@ begin
   // %(light)(E)(RW)(RS)
   outp 3, %0011;
 
-  outp 2, %1100;
-  outp 2, %1000;
+  outp 2, %0100;
+  outp 2, %0000;
   call LcdDelayLong;
 
-  outp 2, %1100;
-  outp 2, %1000;
+  outp 2, %0100;
+  outp 2, %0000;
   call LcdDelayLong;
 
-  outp 2, %1100;
-  outp 2, %1000;
+  outp 2, %0100;
+  outp 2, %0000;
   call LcdDelayLong;
 
   outp 3, %0010; // init 4 bit mode
 
-  outp 2, %1100;
-  outp 2, %1000;
+  outp 2, %0100;
+  outp 2, %0000;
   call LcdDelayLong;
 
   cmd := %00000001;
@@ -81,6 +92,14 @@ begin
   cmd := %00001100;
   call LcdCmd;
   cmd := %00101000;
+  call LcdCmd;
+end;
+
+// -----------------------------------------------------------------------------
+
+procedure ClearScreen;
+begin
+  cmd := %00000001;
   call LcdCmd;
 end;
 
@@ -133,6 +152,14 @@ end;
 
 // -----------------------------------------------------------------------------
 
+procedure PrintStringPos;
+begin
+  call SetPos;
+  call PrintString;
+end;
+
+// -----------------------------------------------------------------------------
+
 procedure FadeIn;
 var
   rel: nibble,
@@ -144,25 +171,69 @@ begin
   while rel > 0 do
   begin
 
-    i := 200;
+    i := 100;
     while i > 0 do
     begin
       outp 2, %0000;
       
       j := rel;
       while j > 0 do
+      begin
         dec j;
+        asm
+          nop
+          nop
+          nop
+          nop
+          nop
+        end;
+      end;
 
       outp 2, %1000;
 
       j := 15 - rel;
       while j > 0 do
+      begin
         dec j;
+        asm
+          nop
+          nop
+          nop
+          nop
+          nop
+        end;
+      end;
 
       dec i;
     end;
 
     dec rel;
   end;
+
+  light := 1;
 end;
 
+// -----------------------------------------------------------------------------
+
+procedure ScrollLineIntoView;
+var
+  i: byte, j: word;
+
+begin
+  i := 20;
+  while i > 0 do
+  begin
+    dec i;
+
+    printlen := 20 - i;
+    col := i;
+    call SetPos;
+    call PrintString;
+
+    j := 500;
+    while j > 0 do
+      dec j;
+  end;
+end;
+
+// -----------------------------------------------------------------------------
