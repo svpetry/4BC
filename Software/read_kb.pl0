@@ -1,0 +1,48 @@
+  // read start bit
+  i := 0;
+  inp a, 4;
+  while a & 2 = 2 and i < 250 do
+  begin
+    inp a, 4;
+    inc i;
+  end;
+
+  if a & 2 = 0 then
+  begin
+    while a & 2 = 0 do
+      inp a, 4;
+
+    // read data bits
+    j := 0;
+    while j < 8 do
+    begin
+      inp a, 4;
+      while a & 2 = 2 do
+        inp a, 4;
+
+      shr key;
+      if a & 1 = 1 then
+        key := key | %10000000;
+
+      inp a, 4;
+      while a & 2 = 0 do
+        inp a, 4;
+      
+      inc j;
+    end;
+
+    // read parity bit
+    inp a, 4;
+    while a & 2 = 2 do
+      inp a, 4;
+    while a & 2 = 0 do
+      inp a, 4;
+
+    // read stop bit
+    inp a, 4;
+    while a & 2 = 2 do
+      inp a, 4;
+    while a & 2 = 0 do
+      inp a, 4;
+
+  end;

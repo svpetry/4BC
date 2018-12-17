@@ -1,0 +1,19 @@
+#include display.inc
+
+begin
+  outp 0, 0;
+
+  call InitDisplay;
+
+  outp 0, 1;
+
+  col := 5;
+  row := 1;
+  call SetPos;
+
+  str := 'Hallo Welt';
+  printlen := 10;
+  call PrintString;
+
+  outp 0, 2;
+end.

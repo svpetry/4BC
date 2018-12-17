@@ -1,0 +1,147 @@
+ROM board
+----------------------------------------
+1	ROM_O0
+2	ROM_O1
+3	ROM_O2
+4	ROM_O3
+5	ROM_O4
+6	ROM_O5
+7	ROM_O6
+8	ROM_O7
+9	INC_PC
+10	/LOAD_PC
+11	LOAD_PCREG0
+12	LOAD_PCREG1
+13	RESET
+14	VCC
+15	GND
+16	GND
+
+clock board
+----------------------------------------
+1	IC0
+2	IC1
+3	IC2
+4	LOAD_INST
+5	RESET
+6	VCC
+7	GND
+8	GND
+9	GND
+10	GND
+
+jump logic board
+----------------------------------------
+1	IMM0 (IMM3 control board)
+2	IMM1 (IMM2 control board)
+3	IMM2 (IMM1 control board)
+4	IMM3 (IMM0 control board)
+5	EXEC_JUMP
+6	/LOAD_PC
+7	LOAD_CARRY
+8	/LOAD_FROM_ALU
+9	CARRY_IN
+10	ZERO_IN
+11	CARRY
+12	VCC
+13	GND
+14	GND
+15	GND
+16	GND
+
+I/O port
+----------------------------------------
+1	PORT_IO0
+2	PORT_IO1
+3	PORT_IO2
+4	PORT_IO3
+5	PORT_ADDR0
+6	PORT_ADDR1
+7	PORT_ADDR2
+8	PORT_ADDR3
+9	PORT_R
+10	PORT_W
+11	VCC
+12	VCC
+13	GND
+14	GND
+15	GND
+16	GND
+
+RAM board 1
+----------------------------------------
+1	RAM_O0
+2	RAM_O1
+3	RAM_O2
+4	RAM_O3
+5	ACCOUT0
+6	ACCOUT1
+7	ACCOUT2
+8	ACCOUT3
+9	IMM0
+10	IMM1
+11	IMM2
+12	IMM3
+13	REGB0
+14	REGB1
+15	REGB2
+16	REGB3
+17	/LOAD_REGB
+18	/STA_MEM
+19	/RAM_WE
+20	/RAM_OE
+21	/LOAD_MEMADDR
+22	LOAD_MEMADDR_H
+23	ADDR_FROM_REGB
+24	GND
+25	VCC
+26	GND
+
+RAM board 2
+----------------------------------------
+1	ROM_O0
+2	ROM_O1
+3	ROM_O2
+4	ROM_O3
+5	ROM_O4
+6	ROM_O5
+7	ROM_O6
+8	ROM_O7
+9	GND
+10	GND
+
+ALU input
+----------------------------------------
+1	ACCOUT0
+2	ACCOUT1
+3	ACCOUT2
+4	ACCOUT3
+5	REGB0
+6	REGB1
+7	REGB2
+8	REGB3
+9	CARRY
+10	LOAD_ALU
+11	IMM0
+12	IMM1
+13	IMM2
+14	IMM3
+15	VCC
+16	VCC
+17	GND
+18	GND
+19	GND
+20	GND
+
+ALU output
+----------------------------------------
+1	ALU_O0
+2	ALU_O1
+3	ALU_O2
+4	ALU_O3
+5	ALU_CARRY
+6	ALU_ZERO
+7	GND
+8	GND
+9	GND
+10	GND

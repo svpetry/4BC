@@ -1,0 +1,8 @@
+
+Opcode	Description	CPU Flags
+JA	Above		CF = 0 and ZF = 0
+JAE	Above or equal	CF = 0
+JB	Below		CF
+JBE	Below or equal	CF or ZF
+JC	Carry		CF
+JE	Equality	ZF

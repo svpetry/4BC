@@ -1,0 +1,40 @@
+
+var
+  a: byte;
+
+// -----------------------------------------------------------------------------
+
+procedure ShowNumber;
+var
+  n0: byte, n1: byte;
+  
+begin
+  n1 := a / 10;
+  n0 := a - n1 * 10;
+  outp 1, n0;
+  outp 0, n1;
+end;
+
+procedure Delay;
+var
+  i: byte;
+begin
+  i := 100;
+  while i > 0 do
+    inc i;
+end;
+
+// -----------------------------------------------------------------------------
+
+begin
+  a := 0;
+  while 0 = 0 do
+  begin
+    call ShowNumber;
+    inc a;
+    if a = 100 then
+      a := 0;
+
+    call Delay;
+  end;
+end.

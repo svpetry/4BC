@@ -1,0 +1,81 @@
+var
+  p5: nibble,
+  kips: word;
+
+#include display.inc
+#include utils.inc
+
+// -----------------------------------------------------------------------------
+
+begin
+  call InitDisplay;
+
+
+  while 0 = 0 do
+  begin
+    kips := 0;
+
+    inp p5, 5;
+    while p5 & %1000 > 0 do
+      inp p5, 5;
+    inp p5, 5;
+    while p5 & %1000 = 0 do
+      inp p5, 5;
+
+    asm
+@loop:
+      LDA 0
+      LDBL
+      STC 1
+      LDA [(kips)]
+      ADD
+      STA [(kips)]
+      LDA [(kips + 1)]
+      ADD
+      STA [(kips + 1)]
+      LDA [(kips + 2)]
+      ADD
+      STA [(kips + 2)]
+      LDA [(kips + 3)]
+      ADD
+      STA [(kips + 3)]
+
+      LDA 08h
+      LDBL
+      IN 5
+      AND
+      JZ @endloop
+      NOP
+      NOP
+      NOP
+      NOP
+      JMP @loop
+@endloop:
+    end;
+
+    kips := kips / 20;
+
+    row := 1;
+    col := 6;
+    call SetPos;
+
+    numWord := kips;
+    call WordToStr;
+  
+    str[0] := '.';
+    printlen := 4;
+    call PrintString;
+
+    printlen := 5;
+    str := ' MIPS';
+    call PrintString;
+
+    row := 1;
+    col := 5;
+    call SetPos;
+
+    str := '0.';
+    printlen := 1;
+    call PrintString;
+  end;
+end.

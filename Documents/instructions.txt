@@ -1,0 +1,35 @@
+
+code	subcode	binary	instruction	description
+
+0	x	xxxx0000	NOP		no operation
+1	a	aaaa0001	LDA mem abs	load accumulator from memory address (absolute addressing) (LDA [0A00h])
+2	a	aaaa0010	LDA mem ind	load accumulator from memory address (indirect addressing) (LDA [B][0A00h])
+3	i	iiii0011	LDA imm		load accumulator with immediate value (LDA 0Ah)
+4	a	aaaa0100	STA mem abs	store accumulator in memory (absolute addressing) (STA [0A00h])
+5	a	aaaa0101	STA mem ind	store accumulator in memory (indirect addressing) (STA [B][0A00h])
+6	0	00000110	LDBL		load bl with accumulator
+6	1	00010110	LDBH		load bh with accumulator
+7	0	00000111	NOT		negate accumulator
+7	1	00010111	ADD		add bl to accumulator
+7	2	00100111	SUB		sub bl from accumulator
+7	3	00110111	AND		and accumulator with bl
+7	4	01000111	OR		or accumulator with bl
+7	5	01100111	SHL		shift left accumulator
+7	6	01010111	SHR		shift right accumulator
+7	7	01110111	XOR		xor accumulator with bl
+8	0	00001000	JMP addr	unconditional jump (JMP @label1)
+8	1	00011000	JA addr		jump if above (JA @label1)
+8	2	00101000	JB addr		jump if below (JB @label1)
+8	3	00111000	JZ addr		jump if zero (JZ @label1) (JE @label1)
+9	i	iiii1001	STC imm		set carry to value (STC 1) (STC 0)
+A	i	iiii1010	BNK imm		set memory bank (0..7) (BNK 3)
+B	2	00101011	CMP		compare accumulator to bl
+C	a	aaaa1100	OUT imm		output accumulator to port (OUT 0Ah)
+D	a	aaaa1101	IN imm		input accumulator from port (IN 0Ah)
+E	x	xxxx1110	HLT		halt CPU
+F	x	xxxx1111
+
+info: x = don't care, a = memory address, i = immediate value
+
+==================================================================================
+
