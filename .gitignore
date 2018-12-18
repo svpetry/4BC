@@ -2,3 +2,6 @@ CpuEmu/fonts-DSEG_v045/
 Eagle/Gerber/
 Eagle/Backup/
 CpuEmu/.vs/
+CpuEmu/bin/*.config
+CpuEmu/bin/*.pl0
+CpuEmu/bin/*.inc
