@@ -556,9 +556,25 @@ namespace _4BCC
             AddComment("WHILE w <= r DO w := 2 * w;");
             var lblLoop1Start = GenLabel();
             var lblLoop1Body = GenLabel();
+            var lblLoop1Body1 = GenLabel();
             var lblLoop1Exit = GenLabel();
             _mnemonics.Add(new Mnemonic(lblLoop1Start + ":"));
-            GenComparison(varW, varR, lblLoop1Exit, lblLoop1Body);
+            GenComparison(varW, varR, lblLoop1Exit, lblLoop1Body1);
+
+            _mnemonics.Add(new Mnemonic(lblLoop1Body1 + ":"));
+
+            _mnemonics.Add(new Mnemonic("LDA", "08h"));
+            _mnemonics.Add(new Mnemonic("LDBL"));
+            var addr = varW.Address;
+            if (dataType == DataType.Byte)
+                addr += 1;
+            else if (dataType == DataType.Word)
+                addr += 3;
+            _mnemonics.Add(new Mnemonic("LDA", $"[{HexWord(addr)}]"));
+            _mnemonics.Add(new Mnemonic("AND"));
+            _mnemonics.Add(new Mnemonic("JZ", lblLoop1Body));
+            var lblLoop2BeforeIf = GenLabel();
+            _mnemonics.Add(new Mnemonic("JMP", lblLoop2BeforeIf));
 
             _mnemonics.Add(new Mnemonic(lblLoop1Body + ":"));
 
@@ -586,6 +602,8 @@ namespace _4BCC
             // w := w / 2;
             AddComment("w := w / 2;");
             GenShr(varW);
+
+            _mnemonics.Add(new Mnemonic(lblLoop2BeforeIf + ":"));
 
             // IF w <= r THEN
             AddComment("IF w <= r THEN");
@@ -723,7 +741,17 @@ namespace _4BCC
                 }
             }
             else
+            {
+                var blockCount = proc.Calls.Count / 16 + 1;
+                for (var blockIdx = 1; blockIdx < blockCount; blockIdx++)
+                {
+
+
+                }
+
+
                 throw new SyntaxErrorException("", 0, $"too many calls of procedure {proc.Name}");
+            }
         }
 
         public CondBranching EvalCondition(Variable var1, Variable var2, TokenType cond)
