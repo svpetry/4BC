@@ -42,13 +42,13 @@ procedure Delay10ms;
 var
   i: word;
 begin
-  i := 150;
-  while i > 0 do // 32 instructions per loop = 64 µs
+  i := 230;
+  while i > 0 do // 32 instructions per loop = 42 µs
     dec i;
 end;
 
 // -----------------------------------------------------------------------------
-// 2 µs per instruction
+// 1.3 µs per instruction
 
 procedure Delay50us;
 begin
@@ -63,7 +63,18 @@ begin
     nop
     nop
     nop
+    
     nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
     nop
     nop
     nop

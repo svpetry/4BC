@@ -207,10 +207,10 @@ namespace CpuEmu.ViewModels
 
             await Task.Run(() =>
             {
-                // 0.5 MIPS
+                // 1.0 MIPS
                 var stopWatch = new Stopwatch();
                 var ticksPer10Ms = Stopwatch.Frequency / 100;
-                var instructionsPer10Ms = 500000 / 100;
+                var instructionsPer10Ms = 1000000 / 100;
                 long sleepTicks = 0;
 
                 var updateCount = 0;
