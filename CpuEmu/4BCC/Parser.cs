@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 
 namespace _4BCC
 {
-
     enum DataType
     {
         None,
@@ -469,14 +468,32 @@ namespace _4BCC
                     }
                     else
                     {
-                        // string assignment
+                        // string/array assignment
                         Expect(TokenType.Assignment);
-                        var strToken = Expect(new[] { TokenType.String, TokenType.Number });
-                        if (!strToken.Value.StartsWith("'") || !strToken.Value.EndsWith("'"))
-                            throw new SyntaxErrorException(strToken, $"invalid string {strToken.Value}");
-                        if (strToken.Value.Length - 2 > arrayVar.Length)
-                            throw new SyntaxErrorException(strToken, $"array {arrayVar.Name} too short for string {strToken.Value}");
-                        _codeGen.GenStringAssignment(strToken.Value.Substring(1, strToken.Value.Length - 2), arrayVar);
+
+                        if (Accept(TokenType.OpenParenthesis))
+                        {
+                            var strValue = "";
+                            while (strValue == "" || Accept(TokenType.Comma))
+                            {
+                                var numToken = Expect(TokenType.Number);
+                                strValue += (char)ParseNumber(numToken.Value);
+                            }
+                            Expect(TokenType.CloseParenthesis);
+
+                            if (strValue.Length > arrayVar.Length)
+                                throw new SyntaxErrorException(varToken, $"array {arrayVar.Name} too short for array assignment");
+                            _codeGen.GenStringAssignment(strValue, arrayVar);
+                        }
+                        else
+                        {
+                            var strToken = Expect(new[] { TokenType.String, TokenType.Number });
+                            if (!strToken.Value.StartsWith("'") || !strToken.Value.EndsWith("'"))
+                                throw new SyntaxErrorException(strToken, $"invalid string {strToken.Value}");
+                            if (strToken.Value.Length - 2 > arrayVar.Length)
+                                throw new SyntaxErrorException(strToken, $"array {arrayVar.Name} too short for string {strToken.Value}");
+                            _codeGen.GenStringAssignment(strToken.Value.Substring(1, strToken.Value.Length - 2), arrayVar);
+                        }
                     }
                 }
                 else if (destBaseVar is Variable destVar)
