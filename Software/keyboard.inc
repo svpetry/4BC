@@ -8,7 +8,7 @@ procedure ReadScancode;
 var
   a: nibble,
   j: nibble,
-  i: byte;
+  i: word;
 
 begin
   // port 4.0: kb_data (write: 1 = pull down)
@@ -17,31 +17,37 @@ begin
   outp 4, 0; // release clock line
   
   asm
-  ; wait 50 µs
+
+; wait 50 µs
     LDA 01h
     LDBL
     STC 0
-    LDA 08h
+    LDA 0Ch
 @SC_wait1:
     SUB
     JZ @SC_exitwait1
     JMP @SC_wait1
 @SC_exitwait1:
-  end;
 
-  scancode := 0;
+; scancode := 0
+    LDA 0
+    STA [(scancode)]
+    STA [(scancode + 1)]
 
-  asm
 ; read start bit
     LDA 0
     STA [(i)]
     STA [(i + 1)]
+    STA [(i + 2)]
 @SC_loop1:
     LDA 02h
     LDBL
     IN 4
     AND
     JZ @SC_loop1exit
+
+    LDA 0
+    LDBL
     STC 1
     LDA [(i)]
     ADD
@@ -49,9 +55,12 @@ begin
     LDA [(i + 1)]
     ADD
     STA [(i + 1)]
+    LDA [(i + 2)]
+    ADD
+    STA [(i + 2)]
 
     LDBL
-    LDA 0Ch
+    LDA 02h
     CMP
     JZ @SC_exit
 
@@ -104,12 +113,6 @@ begin
     ADD
     STA [(j)]
 
-    LDA 08h
-    LDBL
-    LDA [(j)]
-    CMP
-    JZ @SC_loop3exit
-
 ; wait until clock line high
     LDA 02h
     LDBL
@@ -118,7 +121,12 @@ begin
     AND
     JZ @SC_loop5
 
-
+; loop logic
+    LDA 08h
+    LDBL
+    LDA [(j)]
+    CMP
+    JZ @SC_loop3exit
     JMP @SC_loop3
 @SC_loop3exit:
 
@@ -149,7 +157,10 @@ begin
 @SC_exit:
   end;
 
+  call Delay50us;
+
   outp 4, 2; // pull clock line to 0
+
   call Delay50us;
 end;
 
