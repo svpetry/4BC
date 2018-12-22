@@ -9,32 +9,33 @@
 
 procedure MainMenu;
 begin
-  printlen := 20;
+  call LoadCustomDigits;
+
+  printlen := 16;
   col := 0;
   
   row := 0;
-  str := '1. clock        ';
+  str := '1 - CLOCK       ';
   call PrintStringPos;
   
   row := 1;
-  str := '2.              ';
+  str := '2               ';
   call PrintStringPos;
   
   row := 2;
-  str := '3.              ';
+  str := '3               ';
   call PrintStringPos;
   
   row := 3;
-  str := '4.              ';
+  str := '4               ';
   call PrintStringPos;
 
   while 0 = 0 do
   begin
-    call ReadKey;
+    call WaitForKey;
     
     if key = '1' then
       call RunClock;
-
 
 
   end;

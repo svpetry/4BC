@@ -1,7 +1,8 @@
 var
   sec: byte, min: byte, hour: byte, adv_day: nibble,
   day: byte, month: byte, year: word,
-  weekday: nibble;
+  weekday: nibble,
+  numkey: byte;
 
 // -----------------------------------------------------------------------------
 
@@ -30,7 +31,7 @@ end;
 procedure DisplayTime;
 begin
   col := 6;
-  row := 0;
+  row := 1;
   call SetPos;
 
   numByte := hour;
@@ -55,6 +56,63 @@ begin
   call ByteToStr;
   printlen := 2;
   call PrintString;
+end;
+
+// -----------------------------------------------------------------------------
+
+procedure DisplayLargeTimePoints;
+begin
+  ch := 'o';
+  row := 0;
+  call PrintCharPos;
+  row := 1;
+  call PrintCharPos;
+end;
+
+// -----------------------------------------------------------------------------
+
+procedure DisplayLargeTime;
+var
+  v: byte;
+
+begin
+  // hours
+  v := hour / 10;
+  col := 0;
+  digit := v;
+  call PrintLargeDigit;
+
+  col := 3;
+  digit := hour - v * 10;
+  call PrintLargeDigit;
+
+  // points
+  col := 6;
+  call DisplayLargeTimePoints;
+
+  // minutes
+  v := min / 10;
+  col := 7;
+  digit := v;
+  call PrintLargeDigit;
+
+  col := 10;
+  digit := min - v * 10;
+  call PrintLargeDigit;
+
+  // points
+  col := 13;
+  call DisplayLargeTimePoints;
+
+  // seconds
+  v := sec / 10;
+  col := 14;
+  digit := v;
+  call PrintLargeDigit;
+
+  col := 17;
+  digit := sec - v * 10;
+  call PrintLargeDigit;
 end;
 
 // -----------------------------------------------------------------------------
@@ -108,31 +166,31 @@ end;
 
 procedure DisplayDate;
 begin
+  // generate weekday string
   if weekday = 0 then
-    str := 'Sonntag   '
+    str := 'Sunday   '
   else if weekday = 1 then
-    str := 'Montag    '
+    str := 'Monday   '
   else if weekday = 2 then
-    str := 'Dienstag  '
+    str := 'Tuesday  '
   else if weekday = 3 then
-    str := 'Mittwoch  '
+    str := 'Wednesday'
   else if weekday = 4 then
-    str := 'Donnerstag'
+    str := 'Thursday '
   else if weekday = 5 then
-    str := 'Freitag   '
+    str := 'Friday   '
   else if weekday = 6 then
-    str := 'Samstag   ';
+    str := 'Saturday ';
 
   // print weekday
-  col := 5;
-  row := 1;
-  printlen := 11;
+  col := 0;
+  row := 3;
+  printlen := 9;
   call PrintStringPos;  
 
-  col := 5;
-  row := 2;
-
   // print date ##.##.####
+  col := 10;
+  row := 3;
   numByte := day;
   call ByteToStr;
   printlen := 2;
@@ -228,13 +286,120 @@ end;
 
 // -----------------------------------------------------------------------------
 
+procedure ReadNumkey;
+begin
+  key := 0;
+  while key < '0' or key > '9' do
+    call WaitForKey;
+  numkey := key - '0';
+  outp 0, numkey;
+end;
+
+// -----------------------------------------------------------------------------
+
 procedure SetTime;
 begin
+  call ClearScreen;
   sec := 0;
   call DisplayTime;
+  call DisplayDate;
 
-  asdf
+  row := 1;
+  col := 6;
+  call SetPos;
+  call EnableCursor;
 
+  // hours
+  hour := 0;
+  call ReadNumkey;
+  hour := numkey * 10;
+  ch := key;
+  call PrintChar;
+
+  call ReadNumkey;
+  hour := hour + numkey;
+  ch := key;
+  call PrintChar;
+
+  if hour > 23 then
+    hour := 23;
+
+  // minutes
+  col := 9;
+  call SetPos;
+  min := 0;
+  call ReadNumkey;
+  min := numkey * 10;
+  ch := key;
+  call PrintChar;
+
+  call ReadNumkey;
+  min := min + numkey;
+  ch := key;
+  call PrintChar;
+  
+  if min > 59 then
+    min := 59;
+
+  // day
+  row := 3;
+  col := 10;
+  call SetPos;
+
+  day := 0;
+  call ReadNumkey;
+  day := numkey * 10;
+  ch := key;
+  call PrintChar;
+
+  call ReadNumkey;
+  day := day + numkey;
+  ch := key;
+  call PrintChar;
+
+  if day > 31 then
+    day := 31;
+
+  // month
+  col := 13;
+  call SetPos;
+
+  month := 0;
+  call ReadNumkey;
+  month := numkey * 10;
+  ch := key;
+  call PrintChar;
+
+  call ReadNumkey;
+  month := month + numkey;
+  ch := key;
+  call PrintChar;
+
+  if month > 1 then
+    month := 12;
+
+  // year
+  col := 18;
+  call SetPos;
+
+  year := 2000;
+
+  call ReadNumkey;
+  year := year + numkey * 10;
+  ch := key;
+  call PrintChar;
+
+  call ReadNumkey;
+  year := year + numkey;
+  ch := key;
+  call PrintChar;
+
+  call DisableCursor;
+  call ClearScreen;
+
+  call DisplayLargeTime;
+  call CalcWeekday;
+  call DisplayDate;
 end;
 
 // -----------------------------------------------------------------------------
@@ -260,7 +425,7 @@ begin
   begin
     call WaitForNextSecond;
     call AdvanceTime;
-    call DisplayTime;
+    call DisplayLargeTime;
 
     if adv_day > 0 then
     begin

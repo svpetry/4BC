@@ -2,9 +2,12 @@ var
   ch: byte,
   cmd: byte,
   str: byte[20], 
+  chardef: byte[8],
   printlen: byte,
   row: nibble, col: byte,
-  light: nibble;
+  light: nibble,
+  digit: nibble,
+  digdef: byte[9];
 
 // -----------------------------------------------------------------------------
 
@@ -58,6 +61,7 @@ end;
 
 procedure InitDisplay;
 begin
+  outp 3, 0;
   light := 0;
 
   call LcdDelayLong;
@@ -101,6 +105,7 @@ procedure ClearScreen;
 begin
   cmd := %00000001;
   call LcdCmd;
+  call LcdDelayLong;
 end;
 
 // -----------------------------------------------------------------------------
@@ -137,6 +142,22 @@ end;
 
 // -----------------------------------------------------------------------------
 
+procedure EnableCursor;
+begin
+  cmd := %00001111;
+  call LcdCmd;
+end;
+
+// -----------------------------------------------------------------------------
+
+procedure DisableCursor;
+begin
+  cmd := %00001100;
+  call LcdCmd;
+end;
+
+// -----------------------------------------------------------------------------
+
 procedure PrintString;
 var
   i: byte;
@@ -160,6 +181,14 @@ end;
 
 // -----------------------------------------------------------------------------
 
+procedure PrintCharPos;
+begin
+  call SetPos;
+  call PrintChar;
+end;
+
+// -----------------------------------------------------------------------------
+
 procedure FadeIn;
 var
   rel: nibble,
@@ -171,7 +200,7 @@ begin
   while rel > 0 do
   begin
 
-    i := 100;
+    i := 200;
     while i > 0 do
     begin
       outp 2, %0000;
@@ -233,6 +262,103 @@ begin
     j := 500;
     while j > 0 do
       dec j;
+  end;
+end;
+
+// -----------------------------------------------------------------------------
+
+procedure LoadCustomChar;
+var
+  i: nibble;
+
+begin
+  i := 0;
+  while i < 8 do
+  begin
+    ch := chardef[i];
+    call PrintChar;
+    inc i;
+  end;
+end;
+
+// -----------------------------------------------------------------------------
+
+procedure LoadCustomDigits;
+begin
+  // no idea why this is neccessary
+  cmd := $80;
+  call LcdCmd;
+
+  // set CGRAM address
+  cmd := $40;
+  call LcdCmd;
+
+  chardef := (0, 0, 0, 0, 0, 0, 0, 0);
+  call LoadCustomChar;
+  chardef := (3, 7, 15, 31, 0, 0, 0, 0);
+  call LoadCustomChar;
+  chardef := (24, 28, 30, 31, 0, 0, 0, 0);
+  call LoadCustomChar;
+  chardef := (31, 31, 31, 31, 0, 0, 0, 0);
+  call LoadCustomChar;
+  chardef := (31, 30, 28, 24, 0, 0, 0, 0);
+  call LoadCustomChar;
+  chardef := (31, 15,7, 3, 0, 0, 0, 0);
+  call LoadCustomChar;
+  chardef := (3, 7, 15, 31, 31, 31, 31, 31);
+  call LoadCustomChar;
+  chardef := (24, 28, 30, 31, 31, 31, 31);
+  call LoadCustomChar;
+end;
+
+// -----------------------------------------------------------------------------
+
+procedure PrintLargeDigit;
+var
+  pcol: byte,
+  i: nibble,
+  pos: nibble;
+
+begin
+  if digit = 0 then
+    digdef := (6, 3, 7, 255, 32, 255, 5, 3, 4)
+  else if digit = 1 then
+    digdef := (1, 255, 32, 32, 255, 32, 3, 3, 3)
+  else if digit = 2 then
+    digdef := (1, 3, 7, 6, 3, 4, 5, 3, 4)
+  else if digit = 3 then
+    digdef := (1, 3, 7, 32, 3, 255, 5, 3, 4)
+  else if digit = 4 then
+    digdef := (255, 32, 255, 5, 3, 255, 32, 32, 3)
+  else if digit = 5 then
+    digdef := (255, 3, 4, 3, 3, 7, 5, 3, 4)
+  else if digit = 6 then
+    digdef := (6, 3, 2, 255, 3, 7 ,5, 3, 4)
+  else if digit = 7 then
+    digdef := (5, 3, 255, 32, 6, 4, 32, 3, 32)
+  else if digit = 8 then
+    digdef := (6, 3, 7, 255, 3, 255, 5, 3, 4)
+  else if digit = 9 then
+    digdef := (6, 3, 7, 5, 3, 255, 5, 3, 4);
+
+  pcol := col;
+  row := 0;
+  pos := 0;
+  while row < 3 do
+  begin
+    col := pcol;
+    call SetPos;
+    
+    i := 0;
+    while i < 3 do
+    begin
+      ch := digdef[pos];
+      call PrintChar;
+      inc i;
+      inc pos;
+    end;
+
+    inc row;
   end;
 end;
 
