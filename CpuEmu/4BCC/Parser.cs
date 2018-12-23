@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -63,11 +62,11 @@ namespace _4BCC
 
         private CodeGen _codeGen;
 
-        private VarProvider _varProvider;
+        private readonly VarProvider _varProvider;
 
         private List<Mnemonic> _mnemonics;
 
-        private Dictionary<string, ProcInfo> _procInfos = new Dictionary<string, ProcInfo>();
+        private readonly Dictionary<string, ProcInfo> _procInfos = new Dictionary<string, ProcInfo>();
 
         public Parser()
         {
@@ -473,6 +472,7 @@ namespace _4BCC
 
                         if (Accept(TokenType.OpenParenthesis))
                         {
+                            // constant array assignment x := (1, 3, 4)
                             var strValue = "";
                             while (strValue == "" || Accept(TokenType.Comma))
                             {
@@ -485,8 +485,20 @@ namespace _4BCC
                                 throw new SyntaxErrorException(varToken, $"array {arrayVar.Name} too short for array assignment");
                             _codeGen.GenStringAssignment(strValue, arrayVar);
                         }
+                        else if (Accept(TokenType.Identifier, out var srcVarToken))
+                        {
+                            // array assignment x := y
+                            if (!variables.TryGetValue(srcVarToken.Value, out var srcBaseVar))
+                                throw new SyntaxErrorException(srcVarToken, $"unknown variable {srcVarToken.Value}");
+                            if (!(srcBaseVar is ArrayVar srcVar))
+                                throw new SyntaxErrorException(srcVarToken, $"variable {srcBaseVar.Name} has to be of array type.");
+                            if (arrayVar.Type != srcVar.Type)
+                                throw new SyntaxErrorException(srcVarToken, $"types of {arrayVar.Name} and {srcVar.Name} different.");
+                            _codeGen.GenArrayAssignment(srcVar, arrayVar);
+                        }
                         else
                         {
+                            // string assignemt x := 'asdf'
                             var strToken = Expect(new[] { TokenType.String, TokenType.Number });
                             if (!strToken.Value.StartsWith("'") || !strToken.Value.EndsWith("'"))
                                 throw new SyntaxErrorException(strToken, $"invalid string {strToken.Value}");

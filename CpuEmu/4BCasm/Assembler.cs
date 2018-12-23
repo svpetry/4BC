@@ -245,13 +245,13 @@ namespace _4BCasm
             if (strValue.EndsWith("h"))
             {
                 var hex = strValue.Substring(0, strValue.Length - 1);
-                return (byte)int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
+                return int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
             }
 
             if (strValue.StartsWith("0x"))
             {
                 var hex = strValue.Substring(2);
-                return (byte)int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
+                return int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
             }
 
             if (!int.TryParse(strValue, out int value))

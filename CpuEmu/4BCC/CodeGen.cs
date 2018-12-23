@@ -243,6 +243,43 @@ namespace _4BCC
             _varProvider.FreeSystemVariable(tempIndex);
         }
 
+        public void GenArrayAssignment(ArrayVar srcVar, ArrayVar destVar)
+        {
+            var length = Math.Min(srcVar.Length, destVar.Length);
+            if (srcVar.Type == DataType.Byte)
+                length *= 2;
+            else if (srcVar.Type == DataType.Word)
+                length *= 4;
+
+            var tempIndex = _varProvider.GetSystemVariable(DataType.Byte);
+
+            GenAssignment(length, tempIndex);
+
+            var lblLoopStart = GenLabel();
+            var lblLoopExit = GenLabel();
+            _mnemonics.Add(new Mnemonic(lblLoopStart + ":"));
+
+            GenDecrement(tempIndex);
+
+            _mnemonics.Add(new Mnemonic("LDA", HexAddr(tempIndex.Address)));
+            _mnemonics.Add(new Mnemonic("LDBL"));
+            _mnemonics.Add(new Mnemonic("LDA", HexAddr(tempIndex.Address + 1)));
+            _mnemonics.Add(new Mnemonic("LDBH"));
+
+            _mnemonics.Add(new Mnemonic("BNK", srcVar.Bank.ToString()));
+            _mnemonics.Add(new Mnemonic("LDA", "[B]0" + srcVar.Address.ToString("X3") + "h"));
+            _mnemonics.Add(new Mnemonic("BNK", destVar.Bank.ToString()));
+            _mnemonics.Add(new Mnemonic("STA", "[B]0" + destVar.Address.ToString("X3") + "h"));
+            _mnemonics.Add(new Mnemonic("BNK", "0"));
+
+            var branching = CheckNotZero(tempIndex);
+            branching.SetTrueJumpLabel(lblLoopStart);
+            branching.SetFalseJumpLabel(lblLoopExit);
+            _mnemonics.Add(new Mnemonic(lblLoopExit + ":"));
+
+            _varProvider.FreeSystemVariable(tempIndex);
+        }
+
         private int GetDataSize(DataType type)
         {
             switch (type)

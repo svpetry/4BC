@@ -207,10 +207,10 @@ namespace CpuEmu.ViewModels
 
             await Task.Run(() =>
             {
-                // 1.0 MIPS
+                // 2.0 MIPS
                 var stopWatch = new Stopwatch();
-                var ticksPer10Ms = Stopwatch.Frequency / 100;
-                var instructionsPer10Ms = 1000000 / 100;
+                var ticksPer20Ms = Stopwatch.Frequency / 50;
+                var instructionsPer20Ms = 2000000 / 50;
                 long sleepTicks = 0;
 
                 var updateCount = 0;
@@ -219,7 +219,7 @@ namespace CpuEmu.ViewModels
                 {
                     stopWatch.Restart();
 
-                    for (var i = 0; i < instructionsPer10Ms; i++)
+                    for (var i = 0; i < instructionsPer20Ms; i++)
                         _cpu.Step();
 
                     stopWatch.Stop();
@@ -234,12 +234,12 @@ namespace CpuEmu.ViewModels
                         updateCount = 0;
                     }
 
-                    sleepTicks += ticksPer10Ms - stopWatch.ElapsedTicks;
+                    sleepTicks += ticksPer20Ms - stopWatch.ElapsedTicks;
 
-                    if (sleepTicks > ticksPer10Ms)
+                    if (sleepTicks > ticksPer20Ms)
                     {
-                        sleepTicks -= ticksPer10Ms;
-                        Task.Delay(10).Wait();
+                        sleepTicks -= ticksPer20Ms;
+                        Task.Delay(20).Wait();
                     }
                 }
             });
