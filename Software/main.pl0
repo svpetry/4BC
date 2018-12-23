@@ -4,6 +4,26 @@
 
 #include bootscreen.inc
 #include clock.inc
+#include scrollwindow.inc
+
+// -----------------------------------------------------------------------------
+
+procedure ShowScancodes;
+begin
+  call InitScrollWindow;
+  str := '                    ';
+
+  while 0 = 0 do
+  begin
+    call ReadScancode;
+    if scancode # 0 then
+    begin
+      numByte := scancode;
+      call ByteToHexStr;
+      call PrintWindowLine;
+    end;
+  end;
+end;
 
 // -----------------------------------------------------------------------------
 
@@ -19,7 +39,7 @@ begin
   call PrintStringPos;
   
   row := 1;
-  str := '2               ';
+  str := '2 - SCANCODES   ';
   call PrintStringPos;
   
   row := 2;
@@ -35,7 +55,9 @@ begin
     call WaitForKey;
     
     if key = '1' then
-      call RunClock;
+      call RunClock
+    else if key = '2' then
+      call ShowScancodes;
 
 
   end;

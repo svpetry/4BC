@@ -14,6 +14,26 @@ end;
 
 // -----------------------------------------------------------------------------
 
+procedure ByteToHexStr;
+var
+  a: byte;
+
+begin
+  a := hi(numByte);
+  if a < 10 then
+    str[0] := '0' + a
+  else
+    str[0] := 'A' + a - 10;
+  
+  a := numByte - numByte & $F0;
+  if a < 10 then
+    str[1] := '0' + a
+  else
+    str[1] := 'A' + a - 10;
+end;
+
+// -----------------------------------------------------------------------------
+
 procedure WordToStr;
 var
   a: word;
