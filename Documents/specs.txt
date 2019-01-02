@@ -1,6 +1,6 @@
 4 Bit CPU
 24 instructions
-4 MHz clock (0.5 MIPS)
-16/32 KB RAM (8 pages with 4096 4-bit nibbles)
+6 MHz clock (0.75 MIPS)
+16 KB RAM (8 pages with 4096 4-bit nibbles)
 32 KB program memory (ROM)
 16 4-bit I/O ports
