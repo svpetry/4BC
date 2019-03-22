@@ -1,0 +1,14940 @@
+	BNK 0
+	LDA 0
+	OUT 0
+	OUT 1
+	OUT 2
+	OUT 3
+	LDA 02h
+	OUT 4
+	JMP @main
+@proc_LcdDelayShort:
+	LDA 04h
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [000Ch]
+	LDA [000Fh]
+	STA [000Dh]
+; free [000Eh]
+@label0:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [000Ch]
+	CMP
+	JA @label1
+	LDA [000Dh]
+	CMP
+	JA @label1
+	JMP @label2
+@label1:
+	LDA 01h
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+; $SYS2 = i SUB $SYS0
+	LDA [000Eh]
+	LDBL
+	LDA [000Ch]
+	STC 0
+	SUB
+	STA [0011h]
+	LDA [000Fh]
+	LDBL
+	LDA [000Dh]
+	SUB
+	STA [0012h]
+; free [000Eh]
+	LDA [0011h]
+	STA [000Ch]
+	LDA [0012h]
+	STA [000Dh]
+; free [0011h]
+	JMP @label0
+@label2:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [000Bh]
+	SUB
+	JB @label21
+	JMP @label35
+; endproc LcdDelayShort
+@proc_LcdDelayLong:
+	LDA 04h
+	STA [0018h]
+	LDA 0Fh
+	STA [0019h]
+	LDA 01h
+	STA [001Ah]
+	LDA 00h
+	STA [001Bh]
+	LDA [0018h]
+	STA [0014h]
+	LDA [0019h]
+	STA [0015h]
+	LDA [001Ah]
+	STA [0016h]
+	LDA [001Bh]
+	STA [0017h]
+; free [0018h]
+@label7:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0014h]
+	CMP
+	JA @label8
+	LDA [0015h]
+	CMP
+	JA @label8
+	LDA [0016h]
+	CMP
+	JA @label8
+	LDA [0017h]
+	CMP
+	JA @label8
+	JMP @label9
+@label8:
+	LDA 01h
+	STA [0018h]
+	LDA 0
+	STA [0019h]
+	STA [001Ah]
+	STA [001Bh]
+; $SYS4 = i SUB $SYS3
+	LDA [0018h]
+	LDBL
+	LDA [0014h]
+	STC 0
+	SUB
+	STA [001Ch]
+	LDA [0019h]
+	LDBL
+	LDA [0015h]
+	SUB
+	STA [001Dh]
+	LDA [001Ah]
+	LDBL
+	LDA [0016h]
+	SUB
+	STA [001Eh]
+	LDA [001Bh]
+	LDBL
+	LDA [0017h]
+	SUB
+	STA [001Fh]
+; free [0018h]
+	LDA [001Ch]
+	STA [0014h]
+	LDA [001Dh]
+	STA [0015h]
+	LDA [001Eh]
+	STA [0016h]
+	LDA [001Fh]
+	STA [0017h]
+; free [001Ch]
+	JMP @label7
+@label9:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [0013h]
+	SUB
+	JB @label22
+	JZ @label23
+	SUB
+	JZ @label24
+	SUB
+	JZ @label25
+	SUB
+	JZ @label26
+	SUB
+	JZ @label27
+	SUB
+	JZ @label28
+	JMP @label34
+; endproc LcdDelayLong
+@proc_LcdCmd:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0009h]
+	CMP
+	JA @label14
+	JMP @label15
+@label14:
+	LDA 08h
+	STA [0021h]
+	JMP @label16
+@label15:
+	LDA 00h
+	STA [0021h]
+@label16:
+	LDA [0003h]
+	OUT 03h
+	LDA 04h
+	STA [0010h]
+; $SYS5 = $SYS1 OR l
+	LDA [0021h]
+	LDBL
+	LDA [0010h]
+	OR
+; free [0010h]
+	OUT 02h
+	LDA 00h
+	STA [0022h]
+; $SYS1 = $SYS5 OR l
+	LDA [0021h]
+	LDBL
+	LDA [0022h]
+	OR
+; free [0022h]
+	OUT 02h
+	LDA [0002h]
+	OUT 03h
+	LDA 04h
+	STA [0010h]
+; $SYS5 = $SYS1 OR l
+	LDA [0021h]
+	LDBL
+	LDA [0010h]
+	OR
+; free [0010h]
+	OUT 02h
+	LDA 00h
+	STA [0022h]
+; $SYS1 = $SYS5 OR l
+	LDA [0021h]
+	LDBL
+	LDA [0022h]
+	OR
+; free [0022h]
+	OUT 02h
+	LDA 00h
+	STA [000Bh]
+	JMP @proc_LcdDelayShort
+@label21:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [0020h]
+	SUB
+	JB @label29
+	JZ @label30
+	SUB
+	JZ @label31
+	SUB
+	JZ @label32
+	SUB
+	JZ @label33
+	SUB
+	JZ @label68
+	SUB
+	JZ @label69
+	SUB
+	JZ @label70
+	SUB
+	JZ @label138
+	JMP @label139
+; endproc LcdCmd
+@proc_InitDisplay:
+	LDA 00h
+	OUT 03h
+	LDA 00h
+	STA [0009h]
+	LDA 00h
+	STA [0013h]
+	JMP @proc_LcdDelayLong
+@label22:
+	LDA 01h
+	STA [0013h]
+	JMP @proc_LcdDelayLong
+@label23:
+	LDA 02h
+	STA [0013h]
+	JMP @proc_LcdDelayLong
+@label24:
+	LDA 03h
+	OUT 03h
+	LDA 04h
+	OUT 02h
+	LDA 00h
+	OUT 02h
+	LDA 03h
+	STA [0013h]
+	JMP @proc_LcdDelayLong
+@label25:
+	LDA 04h
+	OUT 02h
+	LDA 00h
+	OUT 02h
+	LDA 04h
+	STA [0013h]
+	JMP @proc_LcdDelayLong
+@label26:
+	LDA 04h
+	OUT 02h
+	LDA 00h
+	OUT 02h
+	LDA 05h
+	STA [0013h]
+	JMP @proc_LcdDelayLong
+@label27:
+	LDA 02h
+	OUT 03h
+	LDA 04h
+	OUT 02h
+	LDA 00h
+	OUT 02h
+	LDA 06h
+	STA [0013h]
+	JMP @proc_LcdDelayLong
+@label28:
+	LDA 01h
+	STA [0002h]
+	LDA 0
+	STA [0003h]
+	LDA 00h
+	STA [0020h]
+	JMP @proc_LcdCmd
+@label29:
+	LDA 06h
+	STA [0002h]
+	LDA 0
+	STA [0003h]
+	LDA 01h
+	STA [0020h]
+	JMP @proc_LcdCmd
+@label30:
+	LDA 0Ch
+	STA [0002h]
+	LDA 0
+	STA [0003h]
+	LDA 02h
+	STA [0020h]
+	JMP @proc_LcdCmd
+@label31:
+	LDA 08h
+	STA [0011h]
+	LDA 02h
+	STA [0012h]
+	LDA [0011h]
+	STA [0002h]
+	LDA [0012h]
+	STA [0003h]
+; free [0011h]
+	LDA 03h
+	STA [0020h]
+	JMP @proc_LcdCmd
+@label32:
+	JMP @label1566
+; endproc InitDisplay
+@proc_ClearScreen:
+	LDA 01h
+	STA [0002h]
+	LDA 0
+	STA [0003h]
+	LDA 04h
+	STA [0020h]
+	JMP @proc_LcdCmd
+@label33:
+	LDA 07h
+	STA [0013h]
+	JMP @proc_LcdDelayLong
+@label34:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [0024h]
+	SUB
+	JB @label821
+	JZ @label1293
+	SUB
+	JZ @label1379
+	SUB
+	JZ @label1383
+	JMP @label1418
+; endproc ClearScreen
+@proc_PrintChar:
+	LDA [0001h]
+	OUT 03h
+	LDA 0Dh
+	OUT 02h
+	LDA 09h
+	OUT 02h
+	LDA [0000h]
+	OUT 03h
+	LDA 0Dh
+	OUT 02h
+	LDA 09h
+	OUT 02h
+	LDA 01h
+	STA [000Bh]
+	JMP @proc_LcdDelayShort
+@label35:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [0025h]
+	SUB
+	JB @label80
+	JZ @label84
+	SUB
+	JZ @label137
+	SUB
+	JZ @label245
+	SUB
+	JZ @label1303
+	SUB
+	JZ @label1305
+	SUB
+	JZ @label1321
+	SUB
+	JZ @label1323
+	SUB
+	JZ @label1339
+	SUB
+	JZ @label1341
+	SUB
+	JZ @label1357
+	SUB
+	JZ @label1359
+	SUB
+	JZ @label1375
+	JMP @label1377
+; endproc PrintChar
+@proc_SetPos:
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [0006h]
+	CMP
+	JE @label43
+	JMP @label37
+@label43:
+@label36:
+	LDA 00h
+	STA [0002h]
+	LDA 0
+	STA [0003h]
+	JMP @label38
+@label37:
+	LDA 01h
+	STC 0
+	LDBL
+	LDA [0006h]
+	CMP
+	JE @label51
+	JMP @label45
+@label51:
+@label44:
+	LDA 00h
+	STA [0011h]
+	LDA 04h
+	STA [0012h]
+	LDA [0011h]
+	STA [0002h]
+	LDA [0012h]
+	STA [0003h]
+; free [0011h]
+	JMP @label46
+@label45:
+	LDA 02h
+	STC 0
+	LDBL
+	LDA [0006h]
+	CMP
+	JE @label59
+	JMP @label53
+@label59:
+@label52:
+	LDA 04h
+	STA [0011h]
+	LDA 01h
+	STA [0012h]
+	LDA [0011h]
+	STA [0002h]
+	LDA [0012h]
+	STA [0003h]
+; free [0011h]
+	JMP @label54
+@label53:
+	LDA 03h
+	STC 0
+	LDBL
+	LDA [0006h]
+	CMP
+	JE @label67
+	JMP @label62
+@label67:
+@label60:
+	LDA 04h
+	STA [0011h]
+	LDA 05h
+	STA [0012h]
+	LDA [0011h]
+	STA [0002h]
+	LDA [0012h]
+	STA [0003h]
+; free [0011h]
+@label62:
+@label54:
+@label46:
+@label38:
+; $SYS2 = cmd ADD col
+	LDA [0007h]
+	LDBL
+	LDA [0002h]
+	STC 0
+	ADD
+	STA [0011h]
+	LDA [0008h]
+	LDBL
+	LDA [0003h]
+	ADD
+	STA [0012h]
+	LDA 00h
+	STA [000Eh]
+	LDA 08h
+	STA [000Fh]
+; $SYS6 = $SYS2 OR $SYS0
+	LDA [000Eh]
+	LDBL
+	LDA [0011h]
+	OR
+	STA [0027h]
+	LDA [000Fh]
+	LDBL
+	LDA [0012h]
+	OR
+	STA [0028h]
+; free [0011h]
+; free [000Eh]
+	LDA [0027h]
+	STA [0002h]
+	LDA [0028h]
+	STA [0003h]
+; free [0027h]
+	LDA 05h
+	STA [0020h]
+	JMP @proc_LcdCmd
+@label68:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [0026h]
+	SUB
+	JB @label81
+	JZ @label83
+	SUB
+	JZ @label120
+	SUB
+	JZ @label236
+	SUB
+	JZ @label849
+	SUB
+	JZ @label1296
+	SUB
+	JZ @label1315
+	SUB
+	JZ @label1333
+	SUB
+	JZ @label1351
+	JMP @label1369
+; endproc SetPos
+@proc_EnableCursor:
+	LDA 0Fh
+	STA [0002h]
+	LDA 0
+	STA [0003h]
+	LDA 06h
+	STA [0020h]
+	JMP @proc_LcdCmd
+@label69:
+	JMP @label1297
+; endproc EnableCursor
+@proc_DisableCursor:
+	LDA 0Ch
+	STA [0002h]
+	LDA 0
+	STA [0003h]
+	LDA 07h
+	STA [0020h]
+	JMP @proc_LcdCmd
+@label70:
+	JMP @label1378
+; endproc DisableCursor
+@proc_PrintString:
+	LDA 00h
+	STA [002Ch]
+	LDA 0
+	STA [002Dh]
+@label71:
+	STC 0
+	LDA [0005h]
+	LDBL
+	LDA [002Dh]
+	CMP
+	JB @label72
+	JA @label73
+	LDA [0004h]
+	LDBL
+	LDA [002Ch]
+	CMP
+	JB @label72
+	JA @label73
+	JMP @label73
+@label72:
+	LDA [002Ch]
+	STA [000Eh]
+	LDA [002Dh]
+	STA [000Fh]
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	BNK 1
+	LDA [B]0000h
+	BNK 0
+	STA [0027h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	BNK 1
+	LDA [B]0000h
+	BNK 0
+	STA [0028h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+	LDA [0027h]
+	STA [0000h]
+	LDA [0028h]
+	STA [0001h]
+; free [0027h]
+	LDA 00h
+	STA [0025h]
+	JMP @proc_PrintChar
+@label80:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [002Ch]
+	ADD
+	STA [002Ch]
+	LDA [002Dh]
+	ADD
+	STA [002Dh]
+	JMP @label71
+@label73:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [002Bh]
+	SUB
+	JB @label82
+	JZ @label121
+	SUB
+	JZ @label767
+	SUB
+	JZ @label768
+	SUB
+	JZ @label851
+	SUB
+	JZ @label852
+	SUB
+	JZ @label854
+	SUB
+	JZ @label855
+	SUB
+	JZ @label857
+	SUB
+	JZ @label1055
+	SUB
+	JZ @label1057
+	SUB
+	JZ @label1058
+	JMP @label1060
+; endproc PrintString
+@proc_PrintStringPos:
+	LDA 00h
+	STA [0026h]
+	JMP @proc_SetPos
+@label81:
+	LDA 00h
+	STA [002Bh]
+	JMP @proc_PrintString
+@label82:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [002Eh]
+	SUB
+	JB @label756
+	JZ @label770
+	SUB
+	JZ @label771
+	SUB
+	JZ @label772
+	SUB
+	JZ @label801
+	SUB
+	JZ @label1052
+	SUB
+	JZ @label1054
+	SUB
+	JZ @label1460
+	SUB
+	JZ @label1502
+	SUB
+	JZ @label1533
+	SUB
+	JZ @label1534
+	SUB
+	JZ @label1535
+	JMP @label1536
+; endproc PrintStringPos
+@proc_PrintCharPos:
+	LDA 01h
+	STA [0026h]
+	JMP @proc_SetPos
+@label83:
+	LDA 01h
+	STA [0025h]
+	JMP @proc_PrintChar
+@label84:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [002Fh]
+	SUB
+	JB @label858
+	JMP @label859
+; endproc PrintCharPos
+@proc_FadeIn:
+	LDA 0Fh
+	STA [0031h]
+@label85:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0031h]
+	CMP
+	JA @label86
+	JMP @label87
+@label86:
+	LDA 08h
+	STA [0027h]
+	LDA 0Ch
+	STA [0028h]
+	LDA [0027h]
+	STA [0032h]
+	LDA [0028h]
+	STA [0033h]
+; free [0027h]
+@label92:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0032h]
+	CMP
+	JA @label93
+	LDA [0033h]
+	CMP
+	JA @label93
+	JMP @label94
+@label93:
+	LDA 00h
+	OUT 02h
+	LDA [0031h]
+	STA [0034h]
+@label99:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0034h]
+	CMP
+	JA @label100
+	JMP @label101
+@label100:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0034h]
+	SUB
+	STA [0034h]
+	nop
+	nop
+	nop
+	nop
+	nop
+	JMP @label99
+@label101:
+	LDA 08h
+	OUT 02h
+	LDA 0Fh
+	STA [0010h]
+; $SYS5 = $SYS1 SUB rel
+	LDA [0031h]
+	LDBL
+	LDA [0010h]
+	STC 0
+	SUB
+; free [0010h]
+	STA [0034h]
+@label106:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0034h]
+	CMP
+	JA @label107
+	JMP @label108
+@label107:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0034h]
+	SUB
+	STA [0034h]
+	nop
+	nop
+	nop
+	nop
+	nop
+	JMP @label106
+@label108:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0032h]
+	SUB
+	STA [0032h]
+	LDA [0033h]
+	SUB
+	STA [0033h]
+	JMP @label92
+@label94:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0031h]
+	SUB
+	STA [0031h]
+	JMP @label85
+@label87:
+	LDA 01h
+	STA [0009h]
+	JMP @label802
+; endproc FadeIn
+@proc_ScrollLineIntoView:
+	LDA 04h
+	STA [0027h]
+	LDA 01h
+	STA [0028h]
+	LDA [0027h]
+	STA [0036h]
+	LDA [0028h]
+	STA [0037h]
+; free [0027h]
+@label113:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0036h]
+	CMP
+	JA @label114
+	LDA [0037h]
+	CMP
+	JA @label114
+	JMP @label115
+@label114:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0036h]
+	SUB
+	STA [0036h]
+	LDA [0037h]
+	SUB
+	STA [0037h]
+	LDA 04h
+	STA [0027h]
+	LDA 01h
+	STA [0028h]
+; $SYS0 = $SYS6 SUB i
+	LDA [0036h]
+	LDBL
+	LDA [0027h]
+	STC 0
+	SUB
+	STA [000Eh]
+	LDA [0037h]
+	LDBL
+	LDA [0028h]
+	SUB
+	STA [000Fh]
+; free [0027h]
+	LDA [000Eh]
+	STA [0004h]
+	LDA [000Fh]
+	STA [0005h]
+; free [000Eh]
+	LDA [0036h]
+	STA [0007h]
+	LDA [0037h]
+	STA [0008h]
+	LDA 02h
+	STA [0026h]
+	JMP @proc_SetPos
+@label120:
+	LDA 01h
+	STA [002Bh]
+	JMP @proc_PrintString
+@label121:
+	LDA 04h
+	STA [001Ch]
+	LDA 0Fh
+	STA [001Dh]
+	LDA 01h
+	STA [001Eh]
+	LDA 00h
+	STA [001Fh]
+	LDA [001Ch]
+	STA [0038h]
+	LDA [001Dh]
+	STA [0039h]
+	LDA [001Eh]
+	STA [003Ah]
+	LDA [001Fh]
+	STA [003Bh]
+; free [001Ch]
+@label122:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0038h]
+	CMP
+	JA @label123
+	LDA [0039h]
+	CMP
+	JA @label123
+	LDA [003Ah]
+	CMP
+	JA @label123
+	LDA [003Bh]
+	CMP
+	JA @label123
+	JMP @label124
+@label123:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0038h]
+	SUB
+	STA [0038h]
+	LDA [0039h]
+	SUB
+	STA [0039h]
+	LDA [003Ah]
+	SUB
+	STA [003Ah]
+	LDA [003Bh]
+	SUB
+	STA [003Bh]
+	JMP @label122
+@label124:
+	JMP @label113
+@label115:
+	JMP @label803
+; endproc ScrollLineIntoView
+@proc_LoadCustomChar:
+	LDA 00h
+	STA [003Dh]
+@label129:
+	LDA 08h
+	STC 0
+	LDBL
+	LDA [003Dh]
+	CMP
+	JB @label130
+	JA @label131
+	JMP @label131
+@label130:
+	LDA [003Dh]
+	STA [0027h]
+	LDA 0
+	STA [0028h]
+	STC 0
+	LDA [0027h]
+	SHL
+	STA [0027h]
+	LDA [0028h]
+	SHL
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0100h
+	BNK 0
+	STA [000Eh]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	ADD
+	STA [0027h]
+	LDA [0028h]
+	ADD
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0100h
+	BNK 0
+	STA [000Fh]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	ADD
+	STA [0027h]
+	LDA [0028h]
+	ADD
+	STA [0028h]
+	LDA [000Eh]
+	STA [0000h]
+	LDA [000Fh]
+	STA [0001h]
+; free [000Eh]
+	LDA 02h
+	STA [0025h]
+	JMP @proc_PrintChar
+@label137:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [003Dh]
+	ADD
+	STA [003Dh]
+	JMP @label129
+@label131:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [003Ch]
+	SUB
+	JB @label140
+	JZ @label141
+	SUB
+	JZ @label142
+	SUB
+	JZ @label143
+	SUB
+	JZ @label144
+	SUB
+	JZ @label145
+	SUB
+	JZ @label146
+	JMP @label147
+; endproc LoadCustomChar
+@proc_LoadCustomDigits:
+	LDA 00h
+	STA [000Eh]
+	LDA 08h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0002h]
+	LDA [000Fh]
+	STA [0003h]
+; free [000Eh]
+	LDA 08h
+	STA [0020h]
+	JMP @proc_LcdCmd
+@label138:
+	LDA 00h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0002h]
+	LDA [000Fh]
+	STA [0003h]
+; free [000Eh]
+	LDA 09h
+	STA [0020h]
+	JMP @proc_LcdCmd
+@label139:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 00h
+	STA [B]0100h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 07h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Bh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	BNK 0
+	LDA 00h
+	STA [003Ch]
+	JMP @proc_LoadCustomChar
+@label140:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 03h
+	STA [B]0100h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 02h
+	LDBL
+	LDA 07h
+	STA [B]0100h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 04h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 06h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 07h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Bh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	BNK 0
+	LDA 01h
+	STA [003Ch]
+	JMP @proc_LoadCustomChar
+@label141:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 08h
+	STA [B]0100h
+	LDA 01h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 02h
+	LDBL
+	LDA 0Ch
+	STA [B]0100h
+	LDA 03h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 04h
+	LDBL
+	LDA 0Eh
+	STA [B]0100h
+	LDA 05h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 06h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 07h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Bh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	BNK 0
+	LDA 02h
+	STA [003Ch]
+	JMP @proc_LoadCustomChar
+@label142:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 0Fh
+	STA [B]0100h
+	LDA 01h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 02h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 03h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 04h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 05h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 06h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 07h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Bh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	BNK 0
+	LDA 03h
+	STA [003Ch]
+	JMP @proc_LoadCustomChar
+@label143:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 0Fh
+	STA [B]0100h
+	LDA 01h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 02h
+	LDBL
+	LDA 0Eh
+	STA [B]0100h
+	LDA 03h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 04h
+	LDBL
+	LDA 0Ch
+	STA [B]0100h
+	LDA 05h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 06h
+	LDBL
+	LDA 08h
+	STA [B]0100h
+	LDA 07h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Bh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	BNK 0
+	LDA 04h
+	STA [003Ch]
+	JMP @proc_LoadCustomChar
+@label144:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 0Fh
+	STA [B]0100h
+	LDA 01h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 02h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 04h
+	LDBL
+	LDA 07h
+	STA [B]0100h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 06h
+	LDBL
+	LDA 03h
+	STA [B]0100h
+	LDA 07h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Bh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	BNK 0
+	LDA 05h
+	STA [003Ch]
+	JMP @proc_LoadCustomChar
+@label145:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 03h
+	STA [B]0100h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 02h
+	LDBL
+	LDA 07h
+	STA [B]0100h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 04h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0100h
+	LDA 06h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 07h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 08h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 09h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 0Ah
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 0Bh
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 0Ch
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 0Dh
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 0Eh
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 0Fh
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	BNK 0
+	LDA 06h
+	STA [003Ch]
+	JMP @proc_LoadCustomChar
+@label146:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 08h
+	STA [B]0100h
+	LDA 01h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 02h
+	LDBL
+	LDA 0Ch
+	STA [B]0100h
+	LDA 03h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 04h
+	LDBL
+	LDA 0Eh
+	STA [B]0100h
+	LDA 05h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 06h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 07h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 08h
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 09h
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 0Ah
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 0Bh
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	LDA 0Ch
+	LDBL
+	LDA 0Fh
+	STA [B]0100h
+	LDA 0Dh
+	LDBL
+	LDA 01h
+	STA [B]0100h
+	BNK 0
+	LDA 07h
+	STA [003Ch]
+	JMP @proc_LoadCustomChar
+@label147:
+	JMP @label1532
+; endproc LoadCustomDigits
+@proc_PrintLargeDigit:
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [000Ah]
+	CMP
+	JE @label155
+	JMP @label149
+@label155:
+@label148:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 06h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 02h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 04h
+	LDBL
+	LDA 07h
+	STA [B]0200h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 06h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 07h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 09h
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 0Ah
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Bh
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Ch
+	LDBL
+	LDA 05h
+	STA [B]0200h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Eh
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 04h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	BNK 0
+	JMP @label150
+@label149:
+	LDA 01h
+	STC 0
+	LDBL
+	LDA [000Ah]
+	CMP
+	JE @label163
+	JMP @label157
+@label163:
+@label156:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 01h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 02h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 03h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 08h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 09h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 0Ch
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Eh
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 03h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	BNK 0
+	JMP @label158
+@label157:
+	LDA 02h
+	STC 0
+	LDBL
+	LDA [000Ah]
+	CMP
+	JE @label171
+	JMP @label165
+@label171:
+@label164:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 01h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 02h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 04h
+	LDBL
+	LDA 07h
+	STA [B]0200h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 06h
+	LDBL
+	LDA 06h
+	STA [B]0200h
+	LDA 07h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ah
+	LDBL
+	LDA 04h
+	STA [B]0200h
+	LDA 0Bh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ch
+	LDBL
+	LDA 05h
+	STA [B]0200h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Eh
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 04h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	BNK 0
+	JMP @label166
+@label165:
+	LDA 03h
+	STC 0
+	LDBL
+	LDA [000Ah]
+	CMP
+	JE @label179
+	JMP @label173
+@label179:
+@label172:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 01h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 02h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 04h
+	LDBL
+	LDA 07h
+	STA [B]0200h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ah
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Bh
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Ch
+	LDBL
+	LDA 05h
+	STA [B]0200h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Eh
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 04h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	BNK 0
+	JMP @label174
+@label173:
+	LDA 04h
+	STC 0
+	LDBL
+	LDA [000Ah]
+	CMP
+	JE @label187
+	JMP @label181
+@label187:
+@label180:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 0Fh
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 04h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 05h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 06h
+	LDBL
+	LDA 05h
+	STA [B]0200h
+	LDA 07h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ah
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Bh
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 03h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	BNK 0
+	JMP @label182
+@label181:
+	LDA 05h
+	STC 0
+	LDBL
+	LDA [000Ah]
+	CMP
+	JE @label195
+	JMP @label189
+@label195:
+@label188:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 0Fh
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 02h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 04h
+	LDBL
+	LDA 04h
+	STA [B]0200h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 06h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 07h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ah
+	LDBL
+	LDA 07h
+	STA [B]0200h
+	LDA 0Bh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ch
+	LDBL
+	LDA 05h
+	STA [B]0200h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Eh
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 04h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	BNK 0
+	JMP @label190
+@label189:
+	LDA 06h
+	STC 0
+	LDBL
+	LDA [000Ah]
+	CMP
+	JE @label203
+	JMP @label197
+@label203:
+@label196:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 06h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 02h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 04h
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 06h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 07h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ah
+	LDBL
+	LDA 07h
+	STA [B]0200h
+	LDA 0Bh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ch
+	LDBL
+	LDA 05h
+	STA [B]0200h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Eh
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 04h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	BNK 0
+	JMP @label198
+@label197:
+	LDA 07h
+	STC 0
+	LDBL
+	LDA [000Ah]
+	CMP
+	JE @label211
+	JMP @label205
+@label211:
+@label204:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 05h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 02h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 04h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 05h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 08h
+	LDBL
+	LDA 06h
+	STA [B]0200h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ah
+	LDBL
+	LDA 04h
+	STA [B]0200h
+	LDA 0Bh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	LDA 0Eh
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0200h
+	BNK 0
+	JMP @label206
+@label205:
+	LDA 08h
+	STC 0
+	LDBL
+	LDA [000Ah]
+	CMP
+	JE @label219
+	JMP @label213
+@label219:
+@label212:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 06h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 02h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 04h
+	LDBL
+	LDA 07h
+	STA [B]0200h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 06h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 07h
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ah
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Bh
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Ch
+	LDBL
+	LDA 05h
+	STA [B]0200h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Eh
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 04h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	BNK 0
+	JMP @label214
+@label213:
+	LDA 09h
+	STC 0
+	LDBL
+	LDA [000Ah]
+	CMP
+	JE @label227
+	JMP @label222
+@label227:
+@label220:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 06h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 02h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 03h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 04h
+	LDBL
+	LDA 07h
+	STA [B]0200h
+	LDA 05h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 06h
+	LDBL
+	LDA 05h
+	STA [B]0200h
+	LDA 07h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 09h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Ah
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Bh
+	LDBL
+	LDA 0Fh
+	STA [B]0200h
+	LDA 0Ch
+	LDBL
+	LDA 05h
+	STA [B]0200h
+	LDA 0Dh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 0Eh
+	LDBL
+	LDA 03h
+	STA [B]0200h
+	LDA 0Fh
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 04h
+	STA [B]0200h
+	LDA 01h
+	LDBL
+	LDA 00h
+	STA [B]0200h
+	BNK 0
+@label222:
+@label214:
+@label206:
+@label198:
+@label190:
+@label182:
+@label174:
+@label166:
+@label158:
+@label150:
+	LDA [0007h]
+	STA [0040h]
+	LDA [0008h]
+	STA [0041h]
+	LDA 00h
+	STA [0006h]
+	LDA 00h
+	STA [0043h]
+@label228:
+	LDA 03h
+	STC 0
+	LDBL
+	LDA [0006h]
+	CMP
+	JB @label229
+	JA @label230
+	JMP @label230
+@label229:
+	LDA [0040h]
+	STA [0007h]
+	LDA [0041h]
+	STA [0008h]
+	LDA 03h
+	STA [0026h]
+	JMP @proc_SetPos
+@label236:
+	LDA 00h
+	STA [0042h]
+@label237:
+	LDA 03h
+	STC 0
+	LDBL
+	LDA [0042h]
+	CMP
+	JB @label238
+	JA @label239
+	JMP @label239
+@label238:
+	LDA [0043h]
+	STA [0027h]
+	LDA 0
+	STA [0028h]
+	STC 0
+	LDA [0027h]
+	SHL
+	STA [0027h]
+	LDA [0028h]
+	SHL
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0200h
+	BNK 0
+	STA [000Eh]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	ADD
+	STA [0027h]
+	LDA [0028h]
+	ADD
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0200h
+	BNK 0
+	STA [000Fh]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	ADD
+	STA [0027h]
+	LDA [0028h]
+	ADD
+	STA [0028h]
+	LDA [000Eh]
+	STA [0000h]
+	LDA [000Fh]
+	STA [0001h]
+; free [000Eh]
+	LDA 03h
+	STA [0025h]
+	JMP @proc_PrintChar
+@label245:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0042h]
+	ADD
+	STA [0042h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0043h]
+	ADD
+	STA [0043h]
+	JMP @label237
+@label239:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0006h]
+	ADD
+	STA [0006h]
+	JMP @label228
+@label230:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [003Fh]
+	SUB
+	JB @label869
+	JZ @label874
+	SUB
+	JZ @label885
+	SUB
+	JZ @label890
+	SUB
+	JZ @label901
+	JMP @label906
+; endproc PrintLargeDigit
+@proc_ByteToStr:
+	LDA 0Ah
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+; $SYS6 = numByte / $SYS0
+	LDA [0044h]
+	STA [0011h]
+	LDA [0045h]
+	STA [0012h]
+	LDA [000Eh]
+	STA [004Dh]
+	LDA [000Fh]
+	STA [004Eh]
+	LDA 0
+	STA [0027h]
+	STA [0028h]
+; WHILE w <= r DO w := 2 * w;
+@label246:
+	STC 0
+	LDA [0012h]
+	LDBL
+	LDA [004Eh]
+	CMP
+	JA @label249
+	JB @label248
+	LDA [0011h]
+	LDBL
+	LDA [004Dh]
+	CMP
+	JA @label249
+@label248:
+	LDA 08h
+	LDBL
+	LDA [004Eh]
+	AND
+	JZ @label247
+	JMP @label250
+@label247:
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	JMP @label246
+@label249:
+; WHILE w > y DO
+@label251:
+	STC 0
+	LDA [000Fh]
+	LDBL
+	LDA [004Eh]
+	CMP
+	JA @label252
+	JB @label253
+	LDA [000Eh]
+	LDBL
+	LDA [004Dh]
+	CMP
+	JA @label252
+	JB @label253
+	JMP @label253
+@label252:
+; q := 2 * q;
+	STC 0
+	LDA [0027h]
+	SHL
+	STA [0027h]
+	LDA [0028h]
+	SHL
+	STA [0028h]
+; w := w / 2;
+	STC 0
+	LDA [004Eh]
+	SHR
+	STA [004Eh]
+	LDA [004Dh]
+	SHR
+	STA [004Dh]
+@label250:
+; IF w <= r THEN
+	STC 0
+	LDA [0012h]
+	LDBL
+	LDA [004Eh]
+	CMP
+	JA @label251
+	JB @label254
+	LDA [0011h]
+	LDBL
+	LDA [004Dh]
+	CMP
+	JA @label251
+@label254:
+; r := r - w
+; $SYS2 = $SYS2 SUB $SYS7
+	LDA [004Dh]
+	LDBL
+	LDA [0011h]
+	STC 0
+	SUB
+	STA [0011h]
+	LDA [004Eh]
+	LDBL
+	LDA [0012h]
+	SUB
+	STA [0012h]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	ADD
+	STA [0027h]
+	LDA [0028h]
+	ADD
+	STA [0028h]
+	JMP @label251
+@label253:
+; free [000Eh]
+	LDA [0027h]
+	STA [004Bh]
+	LDA [0028h]
+	STA [004Ch]
+; free [0027h]
+	LDA 00h
+	STA [0022h]
+	LDA 00h
+	STA [0027h]
+	LDA 03h
+	STA [0028h]
+; $SYS0 = $SYS6 ADD a
+	LDA [004Bh]
+	LDBL
+	LDA [0027h]
+	STC 0
+	ADD
+	STA [000Eh]
+	LDA [004Ch]
+	LDBL
+	LDA [0028h]
+	ADD
+	STA [000Fh]
+; free [0027h]
+	LDA [0022h]
+	STA [0027h]
+	LDA 0
+	STA [0028h]
+	STC 0
+	LDA [0027h]
+	SHL
+	STA [0027h]
+	LDA [0028h]
+	SHL
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	LDA [000Eh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	ADD
+	STA [0027h]
+	LDA [0028h]
+	ADD
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	LDA [000Fh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	ADD
+	STA [0027h]
+	LDA [0028h]
+	ADD
+	STA [0028h]
+; free [0022h]
+; free [000Eh]
+	LDA 01h
+	STA [0022h]
+	LDA 00h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+; $SYS6 = $SYS0 ADD numByte
+	LDA [0044h]
+	LDBL
+	LDA [000Eh]
+	STC 0
+	ADD
+	STA [0027h]
+	LDA [0045h]
+	LDBL
+	LDA [000Fh]
+	ADD
+	STA [0028h]
+; free [000Eh]
+	LDA 0Ah
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+; $SYS7 = a * $SYS0
+; a := x
+	LDA [004Bh]
+	STA [0011h]
+	LDA [004Ch]
+	STA [0012h]
+; b := y
+	LDA [000Eh]
+	STA [004Fh]
+	LDA [000Fh]
+	STA [0050h]
+; z := 0
+	LDA 0
+	STA [004Dh]
+	STA [004Eh]
+; WHILE b > 0 DO
+@label255:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [004Fh]
+	CMP
+	JA @label257
+	LDA [0050h]
+	CMP
+	JA @label257
+	JMP @label256
+@label257:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [004Fh]
+	AND
+	JZ @label258
+; z := z + a;
+; $SYS7 = $SYS7 ADD $SYS2
+	LDA [0011h]
+	LDBL
+	LDA [004Dh]
+	STC 0
+	ADD
+	STA [004Dh]
+	LDA [0012h]
+	LDBL
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+@label258:
+; a := 2 * a;
+	STC 0
+	LDA [0011h]
+	SHL
+	STA [0011h]
+	LDA [0012h]
+	SHL
+	STA [0012h]
+; b := b / 2;
+	STC 0
+	LDA [0050h]
+	SHR
+	STA [0050h]
+	LDA [004Fh]
+	SHR
+	STA [004Fh]
+	JMP @label255
+@label256:
+; free [000Eh]
+; $SYS0 = $SYS6 SUB $SYS7
+	LDA [004Dh]
+	LDBL
+	LDA [0027h]
+	STC 0
+	SUB
+	STA [000Eh]
+	LDA [004Eh]
+	LDBL
+	LDA [0028h]
+	SUB
+	STA [000Fh]
+; free [0027h]
+; free [004Dh]
+	LDA [0022h]
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [000Eh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [000Fh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+; free [0022h]
+; free [000Eh]
+	STC 0
+	LDA 1
+	LDBL
+	LDA [004Ah]
+	SUB
+	JB @label769
+	JZ @label850
+	SUB
+	JZ @label853
+	SUB
+	JZ @label856
+	SUB
+	JZ @label1053
+	JMP @label1056
+; endproc ByteToStr
+@proc_ByteToHexStr:
+	LDA [0045h]
+	STA [0052h]
+	LDA 0
+	STA [0053h]
+	LDA 0Ah
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [0053h]
+	CMP
+	JB @label259
+	JA @label260
+	LDA [000Eh]
+	LDBL
+	LDA [0052h]
+	CMP
+	JB @label259
+	JA @label260
+	JMP @label260
+; free [000Eh]
+@label259:
+	LDA 00h
+	STA [0022h]
+	LDA 00h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+; $SYS7 = $SYS0 ADD a
+	LDA [0052h]
+	LDBL
+	LDA [000Eh]
+	STC 0
+	ADD
+	STA [004Dh]
+	LDA [0053h]
+	LDBL
+	LDA [000Fh]
+	ADD
+	STA [004Eh]
+; free [000Eh]
+	LDA [0022h]
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [004Dh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [004Eh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+; free [0022h]
+; free [004Dh]
+	JMP @label261
+@label260:
+	LDA 00h
+	STA [0022h]
+	LDA 01h
+	STA [004Dh]
+	LDA 04h
+	STA [004Eh]
+; $SYS0 = $SYS7 ADD a
+	LDA [0052h]
+	LDBL
+	LDA [004Dh]
+	STC 0
+	ADD
+	STA [000Eh]
+	LDA [0053h]
+	LDBL
+	LDA [004Eh]
+	ADD
+	STA [000Fh]
+; free [004Dh]
+	LDA 0Ah
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+; $SYS6 = $SYS0 SUB $SYS7
+	LDA [004Dh]
+	LDBL
+	LDA [000Eh]
+	STC 0
+	SUB
+	STA [0027h]
+	LDA [004Eh]
+	LDBL
+	LDA [000Fh]
+	SUB
+	STA [0028h]
+; free [000Eh]
+; free [004Dh]
+	LDA [0022h]
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [0027h]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [0028h]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+; free [0022h]
+; free [0027h]
+@label261:
+	LDA 00h
+	STA [0027h]
+	LDA 0Fh
+	STA [0028h]
+; $SYS7 = numByte AND $SYS6
+	LDA [0027h]
+	LDBL
+	LDA [0044h]
+	AND
+	STA [004Dh]
+	LDA [0028h]
+	LDBL
+	LDA [0045h]
+	AND
+	STA [004Eh]
+; free [0027h]
+; $SYS6 = numByte SUB $SYS7
+	LDA [004Dh]
+	LDBL
+	LDA [0044h]
+	STC 0
+	SUB
+	STA [0027h]
+	LDA [004Eh]
+	LDBL
+	LDA [0045h]
+	SUB
+	STA [0028h]
+; free [004Dh]
+	LDA [0027h]
+	STA [0052h]
+	LDA [0028h]
+	STA [0053h]
+; free [0027h]
+	LDA 0Ah
+	STA [0027h]
+	LDA 0
+	STA [0028h]
+	STC 0
+	LDBL
+	LDA [0053h]
+	CMP
+	JB @label268
+	JA @label269
+	LDA [0027h]
+	LDBL
+	LDA [0052h]
+	CMP
+	JB @label268
+	JA @label269
+	JMP @label269
+; free [0027h]
+@label268:
+	LDA 01h
+	STA [0022h]
+	LDA 00h
+	STA [0027h]
+	LDA 03h
+	STA [0028h]
+; $SYS7 = $SYS6 ADD a
+	LDA [0052h]
+	LDBL
+	LDA [0027h]
+	STC 0
+	ADD
+	STA [004Dh]
+	LDA [0053h]
+	LDBL
+	LDA [0028h]
+	ADD
+	STA [004Eh]
+; free [0027h]
+	LDA [0022h]
+	STA [0027h]
+	LDA 0
+	STA [0028h]
+	STC 0
+	LDA [0027h]
+	SHL
+	STA [0027h]
+	LDA [0028h]
+	SHL
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	LDA [004Dh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	ADD
+	STA [0027h]
+	LDA [0028h]
+	ADD
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	LDA [004Eh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	ADD
+	STA [0027h]
+	LDA [0028h]
+	ADD
+	STA [0028h]
+; free [0022h]
+; free [004Dh]
+	JMP @label270
+@label269:
+	LDA 01h
+	STA [0022h]
+	LDA 01h
+	STA [004Dh]
+	LDA 04h
+	STA [004Eh]
+; $SYS6 = $SYS7 ADD a
+	LDA [0052h]
+	LDBL
+	LDA [004Dh]
+	STC 0
+	ADD
+	STA [0027h]
+	LDA [0053h]
+	LDBL
+	LDA [004Eh]
+	ADD
+	STA [0028h]
+; free [004Dh]
+	LDA 0Ah
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+; $SYS0 = $SYS6 SUB $SYS7
+	LDA [004Dh]
+	LDBL
+	LDA [0027h]
+	STC 0
+	SUB
+	STA [000Eh]
+	LDA [004Eh]
+	LDBL
+	LDA [0028h]
+	SUB
+	STA [000Fh]
+; free [0027h]
+; free [004Dh]
+	LDA [0022h]
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [000Eh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [000Fh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+; free [0022h]
+; free [000Eh]
+@label270:
+	JMP @label1530
+; endproc ByteToHexStr
+@proc_WordToStr:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	BNK 0
+	LDA 08h
+	STA [001Ch]
+	LDA 0Eh
+	STA [001Dh]
+	LDA 03h
+	STA [001Eh]
+	LDA 00h
+	STA [001Fh]
+; $SYS3 = numWord / $SYS4
+	LDA [0046h]
+	STA [0059h]
+	LDA [0047h]
+	STA [005Ah]
+	LDA [0048h]
+	STA [005Bh]
+	LDA [0049h]
+	STA [005Ch]
+	LDA [001Ch]
+	STA [005Dh]
+	LDA [001Dh]
+	STA [005Eh]
+	LDA [001Eh]
+	STA [005Fh]
+	LDA [001Fh]
+	STA [0060h]
+	LDA 0
+	STA [0018h]
+	STA [0019h]
+	STA [001Ah]
+	STA [001Bh]
+; WHILE w <= r DO w := 2 * w;
+@label277:
+	STC 0
+	LDA [005Ch]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label280
+	JB @label279
+	LDA [005Bh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label280
+	JB @label279
+	LDA [005Ah]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label280
+	JB @label279
+	LDA [0059h]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label280
+@label279:
+	LDA 08h
+	LDBL
+	LDA [0060h]
+	AND
+	JZ @label278
+	JMP @label281
+@label278:
+	STC 0
+	LDA [005Dh]
+	SHL
+	STA [005Dh]
+	LDA [005Eh]
+	SHL
+	STA [005Eh]
+	LDA [005Fh]
+	SHL
+	STA [005Fh]
+	LDA [0060h]
+	SHL
+	STA [0060h]
+	JMP @label277
+@label280:
+; WHILE w > y DO
+@label282:
+	STC 0
+	LDA [001Fh]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label283
+	JB @label284
+	LDA [001Eh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label283
+	JB @label284
+	LDA [001Dh]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label283
+	JB @label284
+	LDA [001Ch]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label283
+	JB @label284
+	JMP @label284
+@label283:
+; q := 2 * q;
+	STC 0
+	LDA [0018h]
+	SHL
+	STA [0018h]
+	LDA [0019h]
+	SHL
+	STA [0019h]
+	LDA [001Ah]
+	SHL
+	STA [001Ah]
+	LDA [001Bh]
+	SHL
+	STA [001Bh]
+; w := w / 2;
+	STC 0
+	LDA [0060h]
+	SHR
+	STA [0060h]
+	LDA [005Fh]
+	SHR
+	STA [005Fh]
+	LDA [005Eh]
+	SHR
+	STA [005Eh]
+	LDA [005Dh]
+	SHR
+	STA [005Dh]
+@label281:
+; IF w <= r THEN
+	STC 0
+	LDA [005Ch]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label282
+	JB @label285
+	LDA [005Bh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label282
+	JB @label285
+	LDA [005Ah]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label282
+	JB @label285
+	LDA [0059h]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label282
+@label285:
+; r := r - w
+; $SYS9 = $SYS9 SUB $SYS10
+	LDA [005Dh]
+	LDBL
+	LDA [0059h]
+	STC 0
+	SUB
+	STA [0059h]
+	LDA [005Eh]
+	LDBL
+	LDA [005Ah]
+	SUB
+	STA [005Ah]
+	LDA [005Fh]
+	LDBL
+	LDA [005Bh]
+	SUB
+	STA [005Bh]
+	LDA [0060h]
+	LDBL
+	LDA [005Ch]
+	SUB
+	STA [005Ch]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0018h]
+	ADD
+	STA [0018h]
+	LDA [0019h]
+	ADD
+	STA [0019h]
+	LDA [001Ah]
+	ADD
+	STA [001Ah]
+	LDA [001Bh]
+	ADD
+	STA [001Bh]
+	JMP @label282
+@label284:
+; free [001Ch]
+	LDA [0018h]
+	STA [0055h]
+	LDA [0019h]
+	STA [0056h]
+	LDA [001Ah]
+	STA [0057h]
+	LDA [001Bh]
+	STA [0058h]
+; free [0018h]
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0055h]
+	CMP
+	JA @label286
+	LDA [0056h]
+	CMP
+	JA @label286
+	LDA [0057h]
+	CMP
+	JA @label286
+	LDA [0058h]
+	CMP
+	JA @label286
+	JMP @label288
+@label286:
+	LDA 00h
+	STA [0022h]
+	LDA 00h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0018h]
+	LDA [000Fh]
+	STA [0019h]
+	LDA 0
+	STA [001Ah]
+	STA [001Bh]
+; free [000Eh]
+; $SYS4 = $SYS3 ADD a
+	LDA [0055h]
+	LDBL
+	LDA [0018h]
+	STC 0
+	ADD
+	STA [001Ch]
+	LDA [0056h]
+	LDBL
+	LDA [0019h]
+	ADD
+	STA [001Dh]
+	LDA [0057h]
+	LDBL
+	LDA [001Ah]
+	ADD
+	STA [001Eh]
+	LDA [0058h]
+	LDBL
+	LDA [001Bh]
+	ADD
+	STA [001Fh]
+; free [0018h]
+	LDA [0022h]
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [001Ch]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [001Dh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+; free [0022h]
+; free [001Ch]
+@label288:
+	LDA 08h
+	STA [001Ch]
+	LDA 0Eh
+	STA [001Dh]
+	LDA 03h
+	STA [001Eh]
+	LDA 00h
+	STA [001Fh]
+; $SYS3 = a * $SYS4
+; a := x
+	LDA [0055h]
+	STA [005Dh]
+	LDA [0056h]
+	STA [005Eh]
+	LDA [0057h]
+	STA [005Fh]
+	LDA [0058h]
+	STA [0060h]
+; b := y
+	LDA [001Ch]
+	STA [0059h]
+	LDA [001Dh]
+	STA [005Ah]
+	LDA [001Eh]
+	STA [005Bh]
+	LDA [001Fh]
+	STA [005Ch]
+; z := 0
+	LDA 0
+	STA [0018h]
+	STA [0019h]
+	STA [001Ah]
+	STA [001Bh]
+; WHILE b > 0 DO
+@label293:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [0059h]
+	CMP
+	JA @label295
+	LDA [005Ah]
+	CMP
+	JA @label295
+	LDA [005Bh]
+	CMP
+	JA @label295
+	LDA [005Ch]
+	CMP
+	JA @label295
+	JMP @label294
+@label295:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [0059h]
+	AND
+	JZ @label296
+; z := z + a;
+; $SYS3 = $SYS3 ADD $SYS10
+	LDA [005Dh]
+	LDBL
+	LDA [0018h]
+	STC 0
+	ADD
+	STA [0018h]
+	LDA [005Eh]
+	LDBL
+	LDA [0019h]
+	ADD
+	STA [0019h]
+	LDA [005Fh]
+	LDBL
+	LDA [001Ah]
+	ADD
+	STA [001Ah]
+	LDA [0060h]
+	LDBL
+	LDA [001Bh]
+	ADD
+	STA [001Bh]
+@label296:
+; a := 2 * a;
+	STC 0
+	LDA [005Dh]
+	SHL
+	STA [005Dh]
+	LDA [005Eh]
+	SHL
+	STA [005Eh]
+	LDA [005Fh]
+	SHL
+	STA [005Fh]
+	LDA [0060h]
+	SHL
+	STA [0060h]
+; b := b / 2;
+	STC 0
+	LDA [005Ch]
+	SHR
+	STA [005Ch]
+	LDA [005Bh]
+	SHR
+	STA [005Bh]
+	LDA [005Ah]
+	SHR
+	STA [005Ah]
+	LDA [0059h]
+	SHR
+	STA [0059h]
+	JMP @label293
+@label294:
+; free [001Ch]
+; $SYS4 = numWord SUB $SYS3
+	LDA [0018h]
+	LDBL
+	LDA [0046h]
+	STC 0
+	SUB
+	STA [001Ch]
+	LDA [0019h]
+	LDBL
+	LDA [0047h]
+	SUB
+	STA [001Dh]
+	LDA [001Ah]
+	LDBL
+	LDA [0048h]
+	SUB
+	STA [001Eh]
+	LDA [001Bh]
+	LDBL
+	LDA [0049h]
+	SUB
+	STA [001Fh]
+; free [0018h]
+	LDA [001Ch]
+	STA [0046h]
+	LDA [001Dh]
+	STA [0047h]
+	LDA [001Eh]
+	STA [0048h]
+	LDA [001Fh]
+	STA [0049h]
+; free [001Ch]
+	LDA 04h
+	STA [000Eh]
+	LDA 06h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [001Ch]
+	LDA [000Fh]
+	STA [001Dh]
+	LDA 0
+	STA [001Eh]
+	STA [001Fh]
+; free [000Eh]
+; $SYS3 = numWord / $SYS4
+	LDA [0046h]
+	STA [0059h]
+	LDA [0047h]
+	STA [005Ah]
+	LDA [0048h]
+	STA [005Bh]
+	LDA [0049h]
+	STA [005Ch]
+	LDA [001Ch]
+	STA [005Dh]
+	LDA [001Dh]
+	STA [005Eh]
+	LDA [001Eh]
+	STA [005Fh]
+	LDA [001Fh]
+	STA [0060h]
+	LDA 0
+	STA [0018h]
+	STA [0019h]
+	STA [001Ah]
+	STA [001Bh]
+; WHILE w <= r DO w := 2 * w;
+@label297:
+	STC 0
+	LDA [005Ch]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label300
+	JB @label299
+	LDA [005Bh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label300
+	JB @label299
+	LDA [005Ah]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label300
+	JB @label299
+	LDA [0059h]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label300
+@label299:
+	LDA 08h
+	LDBL
+	LDA [0060h]
+	AND
+	JZ @label298
+	JMP @label301
+@label298:
+	STC 0
+	LDA [005Dh]
+	SHL
+	STA [005Dh]
+	LDA [005Eh]
+	SHL
+	STA [005Eh]
+	LDA [005Fh]
+	SHL
+	STA [005Fh]
+	LDA [0060h]
+	SHL
+	STA [0060h]
+	JMP @label297
+@label300:
+; WHILE w > y DO
+@label302:
+	STC 0
+	LDA [001Fh]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label303
+	JB @label304
+	LDA [001Eh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label303
+	JB @label304
+	LDA [001Dh]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label303
+	JB @label304
+	LDA [001Ch]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label303
+	JB @label304
+	JMP @label304
+@label303:
+; q := 2 * q;
+	STC 0
+	LDA [0018h]
+	SHL
+	STA [0018h]
+	LDA [0019h]
+	SHL
+	STA [0019h]
+	LDA [001Ah]
+	SHL
+	STA [001Ah]
+	LDA [001Bh]
+	SHL
+	STA [001Bh]
+; w := w / 2;
+	STC 0
+	LDA [0060h]
+	SHR
+	STA [0060h]
+	LDA [005Fh]
+	SHR
+	STA [005Fh]
+	LDA [005Eh]
+	SHR
+	STA [005Eh]
+	LDA [005Dh]
+	SHR
+	STA [005Dh]
+@label301:
+; IF w <= r THEN
+	STC 0
+	LDA [005Ch]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label302
+	JB @label305
+	LDA [005Bh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label302
+	JB @label305
+	LDA [005Ah]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label302
+	JB @label305
+	LDA [0059h]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label302
+@label305:
+; r := r - w
+; $SYS9 = $SYS9 SUB $SYS10
+	LDA [005Dh]
+	LDBL
+	LDA [0059h]
+	STC 0
+	SUB
+	STA [0059h]
+	LDA [005Eh]
+	LDBL
+	LDA [005Ah]
+	SUB
+	STA [005Ah]
+	LDA [005Fh]
+	LDBL
+	LDA [005Bh]
+	SUB
+	STA [005Bh]
+	LDA [0060h]
+	LDBL
+	LDA [005Ch]
+	SUB
+	STA [005Ch]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0018h]
+	ADD
+	STA [0018h]
+	LDA [0019h]
+	ADD
+	STA [0019h]
+	LDA [001Ah]
+	ADD
+	STA [001Ah]
+	LDA [001Bh]
+	ADD
+	STA [001Bh]
+	JMP @label302
+@label304:
+; free [001Ch]
+	LDA [0018h]
+	STA [0055h]
+	LDA [0019h]
+	STA [0056h]
+	LDA [001Ah]
+	STA [0057h]
+	LDA [001Bh]
+	STA [0058h]
+; free [0018h]
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0055h]
+	CMP
+	JA @label306
+	LDA [0056h]
+	CMP
+	JA @label306
+	LDA [0057h]
+	CMP
+	JA @label306
+	LDA [0058h]
+	CMP
+	JA @label306
+	JMP @label308
+@label306:
+	LDA 01h
+	STA [0022h]
+	LDA 00h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0018h]
+	LDA [000Fh]
+	STA [0019h]
+	LDA 0
+	STA [001Ah]
+	STA [001Bh]
+; free [000Eh]
+; $SYS4 = $SYS3 ADD a
+	LDA [0055h]
+	LDBL
+	LDA [0018h]
+	STC 0
+	ADD
+	STA [001Ch]
+	LDA [0056h]
+	LDBL
+	LDA [0019h]
+	ADD
+	STA [001Dh]
+	LDA [0057h]
+	LDBL
+	LDA [001Ah]
+	ADD
+	STA [001Eh]
+	LDA [0058h]
+	LDBL
+	LDA [001Bh]
+	ADD
+	STA [001Fh]
+; free [0018h]
+	LDA [0022h]
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [001Ch]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [001Dh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+; free [0022h]
+; free [001Ch]
+@label308:
+	LDA 04h
+	STA [000Eh]
+	LDA 06h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [001Ch]
+	LDA [000Fh]
+	STA [001Dh]
+	LDA 0
+	STA [001Eh]
+	STA [001Fh]
+; free [000Eh]
+; $SYS3 = a * $SYS4
+; a := x
+	LDA [0055h]
+	STA [005Dh]
+	LDA [0056h]
+	STA [005Eh]
+	LDA [0057h]
+	STA [005Fh]
+	LDA [0058h]
+	STA [0060h]
+; b := y
+	LDA [001Ch]
+	STA [0059h]
+	LDA [001Dh]
+	STA [005Ah]
+	LDA [001Eh]
+	STA [005Bh]
+	LDA [001Fh]
+	STA [005Ch]
+; z := 0
+	LDA 0
+	STA [0018h]
+	STA [0019h]
+	STA [001Ah]
+	STA [001Bh]
+; WHILE b > 0 DO
+@label313:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [0059h]
+	CMP
+	JA @label315
+	LDA [005Ah]
+	CMP
+	JA @label315
+	LDA [005Bh]
+	CMP
+	JA @label315
+	LDA [005Ch]
+	CMP
+	JA @label315
+	JMP @label314
+@label315:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [0059h]
+	AND
+	JZ @label316
+; z := z + a;
+; $SYS3 = $SYS3 ADD $SYS10
+	LDA [005Dh]
+	LDBL
+	LDA [0018h]
+	STC 0
+	ADD
+	STA [0018h]
+	LDA [005Eh]
+	LDBL
+	LDA [0019h]
+	ADD
+	STA [0019h]
+	LDA [005Fh]
+	LDBL
+	LDA [001Ah]
+	ADD
+	STA [001Ah]
+	LDA [0060h]
+	LDBL
+	LDA [001Bh]
+	ADD
+	STA [001Bh]
+@label316:
+; a := 2 * a;
+	STC 0
+	LDA [005Dh]
+	SHL
+	STA [005Dh]
+	LDA [005Eh]
+	SHL
+	STA [005Eh]
+	LDA [005Fh]
+	SHL
+	STA [005Fh]
+	LDA [0060h]
+	SHL
+	STA [0060h]
+; b := b / 2;
+	STC 0
+	LDA [005Ch]
+	SHR
+	STA [005Ch]
+	LDA [005Bh]
+	SHR
+	STA [005Bh]
+	LDA [005Ah]
+	SHR
+	STA [005Ah]
+	LDA [0059h]
+	SHR
+	STA [0059h]
+	JMP @label313
+@label314:
+; free [001Ch]
+; $SYS4 = numWord SUB $SYS3
+	LDA [0018h]
+	LDBL
+	LDA [0046h]
+	STC 0
+	SUB
+	STA [001Ch]
+	LDA [0019h]
+	LDBL
+	LDA [0047h]
+	SUB
+	STA [001Dh]
+	LDA [001Ah]
+	LDBL
+	LDA [0048h]
+	SUB
+	STA [001Eh]
+	LDA [001Bh]
+	LDBL
+	LDA [0049h]
+	SUB
+	STA [001Fh]
+; free [0018h]
+	LDA [001Ch]
+	STA [0046h]
+	LDA [001Dh]
+	STA [0047h]
+	LDA [001Eh]
+	STA [0048h]
+	LDA [001Fh]
+	STA [0049h]
+; free [001Ch]
+	LDA 0Ah
+	STA [001Ch]
+	LDA 0
+	STA [001Dh]
+	STA [001Eh]
+	STA [001Fh]
+; $SYS3 = numWord / $SYS4
+	LDA [0046h]
+	STA [0059h]
+	LDA [0047h]
+	STA [005Ah]
+	LDA [0048h]
+	STA [005Bh]
+	LDA [0049h]
+	STA [005Ch]
+	LDA [001Ch]
+	STA [005Dh]
+	LDA [001Dh]
+	STA [005Eh]
+	LDA [001Eh]
+	STA [005Fh]
+	LDA [001Fh]
+	STA [0060h]
+	LDA 0
+	STA [0018h]
+	STA [0019h]
+	STA [001Ah]
+	STA [001Bh]
+; WHILE w <= r DO w := 2 * w;
+@label317:
+	STC 0
+	LDA [005Ch]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label320
+	JB @label319
+	LDA [005Bh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label320
+	JB @label319
+	LDA [005Ah]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label320
+	JB @label319
+	LDA [0059h]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label320
+@label319:
+	LDA 08h
+	LDBL
+	LDA [0060h]
+	AND
+	JZ @label318
+	JMP @label321
+@label318:
+	STC 0
+	LDA [005Dh]
+	SHL
+	STA [005Dh]
+	LDA [005Eh]
+	SHL
+	STA [005Eh]
+	LDA [005Fh]
+	SHL
+	STA [005Fh]
+	LDA [0060h]
+	SHL
+	STA [0060h]
+	JMP @label317
+@label320:
+; WHILE w > y DO
+@label322:
+	STC 0
+	LDA [001Fh]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label323
+	JB @label324
+	LDA [001Eh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label323
+	JB @label324
+	LDA [001Dh]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label323
+	JB @label324
+	LDA [001Ch]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label323
+	JB @label324
+	JMP @label324
+@label323:
+; q := 2 * q;
+	STC 0
+	LDA [0018h]
+	SHL
+	STA [0018h]
+	LDA [0019h]
+	SHL
+	STA [0019h]
+	LDA [001Ah]
+	SHL
+	STA [001Ah]
+	LDA [001Bh]
+	SHL
+	STA [001Bh]
+; w := w / 2;
+	STC 0
+	LDA [0060h]
+	SHR
+	STA [0060h]
+	LDA [005Fh]
+	SHR
+	STA [005Fh]
+	LDA [005Eh]
+	SHR
+	STA [005Eh]
+	LDA [005Dh]
+	SHR
+	STA [005Dh]
+@label321:
+; IF w <= r THEN
+	STC 0
+	LDA [005Ch]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label322
+	JB @label325
+	LDA [005Bh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label322
+	JB @label325
+	LDA [005Ah]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label322
+	JB @label325
+	LDA [0059h]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label322
+@label325:
+; r := r - w
+; $SYS9 = $SYS9 SUB $SYS10
+	LDA [005Dh]
+	LDBL
+	LDA [0059h]
+	STC 0
+	SUB
+	STA [0059h]
+	LDA [005Eh]
+	LDBL
+	LDA [005Ah]
+	SUB
+	STA [005Ah]
+	LDA [005Fh]
+	LDBL
+	LDA [005Bh]
+	SUB
+	STA [005Bh]
+	LDA [0060h]
+	LDBL
+	LDA [005Ch]
+	SUB
+	STA [005Ch]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0018h]
+	ADD
+	STA [0018h]
+	LDA [0019h]
+	ADD
+	STA [0019h]
+	LDA [001Ah]
+	ADD
+	STA [001Ah]
+	LDA [001Bh]
+	ADD
+	STA [001Bh]
+	JMP @label322
+@label324:
+; free [001Ch]
+	LDA [0018h]
+	STA [0055h]
+	LDA [0019h]
+	STA [0056h]
+	LDA [001Ah]
+	STA [0057h]
+	LDA [001Bh]
+	STA [0058h]
+; free [0018h]
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0055h]
+	CMP
+	JA @label326
+	LDA [0056h]
+	CMP
+	JA @label326
+	LDA [0057h]
+	CMP
+	JA @label326
+	LDA [0058h]
+	CMP
+	JA @label326
+	JMP @label328
+@label326:
+	LDA 02h
+	STA [0022h]
+	LDA 00h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0018h]
+	LDA [000Fh]
+	STA [0019h]
+	LDA 0
+	STA [001Ah]
+	STA [001Bh]
+; free [000Eh]
+; $SYS4 = $SYS3 ADD a
+	LDA [0055h]
+	LDBL
+	LDA [0018h]
+	STC 0
+	ADD
+	STA [001Ch]
+	LDA [0056h]
+	LDBL
+	LDA [0019h]
+	ADD
+	STA [001Dh]
+	LDA [0057h]
+	LDBL
+	LDA [001Ah]
+	ADD
+	STA [001Eh]
+	LDA [0058h]
+	LDBL
+	LDA [001Bh]
+	ADD
+	STA [001Fh]
+; free [0018h]
+	LDA [0022h]
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [001Ch]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [001Dh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+; free [0022h]
+; free [001Ch]
+@label328:
+	LDA 03h
+	STA [0022h]
+	LDA 00h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [001Ch]
+	LDA [000Fh]
+	STA [001Dh]
+	LDA 0
+	STA [001Eh]
+	STA [001Fh]
+; free [000Eh]
+; $SYS3 = $SYS4 ADD numWord
+	LDA [0046h]
+	LDBL
+	LDA [001Ch]
+	STC 0
+	ADD
+	STA [0018h]
+	LDA [0047h]
+	LDBL
+	LDA [001Dh]
+	ADD
+	STA [0019h]
+	LDA [0048h]
+	LDBL
+	LDA [001Eh]
+	ADD
+	STA [001Ah]
+	LDA [0049h]
+	LDBL
+	LDA [001Fh]
+	ADD
+	STA [001Bh]
+; free [001Ch]
+	LDA 0Ah
+	STA [001Ch]
+	LDA 0
+	STA [001Dh]
+	STA [001Eh]
+	STA [001Fh]
+; $SYS10 = a * $SYS4
+; a := x
+	LDA [0055h]
+	STA [0059h]
+	LDA [0056h]
+	STA [005Ah]
+	LDA [0057h]
+	STA [005Bh]
+	LDA [0058h]
+	STA [005Ch]
+; b := y
+	LDA [001Ch]
+	STA [0061h]
+	LDA [001Dh]
+	STA [0062h]
+	LDA [001Eh]
+	STA [0063h]
+	LDA [001Fh]
+	STA [0064h]
+; z := 0
+	LDA 0
+	STA [005Dh]
+	STA [005Eh]
+	STA [005Fh]
+	STA [0060h]
+; WHILE b > 0 DO
+@label333:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [0061h]
+	CMP
+	JA @label335
+	LDA [0062h]
+	CMP
+	JA @label335
+	LDA [0063h]
+	CMP
+	JA @label335
+	LDA [0064h]
+	CMP
+	JA @label335
+	JMP @label334
+@label335:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [0061h]
+	AND
+	JZ @label336
+; z := z + a;
+; $SYS10 = $SYS10 ADD $SYS9
+	LDA [0059h]
+	LDBL
+	LDA [005Dh]
+	STC 0
+	ADD
+	STA [005Dh]
+	LDA [005Ah]
+	LDBL
+	LDA [005Eh]
+	ADD
+	STA [005Eh]
+	LDA [005Bh]
+	LDBL
+	LDA [005Fh]
+	ADD
+	STA [005Fh]
+	LDA [005Ch]
+	LDBL
+	LDA [0060h]
+	ADD
+	STA [0060h]
+@label336:
+; a := 2 * a;
+	STC 0
+	LDA [0059h]
+	SHL
+	STA [0059h]
+	LDA [005Ah]
+	SHL
+	STA [005Ah]
+	LDA [005Bh]
+	SHL
+	STA [005Bh]
+	LDA [005Ch]
+	SHL
+	STA [005Ch]
+; b := b / 2;
+	STC 0
+	LDA [0064h]
+	SHR
+	STA [0064h]
+	LDA [0063h]
+	SHR
+	STA [0063h]
+	LDA [0062h]
+	SHR
+	STA [0062h]
+	LDA [0061h]
+	SHR
+	STA [0061h]
+	JMP @label333
+@label334:
+; free [001Ch]
+; $SYS4 = $SYS3 SUB $SYS10
+	LDA [005Dh]
+	LDBL
+	LDA [0018h]
+	STC 0
+	SUB
+	STA [001Ch]
+	LDA [005Eh]
+	LDBL
+	LDA [0019h]
+	SUB
+	STA [001Dh]
+	LDA [005Fh]
+	LDBL
+	LDA [001Ah]
+	SUB
+	STA [001Eh]
+	LDA [0060h]
+	LDBL
+	LDA [001Bh]
+	SUB
+	STA [001Fh]
+; free [0018h]
+; free [005Dh]
+	LDA [0022h]
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [001Ch]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [001Dh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+; free [0022h]
+; free [001Ch]
+	STC 0
+	LDA 1
+	LDBL
+	LDA [0054h]
+	SUB
+	JB @label766
+	JMP @label1059
+; endproc WordToStr
+@proc_Delay10ms:
+	LDA 06h
+	STA [000Eh]
+	LDA 0Eh
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0066h]
+	LDA [000Fh]
+	STA [0067h]
+	LDA 0
+	STA [0068h]
+	STA [0069h]
+; free [000Eh]
+@label337:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0066h]
+	CMP
+	JA @label338
+	LDA [0067h]
+	CMP
+	JA @label338
+	LDA [0068h]
+	CMP
+	JA @label338
+	LDA [0069h]
+	CMP
+	JA @label338
+	JMP @label339
+@label338:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0066h]
+	SUB
+	STA [0066h]
+	LDA [0067h]
+	SUB
+	STA [0067h]
+	LDA [0068h]
+	SUB
+	STA [0068h]
+	LDA [0069h]
+	SUB
+	STA [0069h]
+	JMP @label337
+@label339:
+	NOP
+; endproc Delay10ms
+@proc_Delay50us:
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	STC 0
+	LDA 1
+	LDBL
+	LDA [006Ah]
+	SUB
+	JB @label344
+	JMP @label345
+; endproc Delay50us
+@proc_ReadScancode:
+	LDA 00h
+	OUT 04h
+	
+;
+	LDA 01h
+	LDBL
+	STC 0
+	LDA 0Ch
+@SC_wait1:
+	SUB
+	JZ @SC_exitwait1
+	JMP @SC_wait1
+@SC_exitwait1:
+	
+;
+	LDA 0
+	STA [006Bh]
+	STA [006Ch]
+	
+;
+	LDA 0
+	STA [0072h]
+	STA [0073h]
+	STA [0074h]
+@SC_loop1:
+	LDA 02h
+	LDBL
+	IN 4
+	AND
+	JZ @SC_loop1exit
+	
+	LDA 0
+	LDBL
+	STC 1
+	LDA [0072h]
+	ADD
+	STA [0072h]
+	LDA [0073h]
+	ADD
+	STA [0073h]
+	LDA [0074h]
+	ADD
+	STA [0074h]
+	
+	LDBL
+	LDA 02h
+	CMP
+	JZ @SC_exit
+	
+	JMP @SC_loop1
+@SC_loop1exit:
+	
+	LDA 02h
+	LDBL
+@SC_loop2:
+	IN 4
+	AND
+	JZ @SC_loop2
+	
+;
+	LDA 0
+	STA [0071h]
+@SC_loop3:
+	
+;
+	LDA 02h
+	LDBL
+@SC_loop4:
+	IN 4
+	AND
+	JZ @SC_loop4exit
+	JMP @SC_loop4
+@SC_loop4exit:
+	
+;
+	LDA 1
+	LDBL
+	IN 4
+	AND
+	JZ @SC_zero
+	STC 1
+	JMP @SC_continue
+@SC_zero:
+	STC 0
+@SC_continue:
+	
+	LDA [006Ch]
+	SHR
+	STA [006Ch]
+	LDA [006Bh]
+	SHR
+	STA [006Bh]
+	
+	STC 0
+	LDA [0071h]
+	ADD
+	STA [0071h]
+	
+;
+	LDA 02h
+	LDBL
+@SC_loop5:
+	IN 4
+	AND
+	JZ @SC_loop5
+	
+;
+	LDA 08h
+	LDBL
+	LDA [0071h]
+	CMP
+	JZ @SC_loop3exit
+	JMP @SC_loop3
+@SC_loop3exit:
+	
+;
+	LDA 02h
+	LDBL
+@SC_loop6:
+	IN 4
+	AND
+	JZ @SC_loop7
+	JMP @SC_loop6
+@SC_loop7:
+	IN 4
+	AND
+	JZ @SC_loop7
+	
+;
+@SC_loop8:
+	IN 4
+	AND
+	JZ @SC_loop9
+	JMP @SC_loop8
+@SC_loop9:
+	IN 4
+	AND
+	JZ @SC_loop9
+	
+@SC_exit:
+	LDA 00h
+	STA [006Ah]
+	JMP @proc_Delay50us
+@label344:
+	LDA 02h
+	OUT 04h
+	LDA 01h
+	STA [006Ah]
+	JMP @proc_Delay50us
+@label345:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [006Fh]
+	SUB
+	JB @label346
+	JZ @label730
+	JMP @label1522
+; endproc ReadScancode
+@proc_ReadKey:
+	LDA 00h
+	STA [006Fh]
+	JMP @proc_ReadScancode
+@label346:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [006Bh]
+	CMP
+	JA @label347
+	LDA [006Ch]
+	CMP
+	JA @label347
+	JMP @label349
+@label347:
+	LDA 0Ch
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label361
+	JMP @label355
+@label361:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label362
+	JMP @label355
+@label362:
+; free [000Eh]
+@label354:
+	LDA 01h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label356
+@label355:
+	LDA 02h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label370
+	JMP @label364
+@label370:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label371
+	JMP @label364
+@label371:
+; free [000Eh]
+@label363:
+	LDA 02h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label365
+@label364:
+	LDA 01h
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label379
+	JMP @label373
+@label379:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label380
+	JMP @label373
+@label380:
+; free [000Eh]
+@label372:
+	LDA 03h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label374
+@label373:
+	LDA 03h
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label388
+	JMP @label382
+@label388:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label389
+	JMP @label382
+@label389:
+; free [000Eh]
+@label381:
+	LDA 04h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label383
+@label382:
+	LDA 04h
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label397
+	JMP @label391
+@label397:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label398
+	JMP @label391
+@label398:
+; free [000Eh]
+@label390:
+	LDA 05h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label392
+@label391:
+	LDA 0Bh
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label406
+	JMP @label400
+@label406:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label407
+	JMP @label400
+@label407:
+; free [000Eh]
+@label399:
+	LDA 06h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label401
+@label400:
+	LDA 04h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label415
+	JMP @label409
+@label415:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label416
+	JMP @label409
+@label416:
+; free [000Eh]
+@label408:
+	LDA 07h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label410
+@label409:
+	LDA 03h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label424
+	JMP @label418
+@label424:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label425
+	JMP @label418
+@label425:
+; free [000Eh]
+@label417:
+	LDA 08h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label419
+@label418:
+	LDA 03h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label433
+	JMP @label427
+@label433:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label434
+	JMP @label427
+@label434:
+; free [000Eh]
+@label426:
+	LDA 09h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label428
+@label427:
+	LDA 0Bh
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label442
+	JMP @label436
+@label442:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label443
+	JMP @label436
+@label443:
+; free [000Eh]
+@label435:
+	LDA 0Ah
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label437
+@label436:
+	LDA 02h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label451
+	JMP @label445
+@label451:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label452
+	JMP @label445
+@label452:
+; free [000Eh]
+@label444:
+	LDA 0Bh
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label446
+@label445:
+	LDA 0Bh
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label460
+	JMP @label454
+@label460:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label461
+	JMP @label454
+@label461:
+; free [000Eh]
+@label453:
+	LDA 0Ch
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label455
+@label454:
+	LDA 0Ah
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label469
+	JMP @label463
+@label469:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label470
+	JMP @label463
+@label470:
+; free [000Eh]
+@label462:
+	LDA 0Dh
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label464
+@label463:
+	LDA 01h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label478
+	JMP @label472
+@label478:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label479
+	JMP @label472
+@label479:
+; free [000Eh]
+@label471:
+	LDA 0Eh
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label473
+@label472:
+	LDA 04h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label487
+	JMP @label481
+@label487:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label488
+	JMP @label481
+@label488:
+; free [000Eh]
+@label480:
+	LDA 0Fh
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label482
+@label481:
+	LDA 0Dh
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label496
+	JMP @label490
+@label496:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label497
+	JMP @label490
+@label497:
+; free [000Eh]
+@label489:
+	LDA 00h
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label491
+@label490:
+	LDA 05h
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label505
+	JMP @label499
+@label505:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label506
+	JMP @label499
+@label506:
+; free [000Eh]
+@label498:
+	LDA 01h
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label500
+@label499:
+	LDA 0Dh
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label514
+	JMP @label508
+@label514:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label515
+	JMP @label508
+@label515:
+; free [000Eh]
+@label507:
+	LDA 02h
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label509
+@label508:
+	LDA 0Bh
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label523
+	JMP @label517
+@label523:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label524
+	JMP @label517
+@label524:
+; free [000Eh]
+@label516:
+	LDA 03h
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label518
+@label517:
+	LDA 0Ch
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label532
+	JMP @label526
+@label532:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label533
+	JMP @label526
+@label533:
+; free [000Eh]
+@label525:
+	LDA 04h
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label527
+@label526:
+	LDA 0Ch
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label541
+	JMP @label535
+@label541:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label542
+	JMP @label535
+@label542:
+; free [000Eh]
+@label534:
+	LDA 05h
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label536
+@label535:
+	LDA 0Ah
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label550
+	JMP @label544
+@label550:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label551
+	JMP @label544
+@label551:
+; free [000Eh]
+@label543:
+	LDA 06h
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label545
+@label544:
+	LDA 0Dh
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label559
+	JMP @label553
+@label559:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label560
+	JMP @label553
+@label560:
+; free [000Eh]
+@label552:
+	LDA 07h
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label554
+@label553:
+	LDA 02h
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label568
+	JMP @label562
+@label568:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label569
+	JMP @label562
+@label569:
+; free [000Eh]
+@label561:
+	LDA 08h
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label563
+@label562:
+	LDA 0Ah
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label577
+	JMP @label571
+@label577:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label578
+	JMP @label571
+@label578:
+; free [000Eh]
+@label570:
+	LDA 09h
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label572
+@label571:
+	LDA 05h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label586
+	JMP @label580
+@label586:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label587
+	JMP @label580
+@label587:
+; free [000Eh]
+@label579:
+	LDA 0Ah
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label581
+@label580:
+	LDA 05h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label595
+	JMP @label589
+@label595:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label596
+	JMP @label589
+@label596:
+; free [000Eh]
+@label588:
+	LDA 00h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label590
+@label589:
+	LDA 06h
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label604
+	JMP @label598
+@label604:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label605
+	JMP @label598
+@label605:
+; free [000Eh]
+@label597:
+	LDA 01h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label599
+@label598:
+	LDA 0Eh
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label613
+	JMP @label607
+@label613:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label614
+	JMP @label607
+@label614:
+; free [000Eh]
+@label606:
+	LDA 02h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label608
+@label607:
+	LDA 06h
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label622
+	JMP @label616
+@label622:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label623
+	JMP @label616
+@label623:
+; free [000Eh]
+@label615:
+	LDA 03h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label617
+@label616:
+	LDA 05h
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label631
+	JMP @label625
+@label631:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label632
+	JMP @label625
+@label632:
+; free [000Eh]
+@label624:
+	LDA 04h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label626
+@label625:
+	LDA 0Eh
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label640
+	JMP @label634
+@label640:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label641
+	JMP @label634
+@label641:
+; free [000Eh]
+@label633:
+	LDA 05h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label635
+@label634:
+	LDA 06h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label649
+	JMP @label643
+@label649:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label650
+	JMP @label643
+@label650:
+; free [000Eh]
+@label642:
+	LDA 06h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label644
+@label643:
+	LDA 0Dh
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label658
+	JMP @label652
+@label658:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label659
+	JMP @label652
+@label659:
+; free [000Eh]
+@label651:
+	LDA 07h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label653
+@label652:
+	LDA 0Eh
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label667
+	JMP @label661
+@label667:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label668
+	JMP @label661
+@label668:
+; free [000Eh]
+@label660:
+	LDA 08h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label662
+@label661:
+	LDA 06h
+	STA [000Eh]
+	LDA 04h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label676
+	JMP @label670
+@label676:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label677
+	JMP @label670
+@label677:
+; free [000Eh]
+@label669:
+	LDA 09h
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label671
+@label670:
+	LDA 09h
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label685
+	JMP @label679
+@label685:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label686
+	JMP @label679
+@label686:
+; free [000Eh]
+@label678:
+	LDA 00h
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label680
+@label679:
+	LDA 0Dh
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label694
+	JMP @label688
+@label694:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label695
+	JMP @label688
+@label695:
+; free [000Eh]
+@label687:
+	LDA 09h
+	STA [006Dh]
+	LDA 0
+	STA [006Eh]
+	JMP @label689
+@label688:
+	LDA 0Ah
+	STA [000Eh]
+	LDA 05h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label703
+	JMP @label697
+@label703:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label704
+	JMP @label697
+@label704:
+; free [000Eh]
+@label696:
+	LDA 0Ah
+	STA [006Dh]
+	LDA 0
+	STA [006Eh]
+	JMP @label698
+@label697:
+	LDA 06h
+	STA [000Eh]
+	LDA 06h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label712
+	JMP @label706
+@label712:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label713
+	JMP @label706
+@label713:
+; free [000Eh]
+@label705:
+	LDA 08h
+	STA [006Dh]
+	LDA 0
+	STA [006Eh]
+	JMP @label707
+@label706:
+	LDA 06h
+	STA [000Eh]
+	LDA 07h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Ch]
+	CMP
+	JE @label721
+	JMP @label715
+@label721:
+	LDA [000Eh]
+	LDBL
+	LDA [006Bh]
+	CMP
+	JE @label722
+	JMP @label715
+@label722:
+; free [000Eh]
+@label714:
+	LDA 0Bh
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [006Dh]
+	LDA [000Fh]
+	STA [006Eh]
+; free [000Eh]
+	JMP @label716
+@label715:
+	LDA 00h
+	STA [006Dh]
+	LDA 0
+	STA [006Eh]
+@label716:
+@label707:
+@label698:
+@label689:
+@label680:
+@label671:
+@label662:
+@label653:
+@label644:
+@label635:
+@label626:
+@label617:
+@label608:
+@label599:
+@label590:
+@label581:
+@label572:
+@label563:
+@label554:
+@label545:
+@label536:
+@label527:
+@label518:
+@label509:
+@label500:
+@label491:
+@label482:
+@label473:
+@label464:
+@label455:
+@label446:
+@label437:
+@label428:
+@label419:
+@label410:
+@label401:
+@label392:
+@label383:
+@label374:
+@label365:
+@label356:
+@label723:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [006Bh]
+	CMP
+	JA @label724
+	LDA [006Ch]
+	CMP
+	JA @label724
+	JMP @label725
+@label724:
+	LDA 01h
+	STA [006Fh]
+	JMP @proc_ReadScancode
+@label730:
+	JMP @label723
+@label725:
+@label349:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [0076h]
+	SUB
+	JB @label740
+	JMP @label1407
+; endproc ReadKey
+@proc_WaitForKey:
+	LDA 00h
+	STA [006Dh]
+	LDA 0
+	STA [006Eh]
+@label731:
+	LDA 00h
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [006Eh]
+	CMP
+	JE @label738
+	JMP @label733
+@label738:
+	LDA [000Eh]
+	LDBL
+	LDA [006Dh]
+	CMP
+	JE @label739
+	JMP @label733
+@label739:
+; free [000Eh]
+@label732:
+	LDA 00h
+	STA [0076h]
+	JMP @proc_ReadKey
+@label740:
+	JMP @label731
+@label733:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [0077h]
+	SUB
+	JB @label1292
+	JMP @label1545
+; endproc WaitForKey
+@proc_CheckSpeed:
+	LDA 00h
+	STA [007Ah]
+	LDA 0
+	STA [007Bh]
+	STA [007Ch]
+	STA [007Dh]
+	IN 05h
+	STA [0079h]
+@label741:
+	LDA 08h
+; $SYS1 = p5 AND $SYS5
+	LDBL
+	LDA [0079h]
+	AND
+	STA [0010h]
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0010h]
+	CMP
+	JA @label742
+	JMP @label743
+@label742:
+	IN 05h
+	STA [0079h]
+	JMP @label741
+@label743:
+	IN 05h
+	STA [0079h]
+@label748:
+	LDA 08h
+; $SYS12 = p5 AND $SYS5
+	LDBL
+	LDA [0079h]
+	AND
+	STA [007Eh]
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [007Eh]
+	CMP
+	JE @label755
+	JMP @label750
+@label755:
+; free [007Eh]
+@label749:
+	IN 05h
+	STA [0079h]
+	JMP @label748
+@label750:
+@loop:
+	LDA 0
+	LDBL
+	STC 1
+	LDA [007Ah]
+	ADD
+	STA [007Ah]
+	LDA [007Bh]
+	ADD
+	STA [007Bh]
+	LDA [007Ch]
+	ADD
+	STA [007Ch]
+	LDA [007Dh]
+	ADD
+	STA [007Dh]
+	
+	LDA 08h
+	LDBL
+	IN 5
+	AND
+	JZ @endloop
+	NOP
+	NOP
+	NOP
+	NOP
+	JMP @loop
+@endloop:
+	LDA 00h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	BNK 0
+	LDA 01h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 00h
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label756:
+	LDA 04h
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [001Ch]
+	LDA [000Fh]
+	STA [001Dh]
+	LDA 0
+	STA [001Eh]
+	STA [001Fh]
+; free [000Eh]
+; $SYS10 = kips / $SYS4
+	LDA [007Ah]
+	STA [0018h]
+	LDA [007Bh]
+	STA [0019h]
+	LDA [007Ch]
+	STA [001Ah]
+	LDA [007Dh]
+	STA [001Bh]
+	LDA [001Ch]
+	STA [0061h]
+	LDA [001Dh]
+	STA [0062h]
+	LDA [001Eh]
+	STA [0063h]
+	LDA [001Fh]
+	STA [0064h]
+	LDA 0
+	STA [005Dh]
+	STA [005Eh]
+	STA [005Fh]
+	STA [0060h]
+; WHILE w <= r DO w := 2 * w;
+@label757:
+	STC 0
+	LDA [001Bh]
+	LDBL
+	LDA [0064h]
+	CMP
+	JA @label760
+	JB @label759
+	LDA [001Ah]
+	LDBL
+	LDA [0063h]
+	CMP
+	JA @label760
+	JB @label759
+	LDA [0019h]
+	LDBL
+	LDA [0062h]
+	CMP
+	JA @label760
+	JB @label759
+	LDA [0018h]
+	LDBL
+	LDA [0061h]
+	CMP
+	JA @label760
+@label759:
+	LDA 08h
+	LDBL
+	LDA [0064h]
+	AND
+	JZ @label758
+	JMP @label761
+@label758:
+	STC 0
+	LDA [0061h]
+	SHL
+	STA [0061h]
+	LDA [0062h]
+	SHL
+	STA [0062h]
+	LDA [0063h]
+	SHL
+	STA [0063h]
+	LDA [0064h]
+	SHL
+	STA [0064h]
+	JMP @label757
+@label760:
+; WHILE w > y DO
+@label762:
+	STC 0
+	LDA [001Fh]
+	LDBL
+	LDA [0064h]
+	CMP
+	JA @label763
+	JB @label764
+	LDA [001Eh]
+	LDBL
+	LDA [0063h]
+	CMP
+	JA @label763
+	JB @label764
+	LDA [001Dh]
+	LDBL
+	LDA [0062h]
+	CMP
+	JA @label763
+	JB @label764
+	LDA [001Ch]
+	LDBL
+	LDA [0061h]
+	CMP
+	JA @label763
+	JB @label764
+	JMP @label764
+@label763:
+; q := 2 * q;
+	STC 0
+	LDA [005Dh]
+	SHL
+	STA [005Dh]
+	LDA [005Eh]
+	SHL
+	STA [005Eh]
+	LDA [005Fh]
+	SHL
+	STA [005Fh]
+	LDA [0060h]
+	SHL
+	STA [0060h]
+; w := w / 2;
+	STC 0
+	LDA [0064h]
+	SHR
+	STA [0064h]
+	LDA [0063h]
+	SHR
+	STA [0063h]
+	LDA [0062h]
+	SHR
+	STA [0062h]
+	LDA [0061h]
+	SHR
+	STA [0061h]
+@label761:
+; IF w <= r THEN
+	STC 0
+	LDA [001Bh]
+	LDBL
+	LDA [0064h]
+	CMP
+	JA @label762
+	JB @label765
+	LDA [001Ah]
+	LDBL
+	LDA [0063h]
+	CMP
+	JA @label762
+	JB @label765
+	LDA [0019h]
+	LDBL
+	LDA [0062h]
+	CMP
+	JA @label762
+	JB @label765
+	LDA [0018h]
+	LDBL
+	LDA [0061h]
+	CMP
+	JA @label762
+@label765:
+; r := r - w
+; $SYS3 = $SYS3 SUB $SYS11
+	LDA [0061h]
+	LDBL
+	LDA [0018h]
+	STC 0
+	SUB
+	STA [0018h]
+	LDA [0062h]
+	LDBL
+	LDA [0019h]
+	SUB
+	STA [0019h]
+	LDA [0063h]
+	LDBL
+	LDA [001Ah]
+	SUB
+	STA [001Ah]
+	LDA [0064h]
+	LDBL
+	LDA [001Bh]
+	SUB
+	STA [001Bh]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [005Dh]
+	ADD
+	STA [005Dh]
+	LDA [005Eh]
+	ADD
+	STA [005Eh]
+	LDA [005Fh]
+	ADD
+	STA [005Fh]
+	LDA [0060h]
+	ADD
+	STA [0060h]
+	JMP @label762
+@label764:
+; free [001Ch]
+	LDA [005Dh]
+	STA [007Ah]
+	LDA [005Eh]
+	STA [007Bh]
+	LDA [005Fh]
+	STA [007Ch]
+	LDA [0060h]
+	STA [007Dh]
+; free [005Dh]
+	LDA [007Ah]
+	STA [0046h]
+	LDA [007Bh]
+	STA [0047h]
+	LDA [007Ch]
+	STA [0048h]
+	LDA [007Dh]
+	STA [0049h]
+	LDA 00h
+	STA [0054h]
+	JMP @proc_WordToStr
+@label766:
+	LDA 00h
+	STA [0022h]
+	LDA 0Eh
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	LDA [0022h]
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [000Eh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [000Fh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+; free [0022h]
+; free [000Eh]
+	LDA 04h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 02h
+	STA [002Bh]
+	JMP @proc_PrintString
+@label767:
+	LDA 05h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 0Dh
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	BNK 0
+	LDA 03h
+	STA [002Bh]
+	JMP @proc_PrintString
+@label768:
+	JMP @label806
+; endproc CheckSpeed
+@proc_CheckMemory:
+	LDA 08h
+	STA [0080h]
+	LDA 0
+	STA [0081h]
+	BNK 4
+	LDA 05h
+	LDBL
+	STA [0]
+	LDA 0Ah
+	LDA [0]
+	CMP
+	BNK 0
+	JA @CM_error
+	JB @CM_error
+	LDA 00h
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0080h]
+	LDA [000Fh]
+	STA [0081h]
+; free [000Eh]
+	BNK 8
+	LDA 05h
+	LDBL
+	STA [0]
+	LDA 0Ah
+	LDA [0]
+	CMP
+	BNK 0
+	JA @CM_error
+	JB @CM_error
+	LDA 08h
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0080h]
+	LDA [000Fh]
+	STA [0081h]
+; free [000Eh]
+	BNK 12
+	LDA 05h
+	LDBL
+	STA [0]
+	LDA 0Ah
+	LDA [0]
+	CMP
+	BNK 0
+	JA @CM_error
+	JB @CM_error
+	LDA 00h
+	STA [000Eh]
+	LDA 02h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0080h]
+	LDA [000Fh]
+	STA [0081h]
+; free [000Eh]
+@CM_error:
+	LDA [0080h]
+	STA [0044h]
+	LDA [0081h]
+	STA [0045h]
+	LDA 00h
+	STA [004Ah]
+	JMP @proc_ByteToStr
+@label769:
+	LDA 00h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 02h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 01h
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label770:
+	LDA 03h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 0Bh
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 0Dh
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	BNK 0
+	LDA 06h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 02h
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label771:
+	JMP @label805
+; endproc CheckMemory
+@proc_CheckTimer:
+	LDA 00h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 03h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 08h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 0Bh
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 0Eh
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 0Dh
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 0Eh
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 0Eh
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 02h
+	LDBH
+	LDA 0Eh
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	LDA 01h
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0004h]
+	LDA [000Fh]
+	STA [0005h]
+; free [000Eh]
+	LDA 03h
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label772:
+	LDA 00h
+	STA [005Dh]
+	LDA 05h
+	STA [005Eh]
+	LDA 03h
+	STA [005Fh]
+	LDA 0Ch
+	STA [0060h]
+	LDA [005Dh]
+	STA [0083h]
+	LDA [005Eh]
+	STA [0084h]
+	LDA [005Fh]
+	STA [0085h]
+	LDA [0060h]
+	STA [0086h]
+; free [005Dh]
+	IN 05h
+	STA [0087h]
+@label773:
+	LDA 08h
+; $SYS12 = p5 AND $SYS5
+	LDBL
+	LDA [0087h]
+	AND
+	STA [007Eh]
+	STC 0
+	LDA 0
+	LDBL
+	LDA [007Eh]
+	CMP
+	JA @label780
+	JMP @label779
+@label780:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0083h]
+	CMP
+	JA @label778
+	LDA [0084h]
+	CMP
+	JA @label778
+	LDA [0085h]
+	CMP
+	JA @label778
+	LDA [0086h]
+	CMP
+	JA @label778
+	JMP @label779
+@label778:
+	JMP @label774
+@label779:
+	JMP @label775
+@label774:
+	IN 05h
+	STA [0087h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0083h]
+	SUB
+	STA [0083h]
+	LDA [0084h]
+	SUB
+	STA [0084h]
+	LDA [0085h]
+	SUB
+	STA [0085h]
+	LDA [0086h]
+	SUB
+	STA [0086h]
+	JMP @label773
+@label775:
+@label783:
+	LDA 08h
+; $SYS13 = p5 AND $SYS5
+	LDBL
+	LDA [0087h]
+	AND
+	STA [0088h]
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [0088h]
+	CMP
+	JE @label790
+	JMP @label789
+@label790:
+; free [0088h]
+@label791:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0083h]
+	CMP
+	JA @label788
+	LDA [0084h]
+	CMP
+	JA @label788
+	LDA [0085h]
+	CMP
+	JA @label788
+	LDA [0086h]
+	CMP
+	JA @label788
+	JMP @label789
+@label788:
+	JMP @label784
+@label789:
+	JMP @label785
+@label784:
+	IN 05h
+	STA [0087h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0083h]
+	SUB
+	STA [0083h]
+	LDA [0084h]
+	SUB
+	STA [0084h]
+	LDA [0085h]
+	SUB
+	STA [0085h]
+	LDA [0086h]
+	SUB
+	STA [0086h]
+	JMP @label783
+@label785:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0083h]
+	CMP
+	JA @label794
+	LDA [0084h]
+	CMP
+	JA @label794
+	LDA [0085h]
+	CMP
+	JA @label794
+	LDA [0086h]
+	CMP
+	JA @label794
+	JMP @label795
+@label794:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 04h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 0Dh
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 0Fh
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 0Bh
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 02h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	JMP @label796
+@label795:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 04h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 0Dh
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 02h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 0Fh
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 02h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+@label796:
+	LDA 00h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 04h
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label801:
+	JMP @label804
+; endproc CheckTimer
+@proc_ShowBootScreen:
+	JMP @proc_FadeIn
+@label802:
+	LDA 00h
+	STA [0006h]
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 04h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 05h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 0Dh
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 02h
+	LDBH
+	LDA 05h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	JMP @proc_ScrollLineIntoView
+@label803:
+	LDA 01h
+	STA [0006h]
+	JMP @proc_CheckTimer
+@label804:
+	LDA 02h
+	STA [0006h]
+	JMP @proc_CheckMemory
+@label805:
+	LDA 03h
+	STA [0006h]
+	JMP @proc_CheckSpeed
+@label806:
+	LDA 00h
+	STA [005Dh]
+	LDA 01h
+	STA [005Eh]
+	LDA 07h
+	STA [005Fh]
+	LDA 02h
+	STA [0060h]
+	LDA [005Dh]
+	STA [008Ah]
+	LDA [005Eh]
+	STA [008Bh]
+	LDA [005Fh]
+	STA [008Ch]
+	LDA [0060h]
+	STA [008Dh]
+; free [005Dh]
+@label807:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [008Ah]
+	CMP
+	JA @label808
+	LDA [008Bh]
+	CMP
+	JA @label808
+	LDA [008Ch]
+	CMP
+	JA @label808
+	LDA [008Dh]
+	CMP
+	JA @label808
+	JMP @label809
+@label808:
+	LDA 0Ah
+	STA [008Eh]
+@label814:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [008Eh]
+	CMP
+	JA @label815
+	JMP @label816
+@label815:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [008Eh]
+	SUB
+	STA [008Eh]
+	JMP @label814
+@label816:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [008Ah]
+	SUB
+	STA [008Ah]
+	LDA [008Bh]
+	SUB
+	STA [008Bh]
+	LDA [008Ch]
+	SUB
+	STA [008Ch]
+	LDA [008Dh]
+	SUB
+	STA [008Dh]
+	JMP @label807
+@label809:
+	LDA 00h
+	STA [0024h]
+	JMP @proc_ClearScreen
+@label821:
+	JMP @label1567
+; endproc ShowBootScreen
+@proc_AdvanceTime:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [008Fh]
+	ADD
+	STA [008Fh]
+	LDA [0090h]
+	ADD
+	STA [0090h]
+	LDA 0Ch
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [0090h]
+	CMP
+	JE @label829
+	JMP @label824
+@label829:
+	LDA [000Eh]
+	LDBL
+	LDA [008Fh]
+	CMP
+	JE @label830
+	JMP @label824
+@label830:
+; free [000Eh]
+@label822:
+	LDA 00h
+	STA [008Fh]
+	LDA 0
+	STA [0090h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0091h]
+	ADD
+	STA [0091h]
+	LDA [0092h]
+	ADD
+	STA [0092h]
+@label824:
+	LDA 0Ch
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [0092h]
+	CMP
+	JE @label838
+	JMP @label833
+@label838:
+	LDA [000Eh]
+	LDBL
+	LDA [0091h]
+	CMP
+	JE @label839
+	JMP @label833
+@label839:
+; free [000Eh]
+@label831:
+	LDA 00h
+	STA [0091h]
+	LDA 0
+	STA [0092h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0093h]
+	ADD
+	STA [0093h]
+	LDA [0094h]
+	ADD
+	STA [0094h]
+@label833:
+	LDA 08h
+	STA [000Eh]
+	LDA 01h
+	STA [000Fh]
+	STC 0
+	LDBL
+	LDA [0094h]
+	CMP
+	JE @label847
+	JMP @label842
+@label847:
+	LDA [000Eh]
+	LDBL
+	LDA [0093h]
+	CMP
+	JE @label848
+	JMP @label842
+@label848:
+; free [000Eh]
+@label840:
+	LDA 00h
+	STA [0093h]
+	LDA 0
+	STA [0094h]
+	LDA 01h
+	STA [0095h]
+@label842:
+	JMP @label1395
+; endproc AdvanceTime
+@proc_DisplayTime:
+	LDA 06h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 01h
+	STA [0006h]
+	LDA 04h
+	STA [0026h]
+	JMP @proc_SetPos
+@label849:
+	LDA [0093h]
+	STA [0044h]
+	LDA [0094h]
+	STA [0045h]
+	LDA 01h
+	STA [004Ah]
+	JMP @proc_ByteToStr
+@label850:
+	LDA 02h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 04h
+	STA [002Bh]
+	JMP @proc_PrintString
+@label851:
+	LDA 00h
+	STA [0022h]
+	LDA 0Ah
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [0022h]
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [000Eh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [000Fh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+; free [0022h]
+; free [000Eh]
+	LDA 01h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 05h
+	STA [002Bh]
+	JMP @proc_PrintString
+@label852:
+	LDA [0091h]
+	STA [0044h]
+	LDA [0092h]
+	STA [0045h]
+	LDA 02h
+	STA [004Ah]
+	JMP @proc_ByteToStr
+@label853:
+	LDA 02h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 06h
+	STA [002Bh]
+	JMP @proc_PrintString
+@label854:
+	LDA 00h
+	STA [0022h]
+	LDA 0Ah
+	STA [000Eh]
+	LDA 03h
+	STA [000Fh]
+	LDA [0022h]
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [000Eh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [000Fh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+; free [0022h]
+; free [000Eh]
+	LDA 01h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 07h
+	STA [002Bh]
+	JMP @proc_PrintString
+@label855:
+	LDA [008Fh]
+	STA [0044h]
+	LDA [0090h]
+	STA [0045h]
+	LDA 03h
+	STA [004Ah]
+	JMP @proc_ByteToStr
+@label856:
+	LDA 02h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 08h
+	STA [002Bh]
+	JMP @proc_PrintString
+@label857:
+	JMP @label1294
+; endproc DisplayTime
+@proc_DisplayLargeTimePoints:
+	LDA 0Fh
+	STA [000Eh]
+	LDA 06h
+	STA [000Fh]
+	LDA [000Eh]
+	STA [0000h]
+	LDA [000Fh]
+	STA [0001h]
+; free [000Eh]
+	LDA 00h
+	STA [0006h]
+	LDA 00h
+	STA [002Fh]
+	JMP @proc_PrintCharPos
+@label858:
+	LDA 01h
+	STA [0006h]
+	LDA 01h
+	STA [002Fh]
+	JMP @proc_PrintCharPos
+@label859:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [00A3h]
+	SUB
+	JB @label875
+	JMP @label891
+; endproc DisplayLargeTimePoints
+@proc_DisplayLargeTime:
+	LDA 0Ah
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+; $SYS7 = hour / $SYS0
+	LDA [0093h]
+	STA [0027h]
+	LDA [0094h]
+	STA [0028h]
+	LDA [000Eh]
+	STA [004Fh]
+	LDA [000Fh]
+	STA [0050h]
+	LDA 0
+	STA [004Dh]
+	STA [004Eh]
+; WHILE w <= r DO w := 2 * w;
+@label860:
+	STC 0
+	LDA [0028h]
+	LDBL
+	LDA [0050h]
+	CMP
+	JA @label863
+	JB @label862
+	LDA [0027h]
+	LDBL
+	LDA [004Fh]
+	CMP
+	JA @label863
+@label862:
+	LDA 08h
+	LDBL
+	LDA [0050h]
+	AND
+	JZ @label861
+	JMP @label864
+@label861:
+	STC 0
+	LDA [004Fh]
+	SHL
+	STA [004Fh]
+	LDA [0050h]
+	SHL
+	STA [0050h]
+	JMP @label860
+@label863:
+; WHILE w > y DO
+@label865:
+	STC 0
+	LDA [000Fh]
+	LDBL
+	LDA [0050h]
+	CMP
+	JA @label866
+	JB @label867
+	LDA [000Eh]
+	LDBL
+	LDA [004Fh]
+	CMP
+	JA @label866
+	JB @label867
+	JMP @label867
+@label866:
+; q := 2 * q;
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+; w := w / 2;
+	STC 0
+	LDA [0050h]
+	SHR
+	STA [0050h]
+	LDA [004Fh]
+	SHR
+	STA [004Fh]
+@label864:
+; IF w <= r THEN
+	STC 0
+	LDA [0028h]
+	LDBL
+	LDA [0050h]
+	CMP
+	JA @label865
+	JB @label868
+	LDA [0027h]
+	LDBL
+	LDA [004Fh]
+	CMP
+	JA @label865
+@label868:
+; r := r - w
+; $SYS6 = $SYS6 SUB $SYS8
+	LDA [004Fh]
+	LDBL
+	LDA [0027h]
+	STC 0
+	SUB
+	STA [0027h]
+	LDA [0050h]
+	LDBL
+	LDA [0028h]
+	SUB
+	STA [0028h]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	JMP @label865
+@label867:
+; free [000Eh]
+	LDA [004Dh]
+	STA [00A5h]
+	LDA [004Eh]
+	STA [00A6h]
+; free [004Dh]
+	LDA 00h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA [00A5h]
+	STA [000Ah]
+	LDA 00h
+	STA [003Fh]
+	JMP @proc_PrintLargeDigit
+@label869:
+	LDA 03h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 0Ah
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+; $SYS0 = v * $SYS7
+; a := x
+	LDA [00A5h]
+	STA [004Fh]
+	LDA [00A6h]
+	STA [0050h]
+; b := y
+	LDA [004Dh]
+	STA [0027h]
+	LDA [004Eh]
+	STA [0028h]
+; z := 0
+	LDA 0
+	STA [000Eh]
+	STA [000Fh]
+; WHILE b > 0 DO
+@label870:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [0027h]
+	CMP
+	JA @label872
+	LDA [0028h]
+	CMP
+	JA @label872
+	JMP @label871
+@label872:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [0027h]
+	AND
+	JZ @label873
+; z := z + a;
+; $SYS0 = $SYS0 ADD $SYS8
+	LDA [004Fh]
+	LDBL
+	LDA [000Eh]
+	STC 0
+	ADD
+	STA [000Eh]
+	LDA [0050h]
+	LDBL
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+@label873:
+; a := 2 * a;
+	STC 0
+	LDA [004Fh]
+	SHL
+	STA [004Fh]
+	LDA [0050h]
+	SHL
+	STA [0050h]
+; b := b / 2;
+	STC 0
+	LDA [0028h]
+	SHR
+	STA [0028h]
+	LDA [0027h]
+	SHR
+	STA [0027h]
+	JMP @label870
+@label871:
+; free [004Dh]
+; $SYS7 = hour SUB $SYS0
+	LDA [000Eh]
+	LDBL
+	LDA [0093h]
+	STC 0
+	SUB
+	STA [004Dh]
+	LDA [000Fh]
+	LDBL
+	LDA [0094h]
+	SUB
+	STA [004Eh]
+; free [000Eh]
+	LDA [004Dh]
+	STA [000Ah]
+; free [004Dh]
+	LDA 01h
+	STA [003Fh]
+	JMP @proc_PrintLargeDigit
+@label874:
+	LDA 06h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 00h
+	STA [00A3h]
+	JMP @proc_DisplayLargeTimePoints
+@label875:
+	LDA 0Ah
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+; $SYS0 = min / $SYS7
+	LDA [0091h]
+	STA [0027h]
+	LDA [0092h]
+	STA [0028h]
+	LDA [004Dh]
+	STA [004Fh]
+	LDA [004Eh]
+	STA [0050h]
+	LDA 0
+	STA [000Eh]
+	STA [000Fh]
+; WHILE w <= r DO w := 2 * w;
+@label876:
+	STC 0
+	LDA [0028h]
+	LDBL
+	LDA [0050h]
+	CMP
+	JA @label879
+	JB @label878
+	LDA [0027h]
+	LDBL
+	LDA [004Fh]
+	CMP
+	JA @label879
+@label878:
+	LDA 08h
+	LDBL
+	LDA [0050h]
+	AND
+	JZ @label877
+	JMP @label880
+@label877:
+	STC 0
+	LDA [004Fh]
+	SHL
+	STA [004Fh]
+	LDA [0050h]
+	SHL
+	STA [0050h]
+	JMP @label876
+@label879:
+; WHILE w > y DO
+@label881:
+	STC 0
+	LDA [004Eh]
+	LDBL
+	LDA [0050h]
+	CMP
+	JA @label882
+	JB @label883
+	LDA [004Dh]
+	LDBL
+	LDA [004Fh]
+	CMP
+	JA @label882
+	JB @label883
+	JMP @label883
+@label882:
+; q := 2 * q;
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+; w := w / 2;
+	STC 0
+	LDA [0050h]
+	SHR
+	STA [0050h]
+	LDA [004Fh]
+	SHR
+	STA [004Fh]
+@label880:
+; IF w <= r THEN
+	STC 0
+	LDA [0028h]
+	LDBL
+	LDA [0050h]
+	CMP
+	JA @label881
+	JB @label884
+	LDA [0027h]
+	LDBL
+	LDA [004Fh]
+	CMP
+	JA @label881
+@label884:
+; r := r - w
+; $SYS6 = $SYS6 SUB $SYS8
+	LDA [004Fh]
+	LDBL
+	LDA [0027h]
+	STC 0
+	SUB
+	STA [0027h]
+	LDA [0050h]
+	LDBL
+	LDA [0028h]
+	SUB
+	STA [0028h]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+	JMP @label881
+@label883:
+; free [004Dh]
+	LDA [000Eh]
+	STA [00A5h]
+	LDA [000Fh]
+	STA [00A6h]
+; free [000Eh]
+	LDA 07h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA [00A5h]
+	STA [000Ah]
+	LDA 02h
+	STA [003Fh]
+	JMP @proc_PrintLargeDigit
+@label885:
+	LDA 0Ah
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 0Ah
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+; $SYS7 = v * $SYS0
+; a := x
+	LDA [00A5h]
+	STA [004Fh]
+	LDA [00A6h]
+	STA [0050h]
+; b := y
+	LDA [000Eh]
+	STA [0027h]
+	LDA [000Fh]
+	STA [0028h]
+; z := 0
+	LDA 0
+	STA [004Dh]
+	STA [004Eh]
+; WHILE b > 0 DO
+@label886:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [0027h]
+	CMP
+	JA @label888
+	LDA [0028h]
+	CMP
+	JA @label888
+	JMP @label887
+@label888:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [0027h]
+	AND
+	JZ @label889
+; z := z + a;
+; $SYS7 = $SYS7 ADD $SYS8
+	LDA [004Fh]
+	LDBL
+	LDA [004Dh]
+	STC 0
+	ADD
+	STA [004Dh]
+	LDA [0050h]
+	LDBL
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+@label889:
+; a := 2 * a;
+	STC 0
+	LDA [004Fh]
+	SHL
+	STA [004Fh]
+	LDA [0050h]
+	SHL
+	STA [0050h]
+; b := b / 2;
+	STC 0
+	LDA [0028h]
+	SHR
+	STA [0028h]
+	LDA [0027h]
+	SHR
+	STA [0027h]
+	JMP @label886
+@label887:
+; free [000Eh]
+; $SYS0 = min SUB $SYS7
+	LDA [004Dh]
+	LDBL
+	LDA [0091h]
+	STC 0
+	SUB
+	STA [000Eh]
+	LDA [004Eh]
+	LDBL
+	LDA [0092h]
+	SUB
+	STA [000Fh]
+; free [004Dh]
+	LDA [000Eh]
+	STA [000Ah]
+; free [000Eh]
+	LDA 03h
+	STA [003Fh]
+	JMP @proc_PrintLargeDigit
+@label890:
+	LDA 0Dh
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 01h
+	STA [00A3h]
+	JMP @proc_DisplayLargeTimePoints
+@label891:
+	LDA 0Ah
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+; $SYS7 = sec / $SYS0
+	LDA [008Fh]
+	STA [0027h]
+	LDA [0090h]
+	STA [0028h]
+	LDA [000Eh]
+	STA [004Fh]
+	LDA [000Fh]
+	STA [0050h]
+	LDA 0
+	STA [004Dh]
+	STA [004Eh]
+; WHILE w <= r DO w := 2 * w;
+@label892:
+	STC 0
+	LDA [0028h]
+	LDBL
+	LDA [0050h]
+	CMP
+	JA @label895
+	JB @label894
+	LDA [0027h]
+	LDBL
+	LDA [004Fh]
+	CMP
+	JA @label895
+@label894:
+	LDA 08h
+	LDBL
+	LDA [0050h]
+	AND
+	JZ @label893
+	JMP @label896
+@label893:
+	STC 0
+	LDA [004Fh]
+	SHL
+	STA [004Fh]
+	LDA [0050h]
+	SHL
+	STA [0050h]
+	JMP @label892
+@label895:
+; WHILE w > y DO
+@label897:
+	STC 0
+	LDA [000Fh]
+	LDBL
+	LDA [0050h]
+	CMP
+	JA @label898
+	JB @label899
+	LDA [000Eh]
+	LDBL
+	LDA [004Fh]
+	CMP
+	JA @label898
+	JB @label899
+	JMP @label899
+@label898:
+; q := 2 * q;
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+; w := w / 2;
+	STC 0
+	LDA [0050h]
+	SHR
+	STA [0050h]
+	LDA [004Fh]
+	SHR
+	STA [004Fh]
+@label896:
+; IF w <= r THEN
+	STC 0
+	LDA [0028h]
+	LDBL
+	LDA [0050h]
+	CMP
+	JA @label897
+	JB @label900
+	LDA [0027h]
+	LDBL
+	LDA [004Fh]
+	CMP
+	JA @label897
+@label900:
+; r := r - w
+; $SYS6 = $SYS6 SUB $SYS8
+	LDA [004Fh]
+	LDBL
+	LDA [0027h]
+	STC 0
+	SUB
+	STA [0027h]
+	LDA [0050h]
+	LDBL
+	LDA [0028h]
+	SUB
+	STA [0028h]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	JMP @label897
+@label899:
+; free [000Eh]
+	LDA [004Dh]
+	STA [00A5h]
+	LDA [004Eh]
+	STA [00A6h]
+; free [004Dh]
+	LDA 0Eh
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA [00A5h]
+	STA [000Ah]
+	LDA 04h
+	STA [003Fh]
+	JMP @proc_PrintLargeDigit
+@label901:
+	LDA 01h
+	STA [004Dh]
+	LDA 01h
+	STA [004Eh]
+	LDA [004Dh]
+	STA [0007h]
+	LDA [004Eh]
+	STA [0008h]
+; free [004Dh]
+	LDA 0Ah
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+; $SYS0 = v * $SYS7
+; a := x
+	LDA [00A5h]
+	STA [004Fh]
+	LDA [00A6h]
+	STA [0050h]
+; b := y
+	LDA [004Dh]
+	STA [0027h]
+	LDA [004Eh]
+	STA [0028h]
+; z := 0
+	LDA 0
+	STA [000Eh]
+	STA [000Fh]
+; WHILE b > 0 DO
+@label902:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [0027h]
+	CMP
+	JA @label904
+	LDA [0028h]
+	CMP
+	JA @label904
+	JMP @label903
+@label904:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [0027h]
+	AND
+	JZ @label905
+; z := z + a;
+; $SYS0 = $SYS0 ADD $SYS8
+	LDA [004Fh]
+	LDBL
+	LDA [000Eh]
+	STC 0
+	ADD
+	STA [000Eh]
+	LDA [0050h]
+	LDBL
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+@label905:
+; a := 2 * a;
+	STC 0
+	LDA [004Fh]
+	SHL
+	STA [004Fh]
+	LDA [0050h]
+	SHL
+	STA [0050h]
+; b := b / 2;
+	STC 0
+	LDA [0028h]
+	SHR
+	STA [0028h]
+	LDA [0027h]
+	SHR
+	STA [0027h]
+	JMP @label902
+@label903:
+; free [004Dh]
+; $SYS7 = sec SUB $SYS0
+	LDA [000Eh]
+	LDBL
+	LDA [008Fh]
+	STC 0
+	SUB
+	STA [004Dh]
+	LDA [000Fh]
+	LDBL
+	LDA [0090h]
+	SUB
+	STA [004Eh]
+; free [000Eh]
+	LDA [004Dh]
+	STA [000Ah]
+; free [004Dh]
+	LDA 05h
+	STA [003Fh]
+	JMP @proc_PrintLargeDigit
+@label906:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [00A4h]
+	SUB
+	JB @label1380
+	JMP @label1396
+; endproc DisplayLargeTime
+@proc_AdvanceDate:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0096h]
+	ADD
+	STA [0096h]
+	LDA [0097h]
+	ADD
+	STA [0097h]
+	LDA 04h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label914
+	JMP @label916
+@label914:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label915
+	JMP @label916
+@label915:
+	JMP @label910
+; free [004Dh]
+@label916:
+	LDA 06h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label919
+	JMP @label921
+@label919:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label920
+	JMP @label921
+@label920:
+	JMP @label910
+; free [004Dh]
+@label921:
+	LDA 09h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label924
+	JMP @label926
+@label924:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label925
+	JMP @label926
+@label925:
+	JMP @label910
+; free [004Dh]
+@label926:
+	LDA 0Bh
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label929
+	JMP @label911
+@label929:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label930
+	JMP @label911
+@label930:
+; free [004Dh]
+@label910:
+	JMP @label907
+@label911:
+	JMP @label908
+@label907:
+	LDA 0Eh
+	STA [004Dh]
+	LDA 01h
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0097h]
+	CMP
+	JA @label931
+	JB @label933
+	LDA [004Dh]
+	LDBL
+	LDA [0096h]
+	CMP
+	JA @label931
+	JB @label933
+	JMP @label933
+; free [004Dh]
+@label931:
+	LDA 01h
+	STA [0096h]
+	LDA 0
+	STA [0097h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0098h]
+	ADD
+	STA [0098h]
+	LDA [0099h]
+	ADD
+	STA [0099h]
+@label933:
+	JMP @label909
+@label908:
+	LDA 02h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label947
+	JMP @label941
+@label947:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label948
+	JMP @label941
+@label948:
+; free [004Dh]
+@label940:
+	LDA 03h
+	STA [005Dh]
+	LDA 0
+	STA [005Eh]
+	STA [005Fh]
+	STA [0060h]
+; $SYS4 = year AND $SYS10
+	LDA [005Dh]
+	LDBL
+	LDA [009Ah]
+	AND
+	STA [001Ch]
+	LDA [005Eh]
+	LDBL
+	LDA [009Bh]
+	AND
+	STA [001Dh]
+	LDA [005Fh]
+	LDBL
+	LDA [009Ch]
+	AND
+	STA [001Eh]
+	LDA [0060h]
+	LDBL
+	LDA [009Dh]
+	AND
+	STA [001Fh]
+; free [005Dh]
+	LDA 00h
+	STA [005Dh]
+	LDA 0
+	STA [005Eh]
+	STA [005Fh]
+	STA [0060h]
+	STC 0
+	LDBL
+	LDA [001Fh]
+	CMP
+	JE @label956
+	JMP @label950
+@label956:
+	LDA [005Fh]
+	LDBL
+	LDA [001Eh]
+	CMP
+	JE @label957
+	JMP @label950
+@label957:
+	LDA [005Eh]
+	LDBL
+	LDA [001Dh]
+	CMP
+	JE @label958
+	JMP @label950
+@label958:
+	LDA [005Dh]
+	LDBL
+	LDA [001Ch]
+	CMP
+	JE @label959
+	JMP @label950
+@label959:
+; free [001Ch]
+; free [005Dh]
+@label949:
+	LDA 0Dh
+	STA [004Dh]
+	LDA 01h
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0097h]
+	CMP
+	JA @label960
+	JB @label962
+	LDA [004Dh]
+	LDBL
+	LDA [0096h]
+	CMP
+	JA @label960
+	JB @label962
+	JMP @label962
+; free [004Dh]
+@label960:
+	LDA 01h
+	STA [0096h]
+	LDA 0
+	STA [0097h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0098h]
+	ADD
+	STA [0098h]
+	LDA [0099h]
+	ADD
+	STA [0099h]
+@label962:
+	JMP @label951
+@label950:
+	LDA 0Ch
+	STA [004Dh]
+	LDA 01h
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0097h]
+	CMP
+	JA @label969
+	JB @label971
+	LDA [004Dh]
+	LDBL
+	LDA [0096h]
+	CMP
+	JA @label969
+	JB @label971
+	JMP @label971
+; free [004Dh]
+@label969:
+	LDA 01h
+	STA [0096h]
+	LDA 0
+	STA [0097h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0098h]
+	ADD
+	STA [0098h]
+	LDA [0099h]
+	ADD
+	STA [0099h]
+@label971:
+@label951:
+	JMP @label942
+@label941:
+	LDA 0Fh
+	STA [004Dh]
+	LDA 01h
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0097h]
+	CMP
+	JA @label978
+	JB @label980
+	LDA [004Dh]
+	LDBL
+	LDA [0096h]
+	CMP
+	JA @label978
+	JB @label980
+	JMP @label980
+; free [004Dh]
+@label978:
+	LDA 01h
+	STA [0096h]
+	LDA 0
+	STA [0097h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0098h]
+	ADD
+	STA [0098h]
+	LDA [0099h]
+	ADD
+	STA [0099h]
+@label980:
+@label942:
+@label909:
+	LDA 0Ch
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JA @label987
+	JB @label989
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JA @label987
+	JB @label989
+	JMP @label989
+; free [004Dh]
+@label987:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [009Ah]
+	ADD
+	STA [009Ah]
+	LDA [009Bh]
+	ADD
+	STA [009Bh]
+	LDA [009Ch]
+	ADD
+	STA [009Ch]
+	LDA [009Dh]
+	ADD
+	STA [009Dh]
+	LDA 01h
+	STA [0098h]
+	LDA 0
+	STA [0099h]
+@label989:
+	JMP @label1404
+; endproc AdvanceDate
+@proc_DisplayDate:
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [009Eh]
+	CMP
+	JE @label1003
+	JMP @label997
+@label1003:
+@label996:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 03h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 0Eh
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	JMP @label998
+@label997:
+	LDA 01h
+	STC 0
+	LDBL
+	LDA [009Eh]
+	CMP
+	JE @label1011
+	JMP @label1005
+@label1011:
+@label1004:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 0Dh
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 0Fh
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 0Eh
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	JMP @label1006
+@label1005:
+	LDA 02h
+	STC 0
+	LDBL
+	LDA [009Eh]
+	CMP
+	JE @label1019
+	JMP @label1013
+@label1019:
+@label1012:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 04h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	JMP @label1014
+@label1013:
+	LDA 03h
+	STC 0
+	LDBL
+	LDA [009Eh]
+	CMP
+	JE @label1027
+	JMP @label1021
+@label1027:
+@label1020:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 07h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 0Eh
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 09h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	BNK 0
+	JMP @label1022
+@label1021:
+	LDA 04h
+	STC 0
+	LDBL
+	LDA [009Eh]
+	CMP
+	JE @label1035
+	JMP @label1029
+@label1035:
+@label1028:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 04h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 08h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	JMP @label1030
+@label1029:
+	LDA 05h
+	STC 0
+	LDBL
+	LDA [009Eh]
+	CMP
+	JE @label1043
+	JMP @label1037
+@label1043:
+@label1036:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 06h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	JMP @label1038
+@label1037:
+	LDA 06h
+	STC 0
+	LDBL
+	LDA [009Eh]
+	CMP
+	JE @label1051
+	JMP @label1046
+@label1051:
+@label1044:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 03h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 06h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 09h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 07h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+@label1046:
+@label1038:
+@label1030:
+@label1022:
+@label1014:
+@label1006:
+@label998:
+	LDA 00h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 03h
+	STA [0006h]
+	LDA 09h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 05h
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label1052:
+	LDA 0Ah
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 03h
+	STA [0006h]
+	LDA [0096h]
+	STA [0044h]
+	LDA [0097h]
+	STA [0045h]
+	LDA 04h
+	STA [004Ah]
+	JMP @proc_ByteToStr
+@label1053:
+	LDA 02h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 06h
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label1054:
+	LDA 00h
+	STA [0022h]
+	LDA 0Eh
+	STA [004Dh]
+	LDA 02h
+	STA [004Eh]
+	LDA [0022h]
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [004Dh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [004Eh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+; free [0022h]
+; free [004Dh]
+	LDA 01h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 09h
+	STA [002Bh]
+	JMP @proc_PrintString
+@label1055:
+	LDA [0098h]
+	STA [0044h]
+	LDA [0099h]
+	STA [0045h]
+	LDA 05h
+	STA [004Ah]
+	JMP @proc_ByteToStr
+@label1056:
+	LDA 02h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 0Ah
+	STA [002Bh]
+	JMP @proc_PrintString
+@label1057:
+	LDA 00h
+	STA [0022h]
+	LDA 0Eh
+	STA [004Dh]
+	LDA 02h
+	STA [004Eh]
+	LDA [0022h]
+	STA [000Eh]
+	LDA 0
+	STA [000Fh]
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [004Dh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+	LDA [000Eh]
+	LDBL
+	LDA [000Fh]
+	LDBH
+	LDA [004Eh]
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [000Eh]
+	ADD
+	STA [000Eh]
+	LDA [000Fh]
+	ADD
+	STA [000Fh]
+; free [0022h]
+; free [004Dh]
+	LDA 01h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 0Bh
+	STA [002Bh]
+	JMP @proc_PrintString
+@label1058:
+	LDA [009Ah]
+	STA [0046h]
+	LDA [009Bh]
+	STA [0047h]
+	LDA [009Ch]
+	STA [0048h]
+	LDA [009Dh]
+	STA [0049h]
+	LDA 01h
+	STA [0054h]
+	JMP @proc_WordToStr
+@label1059:
+	LDA 04h
+	STA [0004h]
+	LDA 0
+	STA [0005h]
+	LDA 0Ch
+	STA [002Bh]
+	JMP @proc_PrintString
+@label1060:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [00A8h]
+	SUB
+	JB @label1295
+	JZ @label1382
+	SUB
+	JZ @label1385
+	JMP @label1406
+; endproc DisplayDate
+@proc_CalcWeekday:
+	LDA 02h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JB @label1061
+	JA @label1062
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JB @label1061
+	JA @label1062
+; free [004Dh]
+@label1061:
+	LDA 01h
+	STA [005Dh]
+	LDA 0
+	STA [005Eh]
+	STA [005Fh]
+	STA [0060h]
+; $SYS4 = year SUB $SYS10
+	LDA [005Dh]
+	LDBL
+	LDA [009Ah]
+	STC 0
+	SUB
+	STA [001Ch]
+	LDA [005Eh]
+	LDBL
+	LDA [009Bh]
+	SUB
+	STA [001Dh]
+	LDA [005Fh]
+	LDBL
+	LDA [009Ch]
+	SUB
+	STA [001Eh]
+	LDA [0060h]
+	LDBL
+	LDA [009Dh]
+	SUB
+	STA [001Fh]
+; free [005Dh]
+	LDA 04h
+	STA [004Dh]
+	LDA 06h
+	STA [004Eh]
+	LDA [004Dh]
+	STA [005Dh]
+	LDA [004Eh]
+	STA [005Eh]
+	LDA 0
+	STA [005Fh]
+	STA [0060h]
+; free [004Dh]
+; $SYS11 = $SYS4 / $SYS10
+	LDA [001Ch]
+	STA [0018h]
+	LDA [001Dh]
+	STA [0019h]
+	LDA [001Eh]
+	STA [001Ah]
+	LDA [001Fh]
+	STA [001Bh]
+	LDA [005Dh]
+	STA [0059h]
+	LDA [005Eh]
+	STA [005Ah]
+	LDA [005Fh]
+	STA [005Bh]
+	LDA [0060h]
+	STA [005Ch]
+	LDA 0
+	STA [0061h]
+	STA [0062h]
+	STA [0063h]
+	STA [0064h]
+; WHILE w <= r DO w := 2 * w;
+@label1070:
+	STC 0
+	LDA [001Bh]
+	LDBL
+	LDA [005Ch]
+	CMP
+	JA @label1073
+	JB @label1072
+	LDA [001Ah]
+	LDBL
+	LDA [005Bh]
+	CMP
+	JA @label1073
+	JB @label1072
+	LDA [0019h]
+	LDBL
+	LDA [005Ah]
+	CMP
+	JA @label1073
+	JB @label1072
+	LDA [0018h]
+	LDBL
+	LDA [0059h]
+	CMP
+	JA @label1073
+@label1072:
+	LDA 08h
+	LDBL
+	LDA [005Ch]
+	AND
+	JZ @label1071
+	JMP @label1074
+@label1071:
+	STC 0
+	LDA [0059h]
+	SHL
+	STA [0059h]
+	LDA [005Ah]
+	SHL
+	STA [005Ah]
+	LDA [005Bh]
+	SHL
+	STA [005Bh]
+	LDA [005Ch]
+	SHL
+	STA [005Ch]
+	JMP @label1070
+@label1073:
+; WHILE w > y DO
+@label1075:
+	STC 0
+	LDA [0060h]
+	LDBL
+	LDA [005Ch]
+	CMP
+	JA @label1076
+	JB @label1077
+	LDA [005Fh]
+	LDBL
+	LDA [005Bh]
+	CMP
+	JA @label1076
+	JB @label1077
+	LDA [005Eh]
+	LDBL
+	LDA [005Ah]
+	CMP
+	JA @label1076
+	JB @label1077
+	LDA [005Dh]
+	LDBL
+	LDA [0059h]
+	CMP
+	JA @label1076
+	JB @label1077
+	JMP @label1077
+@label1076:
+; q := 2 * q;
+	STC 0
+	LDA [0061h]
+	SHL
+	STA [0061h]
+	LDA [0062h]
+	SHL
+	STA [0062h]
+	LDA [0063h]
+	SHL
+	STA [0063h]
+	LDA [0064h]
+	SHL
+	STA [0064h]
+; w := w / 2;
+	STC 0
+	LDA [005Ch]
+	SHR
+	STA [005Ch]
+	LDA [005Bh]
+	SHR
+	STA [005Bh]
+	LDA [005Ah]
+	SHR
+	STA [005Ah]
+	LDA [0059h]
+	SHR
+	STA [0059h]
+@label1074:
+; IF w <= r THEN
+	STC 0
+	LDA [001Bh]
+	LDBL
+	LDA [005Ch]
+	CMP
+	JA @label1075
+	JB @label1078
+	LDA [001Ah]
+	LDBL
+	LDA [005Bh]
+	CMP
+	JA @label1075
+	JB @label1078
+	LDA [0019h]
+	LDBL
+	LDA [005Ah]
+	CMP
+	JA @label1075
+	JB @label1078
+	LDA [0018h]
+	LDBL
+	LDA [0059h]
+	CMP
+	JA @label1075
+@label1078:
+; r := r - w
+; $SYS3 = $SYS3 SUB $SYS9
+	LDA [0059h]
+	LDBL
+	LDA [0018h]
+	STC 0
+	SUB
+	STA [0018h]
+	LDA [005Ah]
+	LDBL
+	LDA [0019h]
+	SUB
+	STA [0019h]
+	LDA [005Bh]
+	LDBL
+	LDA [001Ah]
+	SUB
+	STA [001Ah]
+	LDA [005Ch]
+	LDBL
+	LDA [001Bh]
+	SUB
+	STA [001Bh]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0061h]
+	ADD
+	STA [0061h]
+	LDA [0062h]
+	ADD
+	STA [0062h]
+	LDA [0063h]
+	ADD
+	STA [0063h]
+	LDA [0064h]
+	ADD
+	STA [0064h]
+	JMP @label1075
+@label1077:
+; free [001Ch]
+; free [005Dh]
+	LDA [0061h]
+	STA [00AAh]
+	LDA [0062h]
+	STA [00ABh]
+	LDA [0063h]
+	STA [00ACh]
+	LDA [0064h]
+	STA [00ADh]
+; free [0061h]
+	LDA 01h
+	STA [0061h]
+	LDA 0
+	STA [0062h]
+	STA [0063h]
+	STA [0064h]
+; $SYS10 = year SUB $SYS11
+	LDA [0061h]
+	LDBL
+	LDA [009Ah]
+	STC 0
+	SUB
+	STA [005Dh]
+	LDA [0062h]
+	LDBL
+	LDA [009Bh]
+	SUB
+	STA [005Eh]
+	LDA [0063h]
+	LDBL
+	LDA [009Ch]
+	SUB
+	STA [005Fh]
+	LDA [0064h]
+	LDBL
+	LDA [009Dh]
+	SUB
+	STA [0060h]
+; free [0061h]
+	LDA 04h
+	STA [004Dh]
+	LDA 06h
+	STA [004Eh]
+	LDA [004Dh]
+	STA [0061h]
+	LDA [004Eh]
+	STA [0062h]
+	LDA 0
+	STA [0063h]
+	STA [0064h]
+; free [004Dh]
+; $SYS4 = $SYS11 * c
+; a := x
+	LDA [0061h]
+	STA [0059h]
+	LDA [0062h]
+	STA [005Ah]
+	LDA [0063h]
+	STA [005Bh]
+	LDA [0064h]
+	STA [005Ch]
+; b := y
+	LDA [00AAh]
+	STA [0018h]
+	LDA [00ABh]
+	STA [0019h]
+	LDA [00ACh]
+	STA [001Ah]
+	LDA [00ADh]
+	STA [001Bh]
+; z := 0
+	LDA 0
+	STA [001Ch]
+	STA [001Dh]
+	STA [001Eh]
+	STA [001Fh]
+; WHILE b > 0 DO
+@label1079:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [0018h]
+	CMP
+	JA @label1081
+	LDA [0019h]
+	CMP
+	JA @label1081
+	LDA [001Ah]
+	CMP
+	JA @label1081
+	LDA [001Bh]
+	CMP
+	JA @label1081
+	JMP @label1080
+@label1081:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [0018h]
+	AND
+	JZ @label1082
+; z := z + a;
+; $SYS4 = $SYS4 ADD $SYS9
+	LDA [0059h]
+	LDBL
+	LDA [001Ch]
+	STC 0
+	ADD
+	STA [001Ch]
+	LDA [005Ah]
+	LDBL
+	LDA [001Dh]
+	ADD
+	STA [001Dh]
+	LDA [005Bh]
+	LDBL
+	LDA [001Eh]
+	ADD
+	STA [001Eh]
+	LDA [005Ch]
+	LDBL
+	LDA [001Fh]
+	ADD
+	STA [001Fh]
+@label1082:
+; a := 2 * a;
+	STC 0
+	LDA [0059h]
+	SHL
+	STA [0059h]
+	LDA [005Ah]
+	SHL
+	STA [005Ah]
+	LDA [005Bh]
+	SHL
+	STA [005Bh]
+	LDA [005Ch]
+	SHL
+	STA [005Ch]
+; b := b / 2;
+	STC 0
+	LDA [001Bh]
+	SHR
+	STA [001Bh]
+	LDA [001Ah]
+	SHR
+	STA [001Ah]
+	LDA [0019h]
+	SHR
+	STA [0019h]
+	LDA [0018h]
+	SHR
+	STA [0018h]
+	JMP @label1079
+@label1080:
+; free [0061h]
+; $SYS11 = $SYS10 SUB $SYS4
+	LDA [001Ch]
+	LDBL
+	LDA [005Dh]
+	STC 0
+	SUB
+	STA [0061h]
+	LDA [001Dh]
+	LDBL
+	LDA [005Eh]
+	SUB
+	STA [0062h]
+	LDA [001Eh]
+	LDBL
+	LDA [005Fh]
+	SUB
+	STA [0063h]
+	LDA [001Fh]
+	LDBL
+	LDA [0060h]
+	SUB
+	STA [0064h]
+; free [005Dh]
+; free [001Ch]
+	LDA [0061h]
+	STA [00B0h]
+	LDA [0062h]
+	STA [00B1h]
+	LDA [0063h]
+	STA [00B2h]
+	LDA [0064h]
+	STA [00B3h]
+; free [0061h]
+	JMP @label1063
+@label1062:
+	LDA 04h
+	STA [004Dh]
+	LDA 06h
+	STA [004Eh]
+	LDA [004Dh]
+	STA [0061h]
+	LDA [004Eh]
+	STA [0062h]
+	LDA 0
+	STA [0063h]
+	STA [0064h]
+; free [004Dh]
+; $SYS4 = year / $SYS11
+	LDA [009Ah]
+	STA [005Dh]
+	LDA [009Bh]
+	STA [005Eh]
+	LDA [009Ch]
+	STA [005Fh]
+	LDA [009Dh]
+	STA [0060h]
+	LDA [0061h]
+	STA [0018h]
+	LDA [0062h]
+	STA [0019h]
+	LDA [0063h]
+	STA [001Ah]
+	LDA [0064h]
+	STA [001Bh]
+	LDA 0
+	STA [001Ch]
+	STA [001Dh]
+	STA [001Eh]
+	STA [001Fh]
+; WHILE w <= r DO w := 2 * w;
+@label1083:
+	STC 0
+	LDA [0060h]
+	LDBL
+	LDA [001Bh]
+	CMP
+	JA @label1086
+	JB @label1085
+	LDA [005Fh]
+	LDBL
+	LDA [001Ah]
+	CMP
+	JA @label1086
+	JB @label1085
+	LDA [005Eh]
+	LDBL
+	LDA [0019h]
+	CMP
+	JA @label1086
+	JB @label1085
+	LDA [005Dh]
+	LDBL
+	LDA [0018h]
+	CMP
+	JA @label1086
+@label1085:
+	LDA 08h
+	LDBL
+	LDA [001Bh]
+	AND
+	JZ @label1084
+	JMP @label1087
+@label1084:
+	STC 0
+	LDA [0018h]
+	SHL
+	STA [0018h]
+	LDA [0019h]
+	SHL
+	STA [0019h]
+	LDA [001Ah]
+	SHL
+	STA [001Ah]
+	LDA [001Bh]
+	SHL
+	STA [001Bh]
+	JMP @label1083
+@label1086:
+; WHILE w > y DO
+@label1088:
+	STC 0
+	LDA [0064h]
+	LDBL
+	LDA [001Bh]
+	CMP
+	JA @label1089
+	JB @label1090
+	LDA [0063h]
+	LDBL
+	LDA [001Ah]
+	CMP
+	JA @label1089
+	JB @label1090
+	LDA [0062h]
+	LDBL
+	LDA [0019h]
+	CMP
+	JA @label1089
+	JB @label1090
+	LDA [0061h]
+	LDBL
+	LDA [0018h]
+	CMP
+	JA @label1089
+	JB @label1090
+	JMP @label1090
+@label1089:
+; q := 2 * q;
+	STC 0
+	LDA [001Ch]
+	SHL
+	STA [001Ch]
+	LDA [001Dh]
+	SHL
+	STA [001Dh]
+	LDA [001Eh]
+	SHL
+	STA [001Eh]
+	LDA [001Fh]
+	SHL
+	STA [001Fh]
+; w := w / 2;
+	STC 0
+	LDA [001Bh]
+	SHR
+	STA [001Bh]
+	LDA [001Ah]
+	SHR
+	STA [001Ah]
+	LDA [0019h]
+	SHR
+	STA [0019h]
+	LDA [0018h]
+	SHR
+	STA [0018h]
+@label1087:
+; IF w <= r THEN
+	STC 0
+	LDA [0060h]
+	LDBL
+	LDA [001Bh]
+	CMP
+	JA @label1088
+	JB @label1091
+	LDA [005Fh]
+	LDBL
+	LDA [001Ah]
+	CMP
+	JA @label1088
+	JB @label1091
+	LDA [005Eh]
+	LDBL
+	LDA [0019h]
+	CMP
+	JA @label1088
+	JB @label1091
+	LDA [005Dh]
+	LDBL
+	LDA [0018h]
+	CMP
+	JA @label1088
+@label1091:
+; r := r - w
+; $SYS10 = $SYS10 SUB $SYS3
+	LDA [0018h]
+	LDBL
+	LDA [005Dh]
+	STC 0
+	SUB
+	STA [005Dh]
+	LDA [0019h]
+	LDBL
+	LDA [005Eh]
+	SUB
+	STA [005Eh]
+	LDA [001Ah]
+	LDBL
+	LDA [005Fh]
+	SUB
+	STA [005Fh]
+	LDA [001Bh]
+	LDBL
+	LDA [0060h]
+	SUB
+	STA [0060h]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [001Ch]
+	ADD
+	STA [001Ch]
+	LDA [001Dh]
+	ADD
+	STA [001Dh]
+	LDA [001Eh]
+	ADD
+	STA [001Eh]
+	LDA [001Fh]
+	ADD
+	STA [001Fh]
+	JMP @label1088
+@label1090:
+; free [0061h]
+	LDA [001Ch]
+	STA [00AAh]
+	LDA [001Dh]
+	STA [00ABh]
+	LDA [001Eh]
+	STA [00ACh]
+	LDA [001Fh]
+	STA [00ADh]
+; free [001Ch]
+	LDA 04h
+	STA [004Dh]
+	LDA 06h
+	STA [004Eh]
+	LDA [004Dh]
+	STA [001Ch]
+	LDA [004Eh]
+	STA [001Dh]
+	LDA 0
+	STA [001Eh]
+	STA [001Fh]
+; free [004Dh]
+; $SYS11 = $SYS4 * c
+; a := x
+	LDA [001Ch]
+	STA [0018h]
+	LDA [001Dh]
+	STA [0019h]
+	LDA [001Eh]
+	STA [001Ah]
+	LDA [001Fh]
+	STA [001Bh]
+; b := y
+	LDA [00AAh]
+	STA [005Dh]
+	LDA [00ABh]
+	STA [005Eh]
+	LDA [00ACh]
+	STA [005Fh]
+	LDA [00ADh]
+	STA [0060h]
+; z := 0
+	LDA 0
+	STA [0061h]
+	STA [0062h]
+	STA [0063h]
+	STA [0064h]
+; WHILE b > 0 DO
+@label1092:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [005Dh]
+	CMP
+	JA @label1094
+	LDA [005Eh]
+	CMP
+	JA @label1094
+	LDA [005Fh]
+	CMP
+	JA @label1094
+	LDA [0060h]
+	CMP
+	JA @label1094
+	JMP @label1093
+@label1094:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [005Dh]
+	AND
+	JZ @label1095
+; z := z + a;
+; $SYS11 = $SYS11 ADD $SYS3
+	LDA [0018h]
+	LDBL
+	LDA [0061h]
+	STC 0
+	ADD
+	STA [0061h]
+	LDA [0019h]
+	LDBL
+	LDA [0062h]
+	ADD
+	STA [0062h]
+	LDA [001Ah]
+	LDBL
+	LDA [0063h]
+	ADD
+	STA [0063h]
+	LDA [001Bh]
+	LDBL
+	LDA [0064h]
+	ADD
+	STA [0064h]
+@label1095:
+; a := 2 * a;
+	STC 0
+	LDA [0018h]
+	SHL
+	STA [0018h]
+	LDA [0019h]
+	SHL
+	STA [0019h]
+	LDA [001Ah]
+	SHL
+	STA [001Ah]
+	LDA [001Bh]
+	SHL
+	STA [001Bh]
+; b := b / 2;
+	STC 0
+	LDA [0060h]
+	SHR
+	STA [0060h]
+	LDA [005Fh]
+	SHR
+	STA [005Fh]
+	LDA [005Eh]
+	SHR
+	STA [005Eh]
+	LDA [005Dh]
+	SHR
+	STA [005Dh]
+	JMP @label1092
+@label1093:
+; free [001Ch]
+; $SYS4 = year SUB $SYS11
+	LDA [0061h]
+	LDBL
+	LDA [009Ah]
+	STC 0
+	SUB
+	STA [001Ch]
+	LDA [0062h]
+	LDBL
+	LDA [009Bh]
+	SUB
+	STA [001Dh]
+	LDA [0063h]
+	LDBL
+	LDA [009Ch]
+	SUB
+	STA [001Eh]
+	LDA [0064h]
+	LDBL
+	LDA [009Dh]
+	SUB
+	STA [001Fh]
+; free [0061h]
+	LDA [001Ch]
+	STA [00B0h]
+	LDA [001Dh]
+	STA [00B1h]
+	LDA [001Eh]
+	STA [00B2h]
+	LDA [001Fh]
+	STA [00B3h]
+; free [001Ch]
+@label1063:
+	LDA 01h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1103
+	JMP @label1097
+@label1103:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1104
+	JMP @label1097
+@label1104:
+; free [004Dh]
+@label1096:
+	LDA 00h
+	STA [00AEh]
+	JMP @label1098
+@label1097:
+	LDA 02h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1112
+	JMP @label1106
+@label1112:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1113
+	JMP @label1106
+@label1113:
+; free [004Dh]
+@label1105:
+	LDA 03h
+	STA [00AEh]
+	JMP @label1107
+@label1106:
+	LDA 03h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1121
+	JMP @label1115
+@label1121:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1122
+	JMP @label1115
+@label1122:
+; free [004Dh]
+@label1114:
+	LDA 02h
+	STA [00AEh]
+	JMP @label1116
+@label1115:
+	LDA 04h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1130
+	JMP @label1124
+@label1130:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1131
+	JMP @label1124
+@label1131:
+; free [004Dh]
+@label1123:
+	LDA 05h
+	STA [00AEh]
+	JMP @label1125
+@label1124:
+	LDA 05h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1139
+	JMP @label1133
+@label1139:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1140
+	JMP @label1133
+@label1140:
+; free [004Dh]
+@label1132:
+	LDA 00h
+	STA [00AEh]
+	JMP @label1134
+@label1133:
+	LDA 06h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1148
+	JMP @label1142
+@label1148:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1149
+	JMP @label1142
+@label1149:
+; free [004Dh]
+@label1141:
+	LDA 03h
+	STA [00AEh]
+	JMP @label1143
+@label1142:
+	LDA 07h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1157
+	JMP @label1151
+@label1157:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1158
+	JMP @label1151
+@label1158:
+; free [004Dh]
+@label1150:
+	LDA 05h
+	STA [00AEh]
+	JMP @label1152
+@label1151:
+	LDA 08h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1166
+	JMP @label1160
+@label1166:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1167
+	JMP @label1160
+@label1167:
+; free [004Dh]
+@label1159:
+	LDA 01h
+	STA [00AEh]
+	JMP @label1161
+@label1160:
+	LDA 09h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1175
+	JMP @label1169
+@label1175:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1176
+	JMP @label1169
+@label1176:
+; free [004Dh]
+@label1168:
+	LDA 04h
+	STA [00AEh]
+	JMP @label1170
+@label1169:
+	LDA 0Ah
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1184
+	JMP @label1178
+@label1184:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1185
+	JMP @label1178
+@label1185:
+; free [004Dh]
+@label1177:
+	LDA 06h
+	STA [00AEh]
+	JMP @label1179
+@label1178:
+	LDA 0Bh
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1193
+	JMP @label1187
+@label1193:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1194
+	JMP @label1187
+@label1194:
+; free [004Dh]
+@label1186:
+	LDA 02h
+	STA [00AEh]
+	JMP @label1188
+@label1187:
+	LDA 0Ch
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JE @label1202
+	JMP @label1197
+@label1202:
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JE @label1203
+	JMP @label1197
+@label1203:
+; free [004Dh]
+@label1195:
+	LDA 04h
+	STA [00AEh]
+@label1197:
+@label1188:
+@label1179:
+@label1170:
+@label1161:
+@label1152:
+@label1143:
+@label1134:
+@label1125:
+@label1116:
+@label1107:
+@label1098:
+	LDA 04h
+	STA [001Ch]
+	LDA 0
+	STA [001Dh]
+	STA [001Eh]
+	STA [001Fh]
+; $SYS11 = c / $SYS4
+	LDA [00AAh]
+	STA [005Dh]
+	LDA [00ABh]
+	STA [005Eh]
+	LDA [00ACh]
+	STA [005Fh]
+	LDA [00ADh]
+	STA [0060h]
+	LDA [001Ch]
+	STA [0018h]
+	LDA [001Dh]
+	STA [0019h]
+	LDA [001Eh]
+	STA [001Ah]
+	LDA [001Fh]
+	STA [001Bh]
+	LDA 0
+	STA [0061h]
+	STA [0062h]
+	STA [0063h]
+	STA [0064h]
+; WHILE w <= r DO w := 2 * w;
+@label1204:
+	STC 0
+	LDA [0060h]
+	LDBL
+	LDA [001Bh]
+	CMP
+	JA @label1207
+	JB @label1206
+	LDA [005Fh]
+	LDBL
+	LDA [001Ah]
+	CMP
+	JA @label1207
+	JB @label1206
+	LDA [005Eh]
+	LDBL
+	LDA [0019h]
+	CMP
+	JA @label1207
+	JB @label1206
+	LDA [005Dh]
+	LDBL
+	LDA [0018h]
+	CMP
+	JA @label1207
+@label1206:
+	LDA 08h
+	LDBL
+	LDA [001Bh]
+	AND
+	JZ @label1205
+	JMP @label1208
+@label1205:
+	STC 0
+	LDA [0018h]
+	SHL
+	STA [0018h]
+	LDA [0019h]
+	SHL
+	STA [0019h]
+	LDA [001Ah]
+	SHL
+	STA [001Ah]
+	LDA [001Bh]
+	SHL
+	STA [001Bh]
+	JMP @label1204
+@label1207:
+; WHILE w > y DO
+@label1209:
+	STC 0
+	LDA [001Fh]
+	LDBL
+	LDA [001Bh]
+	CMP
+	JA @label1210
+	JB @label1211
+	LDA [001Eh]
+	LDBL
+	LDA [001Ah]
+	CMP
+	JA @label1210
+	JB @label1211
+	LDA [001Dh]
+	LDBL
+	LDA [0019h]
+	CMP
+	JA @label1210
+	JB @label1211
+	LDA [001Ch]
+	LDBL
+	LDA [0018h]
+	CMP
+	JA @label1210
+	JB @label1211
+	JMP @label1211
+@label1210:
+; q := 2 * q;
+	STC 0
+	LDA [0061h]
+	SHL
+	STA [0061h]
+	LDA [0062h]
+	SHL
+	STA [0062h]
+	LDA [0063h]
+	SHL
+	STA [0063h]
+	LDA [0064h]
+	SHL
+	STA [0064h]
+; w := w / 2;
+	STC 0
+	LDA [001Bh]
+	SHR
+	STA [001Bh]
+	LDA [001Ah]
+	SHR
+	STA [001Ah]
+	LDA [0019h]
+	SHR
+	STA [0019h]
+	LDA [0018h]
+	SHR
+	STA [0018h]
+@label1208:
+; IF w <= r THEN
+	STC 0
+	LDA [0060h]
+	LDBL
+	LDA [001Bh]
+	CMP
+	JA @label1209
+	JB @label1212
+	LDA [005Fh]
+	LDBL
+	LDA [001Ah]
+	CMP
+	JA @label1209
+	JB @label1212
+	LDA [005Eh]
+	LDBL
+	LDA [0019h]
+	CMP
+	JA @label1209
+	JB @label1212
+	LDA [005Dh]
+	LDBL
+	LDA [0018h]
+	CMP
+	JA @label1209
+@label1212:
+; r := r - w
+; $SYS10 = $SYS10 SUB $SYS3
+	LDA [0018h]
+	LDBL
+	LDA [005Dh]
+	STC 0
+	SUB
+	STA [005Dh]
+	LDA [0019h]
+	LDBL
+	LDA [005Eh]
+	SUB
+	STA [005Eh]
+	LDA [001Ah]
+	LDBL
+	LDA [005Fh]
+	SUB
+	STA [005Fh]
+	LDA [001Bh]
+	LDBL
+	LDA [0060h]
+	SUB
+	STA [0060h]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0061h]
+	ADD
+	STA [0061h]
+	LDA [0062h]
+	ADD
+	STA [0062h]
+	LDA [0063h]
+	ADD
+	STA [0063h]
+	LDA [0064h]
+	ADD
+	STA [0064h]
+	JMP @label1209
+@label1211:
+	LDA [005Dh]
+	STA [0061h]
+	LDA [005Eh]
+	STA [0062h]
+	LDA [005Fh]
+	STA [0063h]
+	LDA [0060h]
+	STA [0064h]
+; free [001Ch]
+	LDA [0061h]
+	STA [00B4h]
+; free [0061h]
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [00B4h]
+	CMP
+	JE @label1220
+	JMP @label1214
+@label1220:
+@label1213:
+	LDA 00h
+	STA [00AFh]
+	JMP @label1215
+@label1214:
+	LDA 01h
+	STC 0
+	LDBL
+	LDA [00B4h]
+	CMP
+	JE @label1228
+	JMP @label1222
+@label1228:
+@label1221:
+	LDA 05h
+	STA [00AFh]
+	JMP @label1223
+@label1222:
+	LDA 02h
+	STC 0
+	LDBL
+	LDA [00B4h]
+	CMP
+	JE @label1236
+	JMP @label1230
+@label1236:
+@label1229:
+	LDA 03h
+	STA [00AFh]
+	JMP @label1231
+@label1230:
+	LDA 03h
+	STC 0
+	LDBL
+	LDA [00B4h]
+	CMP
+	JE @label1244
+	JMP @label1239
+@label1244:
+@label1237:
+	LDA 01h
+	STA [00AFh]
+@label1239:
+@label1231:
+@label1223:
+@label1215:
+	LDA [00AEh]
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+; $SYS0 = day ADD $SYS7
+	LDA [004Dh]
+	LDBL
+	LDA [0096h]
+	STC 0
+	ADD
+	STA [000Eh]
+	LDA [004Eh]
+	LDBL
+	LDA [0097h]
+	ADD
+	STA [000Fh]
+; free [004Dh]
+	LDA [00AFh]
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+; $SYS6 = $SYS0 ADD $SYS7
+	LDA [004Dh]
+	LDBL
+	LDA [000Eh]
+	STC 0
+	ADD
+	STA [0027h]
+	LDA [004Eh]
+	LDBL
+	LDA [000Fh]
+	ADD
+	STA [0028h]
+; free [000Eh]
+; free [004Dh]
+	LDA [0027h]
+	STA [0061h]
+	LDA [0028h]
+	STA [0062h]
+	LDA 0
+	STA [0063h]
+	STA [0064h]
+; free [0027h]
+; $SYS4 = $SYS11 ADD g
+	LDA [00B0h]
+	LDBL
+	LDA [0061h]
+	STC 0
+	ADD
+	STA [001Ch]
+	LDA [00B1h]
+	LDBL
+	LDA [0062h]
+	ADD
+	STA [001Dh]
+	LDA [00B2h]
+	LDBL
+	LDA [0063h]
+	ADD
+	STA [001Eh]
+	LDA [00B3h]
+	LDBL
+	LDA [0064h]
+	ADD
+	STA [001Fh]
+; free [0061h]
+	LDA 04h
+	STA [0061h]
+	LDA 0
+	STA [0062h]
+	STA [0063h]
+	STA [0064h]
+; $SYS3 = g / $SYS11
+	LDA [00B0h]
+	STA [005Dh]
+	LDA [00B1h]
+	STA [005Eh]
+	LDA [00B2h]
+	STA [005Fh]
+	LDA [00B3h]
+	STA [0060h]
+	LDA [0061h]
+	STA [0059h]
+	LDA [0062h]
+	STA [005Ah]
+	LDA [0063h]
+	STA [005Bh]
+	LDA [0064h]
+	STA [005Ch]
+	LDA 0
+	STA [0018h]
+	STA [0019h]
+	STA [001Ah]
+	STA [001Bh]
+; WHILE w <= r DO w := 2 * w;
+@label1245:
+	STC 0
+	LDA [0060h]
+	LDBL
+	LDA [005Ch]
+	CMP
+	JA @label1248
+	JB @label1247
+	LDA [005Fh]
+	LDBL
+	LDA [005Bh]
+	CMP
+	JA @label1248
+	JB @label1247
+	LDA [005Eh]
+	LDBL
+	LDA [005Ah]
+	CMP
+	JA @label1248
+	JB @label1247
+	LDA [005Dh]
+	LDBL
+	LDA [0059h]
+	CMP
+	JA @label1248
+@label1247:
+	LDA 08h
+	LDBL
+	LDA [005Ch]
+	AND
+	JZ @label1246
+	JMP @label1249
+@label1246:
+	STC 0
+	LDA [0059h]
+	SHL
+	STA [0059h]
+	LDA [005Ah]
+	SHL
+	STA [005Ah]
+	LDA [005Bh]
+	SHL
+	STA [005Bh]
+	LDA [005Ch]
+	SHL
+	STA [005Ch]
+	JMP @label1245
+@label1248:
+; WHILE w > y DO
+@label1250:
+	STC 0
+	LDA [0064h]
+	LDBL
+	LDA [005Ch]
+	CMP
+	JA @label1251
+	JB @label1252
+	LDA [0063h]
+	LDBL
+	LDA [005Bh]
+	CMP
+	JA @label1251
+	JB @label1252
+	LDA [0062h]
+	LDBL
+	LDA [005Ah]
+	CMP
+	JA @label1251
+	JB @label1252
+	LDA [0061h]
+	LDBL
+	LDA [0059h]
+	CMP
+	JA @label1251
+	JB @label1252
+	JMP @label1252
+@label1251:
+; q := 2 * q;
+	STC 0
+	LDA [0018h]
+	SHL
+	STA [0018h]
+	LDA [0019h]
+	SHL
+	STA [0019h]
+	LDA [001Ah]
+	SHL
+	STA [001Ah]
+	LDA [001Bh]
+	SHL
+	STA [001Bh]
+; w := w / 2;
+	STC 0
+	LDA [005Ch]
+	SHR
+	STA [005Ch]
+	LDA [005Bh]
+	SHR
+	STA [005Bh]
+	LDA [005Ah]
+	SHR
+	STA [005Ah]
+	LDA [0059h]
+	SHR
+	STA [0059h]
+@label1249:
+; IF w <= r THEN
+	STC 0
+	LDA [0060h]
+	LDBL
+	LDA [005Ch]
+	CMP
+	JA @label1250
+	JB @label1253
+	LDA [005Fh]
+	LDBL
+	LDA [005Bh]
+	CMP
+	JA @label1250
+	JB @label1253
+	LDA [005Eh]
+	LDBL
+	LDA [005Ah]
+	CMP
+	JA @label1250
+	JB @label1253
+	LDA [005Dh]
+	LDBL
+	LDA [0059h]
+	CMP
+	JA @label1250
+@label1253:
+; r := r - w
+; $SYS10 = $SYS10 SUB $SYS9
+	LDA [0059h]
+	LDBL
+	LDA [005Dh]
+	STC 0
+	SUB
+	STA [005Dh]
+	LDA [005Ah]
+	LDBL
+	LDA [005Eh]
+	SUB
+	STA [005Eh]
+	LDA [005Bh]
+	LDBL
+	LDA [005Fh]
+	SUB
+	STA [005Fh]
+	LDA [005Ch]
+	LDBL
+	LDA [0060h]
+	SUB
+	STA [0060h]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0018h]
+	ADD
+	STA [0018h]
+	LDA [0019h]
+	ADD
+	STA [0019h]
+	LDA [001Ah]
+	ADD
+	STA [001Ah]
+	LDA [001Bh]
+	ADD
+	STA [001Bh]
+	JMP @label1250
+@label1252:
+; free [0061h]
+; $SYS11 = $SYS4 ADD $SYS3
+	LDA [0018h]
+	LDBL
+	LDA [001Ch]
+	STC 0
+	ADD
+	STA [0061h]
+	LDA [0019h]
+	LDBL
+	LDA [001Dh]
+	ADD
+	STA [0062h]
+	LDA [001Ah]
+	LDBL
+	LDA [001Eh]
+	ADD
+	STA [0063h]
+	LDA [001Bh]
+	LDBL
+	LDA [001Fh]
+	ADD
+	STA [0064h]
+; free [001Ch]
+; free [0018h]
+	LDA 07h
+	STA [0018h]
+	LDA 0
+	STA [0019h]
+	STA [001Ah]
+	STA [001Bh]
+; $SYS4 = $SYS11 / $SYS3
+	LDA [0061h]
+	STA [0059h]
+	LDA [0062h]
+	STA [005Ah]
+	LDA [0063h]
+	STA [005Bh]
+	LDA [0064h]
+	STA [005Ch]
+	LDA [0018h]
+	STA [005Dh]
+	LDA [0019h]
+	STA [005Eh]
+	LDA [001Ah]
+	STA [005Fh]
+	LDA [001Bh]
+	STA [0060h]
+	LDA 0
+	STA [001Ch]
+	STA [001Dh]
+	STA [001Eh]
+	STA [001Fh]
+; WHILE w <= r DO w := 2 * w;
+@label1254:
+	STC 0
+	LDA [005Ch]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label1257
+	JB @label1256
+	LDA [005Bh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label1257
+	JB @label1256
+	LDA [005Ah]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label1257
+	JB @label1256
+	LDA [0059h]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label1257
+@label1256:
+	LDA 08h
+	LDBL
+	LDA [0060h]
+	AND
+	JZ @label1255
+	JMP @label1258
+@label1255:
+	STC 0
+	LDA [005Dh]
+	SHL
+	STA [005Dh]
+	LDA [005Eh]
+	SHL
+	STA [005Eh]
+	LDA [005Fh]
+	SHL
+	STA [005Fh]
+	LDA [0060h]
+	SHL
+	STA [0060h]
+	JMP @label1254
+@label1257:
+; WHILE w > y DO
+@label1259:
+	STC 0
+	LDA [001Bh]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label1260
+	JB @label1261
+	LDA [001Ah]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label1260
+	JB @label1261
+	LDA [0019h]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label1260
+	JB @label1261
+	LDA [0018h]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label1260
+	JB @label1261
+	JMP @label1261
+@label1260:
+; q := 2 * q;
+	STC 0
+	LDA [001Ch]
+	SHL
+	STA [001Ch]
+	LDA [001Dh]
+	SHL
+	STA [001Dh]
+	LDA [001Eh]
+	SHL
+	STA [001Eh]
+	LDA [001Fh]
+	SHL
+	STA [001Fh]
+; w := w / 2;
+	STC 0
+	LDA [0060h]
+	SHR
+	STA [0060h]
+	LDA [005Fh]
+	SHR
+	STA [005Fh]
+	LDA [005Eh]
+	SHR
+	STA [005Eh]
+	LDA [005Dh]
+	SHR
+	STA [005Dh]
+@label1258:
+; IF w <= r THEN
+	STC 0
+	LDA [005Ch]
+	LDBL
+	LDA [0060h]
+	CMP
+	JA @label1259
+	JB @label1262
+	LDA [005Bh]
+	LDBL
+	LDA [005Fh]
+	CMP
+	JA @label1259
+	JB @label1262
+	LDA [005Ah]
+	LDBL
+	LDA [005Eh]
+	CMP
+	JA @label1259
+	JB @label1262
+	LDA [0059h]
+	LDBL
+	LDA [005Dh]
+	CMP
+	JA @label1259
+@label1262:
+; r := r - w
+; $SYS9 = $SYS9 SUB $SYS10
+	LDA [005Dh]
+	LDBL
+	LDA [0059h]
+	STC 0
+	SUB
+	STA [0059h]
+	LDA [005Eh]
+	LDBL
+	LDA [005Ah]
+	SUB
+	STA [005Ah]
+	LDA [005Fh]
+	LDBL
+	LDA [005Bh]
+	SUB
+	STA [005Bh]
+	LDA [0060h]
+	LDBL
+	LDA [005Ch]
+	SUB
+	STA [005Ch]
+; q := q + 1
+	STC 1
+	LDA 0
+	LDBL
+	LDA [001Ch]
+	ADD
+	STA [001Ch]
+	LDA [001Dh]
+	ADD
+	STA [001Dh]
+	LDA [001Eh]
+	ADD
+	STA [001Eh]
+	LDA [001Fh]
+	ADD
+	STA [001Fh]
+	JMP @label1259
+@label1261:
+	LDA [0059h]
+	STA [001Ch]
+	LDA [005Ah]
+	STA [001Dh]
+	LDA [005Bh]
+	STA [001Eh]
+	LDA [005Ch]
+	STA [001Fh]
+; free [0061h]
+; free [0018h]
+	LDA [001Ch]
+	STA [009Eh]
+; free [001Ch]
+	STC 0
+	LDA 1
+	LDBL
+	LDA [00A9h]
+	SUB
+	JB @label1381
+	JZ @label1384
+	JMP @label1405
+; endproc CalcWeekday
+@proc_WaitForNextSecond:
+	IN 05h
+	STA [00B6h]
+@label1263:
+	LDA 08h
+; $SYS13 = p5 AND $SYS5
+	LDBL
+	LDA [00B6h]
+	AND
+	STA [0088h]
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0088h]
+	CMP
+	JA @label1264
+	JMP @label1265
+@label1264:
+	IN 05h
+	STA [00B6h]
+	JMP @label1263
+@label1265:
+@label1270:
+	LDA 08h
+; $SYS14 = p5 AND $SYS5
+	LDBL
+	LDA [00B6h]
+	AND
+	STA [00B7h]
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [00B7h]
+	CMP
+	JE @label1277
+	JMP @label1272
+@label1277:
+; free [00B7h]
+@label1271:
+	IN 05h
+	STA [00B6h]
+	JMP @label1270
+@label1272:
+	JMP @label1394
+; endproc WaitForNextSecond
+@proc_ReadNumkey:
+	LDA 00h
+	STA [006Dh]
+	LDA 0
+	STA [006Eh]
+@label1278:
+	LDA 00h
+	STA [0027h]
+	LDA 03h
+	STA [0028h]
+	STC 0
+	LDBL
+	LDA [006Eh]
+	CMP
+	JB @label1281
+	JA @label1287
+	LDA [0027h]
+	LDBL
+	LDA [006Dh]
+	CMP
+	JB @label1281
+	JA @label1287
+; free [0027h]
+@label1287:
+	LDA 09h
+	STA [0027h]
+	LDA 03h
+	STA [0028h]
+	STC 0
+	LDBL
+	LDA [006Eh]
+	CMP
+	JA @label1281
+	JB @label1282
+	LDA [0027h]
+	LDBL
+	LDA [006Dh]
+	CMP
+	JA @label1281
+	JB @label1282
+	JMP @label1282
+; free [0027h]
+@label1281:
+	JMP @label1279
+@label1282:
+	JMP @label1280
+@label1279:
+	LDA 00h
+	STA [0077h]
+	JMP @proc_WaitForKey
+@label1292:
+	JMP @label1278
+@label1280:
+	LDA 00h
+	STA [0027h]
+	LDA 03h
+	STA [0028h]
+; $SYS7 = key SUB $SYS6
+	LDA [0027h]
+	LDBL
+	LDA [006Dh]
+	STC 0
+	SUB
+	STA [004Dh]
+	LDA [0028h]
+	LDBL
+	LDA [006Eh]
+	SUB
+	STA [004Eh]
+; free [0027h]
+	LDA [004Dh]
+	STA [009Fh]
+	LDA [004Eh]
+	STA [00A0h]
+; free [004Dh]
+	LDA [009Fh]
+	OUT 00h
+	STC 0
+	LDA 1
+	LDBL
+	LDA [00B8h]
+	SUB
+	JB @label1298
+	JZ @label1304
+	SUB
+	JZ @label1316
+	SUB
+	JZ @label1322
+	SUB
+	JZ @label1334
+	SUB
+	JZ @label1340
+	SUB
+	JZ @label1352
+	SUB
+	JZ @label1358
+	SUB
+	JZ @label1370
+	JMP @label1376
+; endproc ReadNumkey
+@proc_SetTime:
+	LDA 01h
+	STA [0024h]
+	JMP @proc_ClearScreen
+@label1293:
+	LDA 00h
+	STA [008Fh]
+	LDA 0
+	STA [0090h]
+	JMP @proc_DisplayTime
+@label1294:
+	LDA 00h
+	STA [00A8h]
+	JMP @proc_DisplayDate
+@label1295:
+	LDA 01h
+	STA [0006h]
+	LDA 06h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 05h
+	STA [0026h]
+	JMP @proc_SetPos
+@label1296:
+	JMP @proc_EnableCursor
+@label1297:
+	LDA 00h
+	STA [0093h]
+	LDA 0
+	STA [0094h]
+	LDA 00h
+	STA [00B8h]
+	JMP @proc_ReadNumkey
+@label1298:
+	LDA 0Ah
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+; $SYS6 = numkey * $SYS7
+; a := x
+	LDA [009Fh]
+	STA [000Eh]
+	LDA [00A0h]
+	STA [000Fh]
+; b := y
+	LDA [004Dh]
+	STA [004Fh]
+	LDA [004Eh]
+	STA [0050h]
+; z := 0
+	LDA 0
+	STA [0027h]
+	STA [0028h]
+; WHILE b > 0 DO
+@label1299:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [004Fh]
+	CMP
+	JA @label1301
+	LDA [0050h]
+	CMP
+	JA @label1301
+	JMP @label1300
+@label1301:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [004Fh]
+	AND
+	JZ @label1302
+; z := z + a;
+; $SYS6 = $SYS6 ADD $SYS0
+	LDA [000Eh]
+	LDBL
+	LDA [0027h]
+	STC 0
+	ADD
+	STA [0027h]
+	LDA [000Fh]
+	LDBL
+	LDA [0028h]
+	ADD
+	STA [0028h]
+@label1302:
+; a := 2 * a;
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+; b := b / 2;
+	STC 0
+	LDA [0050h]
+	SHR
+	STA [0050h]
+	LDA [004Fh]
+	SHR
+	STA [004Fh]
+	JMP @label1299
+@label1300:
+; free [004Dh]
+	LDA [0027h]
+	STA [0093h]
+	LDA [0028h]
+	STA [0094h]
+; free [0027h]
+	LDA [006Dh]
+	STA [0000h]
+	LDA [006Eh]
+	STA [0001h]
+	LDA 04h
+	STA [0025h]
+	JMP @proc_PrintChar
+@label1303:
+	LDA 01h
+	STA [00B8h]
+	JMP @proc_ReadNumkey
+@label1304:
+; $SYS6 = hour ADD numkey
+	LDA [009Fh]
+	LDBL
+	LDA [0093h]
+	STC 0
+	ADD
+	STA [0027h]
+	LDA [00A0h]
+	LDBL
+	LDA [0094h]
+	ADD
+	STA [0028h]
+	LDA [0027h]
+	STA [0093h]
+	LDA [0028h]
+	STA [0094h]
+; free [0027h]
+	LDA [006Dh]
+	STA [0000h]
+	LDA [006Eh]
+	STA [0001h]
+	LDA 05h
+	STA [0025h]
+	JMP @proc_PrintChar
+@label1305:
+	LDA 07h
+	STA [0027h]
+	LDA 01h
+	STA [0028h]
+	STC 0
+	LDBL
+	LDA [0094h]
+	CMP
+	JA @label1306
+	JB @label1308
+	LDA [0027h]
+	LDBL
+	LDA [0093h]
+	CMP
+	JA @label1306
+	JB @label1308
+	JMP @label1308
+; free [0027h]
+@label1306:
+	LDA 07h
+	STA [0027h]
+	LDA 01h
+	STA [0028h]
+	LDA [0027h]
+	STA [0093h]
+	LDA [0028h]
+	STA [0094h]
+; free [0027h]
+@label1308:
+	LDA 09h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 06h
+	STA [0026h]
+	JMP @proc_SetPos
+@label1315:
+	LDA 00h
+	STA [0091h]
+	LDA 0
+	STA [0092h]
+	LDA 02h
+	STA [00B8h]
+	JMP @proc_ReadNumkey
+@label1316:
+	LDA 0Ah
+	STA [0027h]
+	LDA 0
+	STA [0028h]
+; $SYS7 = numkey * $SYS6
+; a := x
+	LDA [009Fh]
+	STA [004Fh]
+	LDA [00A0h]
+	STA [0050h]
+; b := y
+	LDA [0027h]
+	STA [000Eh]
+	LDA [0028h]
+	STA [000Fh]
+; z := 0
+	LDA 0
+	STA [004Dh]
+	STA [004Eh]
+; WHILE b > 0 DO
+@label1317:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [000Eh]
+	CMP
+	JA @label1319
+	LDA [000Fh]
+	CMP
+	JA @label1319
+	JMP @label1318
+@label1319:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [000Eh]
+	AND
+	JZ @label1320
+; z := z + a;
+; $SYS7 = $SYS7 ADD $SYS8
+	LDA [004Fh]
+	LDBL
+	LDA [004Dh]
+	STC 0
+	ADD
+	STA [004Dh]
+	LDA [0050h]
+	LDBL
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+@label1320:
+; a := 2 * a;
+	STC 0
+	LDA [004Fh]
+	SHL
+	STA [004Fh]
+	LDA [0050h]
+	SHL
+	STA [0050h]
+; b := b / 2;
+	STC 0
+	LDA [000Fh]
+	SHR
+	STA [000Fh]
+	LDA [000Eh]
+	SHR
+	STA [000Eh]
+	JMP @label1317
+@label1318:
+; free [0027h]
+	LDA [004Dh]
+	STA [0091h]
+	LDA [004Eh]
+	STA [0092h]
+; free [004Dh]
+	LDA [006Dh]
+	STA [0000h]
+	LDA [006Eh]
+	STA [0001h]
+	LDA 06h
+	STA [0025h]
+	JMP @proc_PrintChar
+@label1321:
+	LDA 03h
+	STA [00B8h]
+	JMP @proc_ReadNumkey
+@label1322:
+; $SYS7 = min ADD numkey
+	LDA [009Fh]
+	LDBL
+	LDA [0091h]
+	STC 0
+	ADD
+	STA [004Dh]
+	LDA [00A0h]
+	LDBL
+	LDA [0092h]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	STA [0091h]
+	LDA [004Eh]
+	STA [0092h]
+; free [004Dh]
+	LDA [006Dh]
+	STA [0000h]
+	LDA [006Eh]
+	STA [0001h]
+	LDA 07h
+	STA [0025h]
+	JMP @proc_PrintChar
+@label1323:
+	LDA 0Bh
+	STA [004Dh]
+	LDA 03h
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0092h]
+	CMP
+	JA @label1324
+	JB @label1326
+	LDA [004Dh]
+	LDBL
+	LDA [0091h]
+	CMP
+	JA @label1324
+	JB @label1326
+	JMP @label1326
+; free [004Dh]
+@label1324:
+	LDA 0Bh
+	STA [004Dh]
+	LDA 03h
+	STA [004Eh]
+	LDA [004Dh]
+	STA [0091h]
+	LDA [004Eh]
+	STA [0092h]
+; free [004Dh]
+@label1326:
+	LDA 03h
+	STA [0006h]
+	LDA 0Ah
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 07h
+	STA [0026h]
+	JMP @proc_SetPos
+@label1333:
+	LDA 00h
+	STA [0096h]
+	LDA 0
+	STA [0097h]
+	LDA 04h
+	STA [00B8h]
+	JMP @proc_ReadNumkey
+@label1334:
+	LDA 0Ah
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+; $SYS6 = numkey * $SYS7
+; a := x
+	LDA [009Fh]
+	STA [000Eh]
+	LDA [00A0h]
+	STA [000Fh]
+; b := y
+	LDA [004Dh]
+	STA [004Fh]
+	LDA [004Eh]
+	STA [0050h]
+; z := 0
+	LDA 0
+	STA [0027h]
+	STA [0028h]
+; WHILE b > 0 DO
+@label1335:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [004Fh]
+	CMP
+	JA @label1337
+	LDA [0050h]
+	CMP
+	JA @label1337
+	JMP @label1336
+@label1337:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [004Fh]
+	AND
+	JZ @label1338
+; z := z + a;
+; $SYS6 = $SYS6 ADD $SYS0
+	LDA [000Eh]
+	LDBL
+	LDA [0027h]
+	STC 0
+	ADD
+	STA [0027h]
+	LDA [000Fh]
+	LDBL
+	LDA [0028h]
+	ADD
+	STA [0028h]
+@label1338:
+; a := 2 * a;
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+; b := b / 2;
+	STC 0
+	LDA [0050h]
+	SHR
+	STA [0050h]
+	LDA [004Fh]
+	SHR
+	STA [004Fh]
+	JMP @label1335
+@label1336:
+; free [004Dh]
+	LDA [0027h]
+	STA [0096h]
+	LDA [0028h]
+	STA [0097h]
+; free [0027h]
+	LDA [006Dh]
+	STA [0000h]
+	LDA [006Eh]
+	STA [0001h]
+	LDA 08h
+	STA [0025h]
+	JMP @proc_PrintChar
+@label1339:
+	LDA 05h
+	STA [00B8h]
+	JMP @proc_ReadNumkey
+@label1340:
+; $SYS6 = day ADD numkey
+	LDA [009Fh]
+	LDBL
+	LDA [0096h]
+	STC 0
+	ADD
+	STA [0027h]
+	LDA [00A0h]
+	LDBL
+	LDA [0097h]
+	ADD
+	STA [0028h]
+	LDA [0027h]
+	STA [0096h]
+	LDA [0028h]
+	STA [0097h]
+; free [0027h]
+	LDA [006Dh]
+	STA [0000h]
+	LDA [006Eh]
+	STA [0001h]
+	LDA 09h
+	STA [0025h]
+	JMP @proc_PrintChar
+@label1341:
+	LDA 0Fh
+	STA [0027h]
+	LDA 01h
+	STA [0028h]
+	STC 0
+	LDBL
+	LDA [0097h]
+	CMP
+	JA @label1342
+	JB @label1344
+	LDA [0027h]
+	LDBL
+	LDA [0096h]
+	CMP
+	JA @label1342
+	JB @label1344
+	JMP @label1344
+; free [0027h]
+@label1342:
+	LDA 0Fh
+	STA [0027h]
+	LDA 01h
+	STA [0028h]
+	LDA [0027h]
+	STA [0096h]
+	LDA [0028h]
+	STA [0097h]
+; free [0027h]
+@label1344:
+	LDA 0Dh
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 08h
+	STA [0026h]
+	JMP @proc_SetPos
+@label1351:
+	LDA 00h
+	STA [0098h]
+	LDA 0
+	STA [0099h]
+	LDA 06h
+	STA [00B8h]
+	JMP @proc_ReadNumkey
+@label1352:
+	LDA 0Ah
+	STA [0027h]
+	LDA 0
+	STA [0028h]
+; $SYS7 = numkey * $SYS6
+; a := x
+	LDA [009Fh]
+	STA [004Fh]
+	LDA [00A0h]
+	STA [0050h]
+; b := y
+	LDA [0027h]
+	STA [000Eh]
+	LDA [0028h]
+	STA [000Fh]
+; z := 0
+	LDA 0
+	STA [004Dh]
+	STA [004Eh]
+; WHILE b > 0 DO
+@label1353:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [000Eh]
+	CMP
+	JA @label1355
+	LDA [000Fh]
+	CMP
+	JA @label1355
+	JMP @label1354
+@label1355:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [000Eh]
+	AND
+	JZ @label1356
+; z := z + a;
+; $SYS7 = $SYS7 ADD $SYS8
+	LDA [004Fh]
+	LDBL
+	LDA [004Dh]
+	STC 0
+	ADD
+	STA [004Dh]
+	LDA [0050h]
+	LDBL
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+@label1356:
+; a := 2 * a;
+	STC 0
+	LDA [004Fh]
+	SHL
+	STA [004Fh]
+	LDA [0050h]
+	SHL
+	STA [0050h]
+; b := b / 2;
+	STC 0
+	LDA [000Fh]
+	SHR
+	STA [000Fh]
+	LDA [000Eh]
+	SHR
+	STA [000Eh]
+	JMP @label1353
+@label1354:
+; free [0027h]
+	LDA [004Dh]
+	STA [0098h]
+	LDA [004Eh]
+	STA [0099h]
+; free [004Dh]
+	LDA [006Dh]
+	STA [0000h]
+	LDA [006Eh]
+	STA [0001h]
+	LDA 0Ah
+	STA [0025h]
+	JMP @proc_PrintChar
+@label1357:
+	LDA 07h
+	STA [00B8h]
+	JMP @proc_ReadNumkey
+@label1358:
+; $SYS7 = month ADD numkey
+	LDA [009Fh]
+	LDBL
+	LDA [0098h]
+	STC 0
+	ADD
+	STA [004Dh]
+	LDA [00A0h]
+	LDBL
+	LDA [0099h]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	STA [0098h]
+	LDA [004Eh]
+	STA [0099h]
+; free [004Dh]
+	LDA [006Dh]
+	STA [0000h]
+	LDA [006Eh]
+	STA [0001h]
+	LDA 0Bh
+	STA [0025h]
+	JMP @proc_PrintChar
+@label1359:
+	LDA 01h
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+	STC 0
+	LDBL
+	LDA [0099h]
+	CMP
+	JA @label1360
+	JB @label1362
+	LDA [004Dh]
+	LDBL
+	LDA [0098h]
+	CMP
+	JA @label1360
+	JB @label1362
+	JMP @label1362
+; free [004Dh]
+@label1360:
+	LDA 0Ch
+	STA [0098h]
+	LDA 0
+	STA [0099h]
+@label1362:
+	LDA 02h
+	STA [004Dh]
+	LDA 01h
+	STA [004Eh]
+	LDA [004Dh]
+	STA [0007h]
+	LDA [004Eh]
+	STA [0008h]
+; free [004Dh]
+	LDA 09h
+	STA [0026h]
+	JMP @proc_SetPos
+@label1369:
+	LDA 00h
+	STA [001Ch]
+	LDA 0Dh
+	STA [001Dh]
+	LDA 07h
+	STA [001Eh]
+	LDA 00h
+	STA [001Fh]
+	LDA [001Ch]
+	STA [009Ah]
+	LDA [001Dh]
+	STA [009Bh]
+	LDA [001Eh]
+	STA [009Ch]
+	LDA [001Fh]
+	STA [009Dh]
+; free [001Ch]
+	LDA 08h
+	STA [00B8h]
+	JMP @proc_ReadNumkey
+@label1370:
+	LDA 0Ah
+	STA [004Dh]
+	LDA 0
+	STA [004Eh]
+; $SYS6 = numkey * $SYS7
+; a := x
+	LDA [009Fh]
+	STA [000Eh]
+	LDA [00A0h]
+	STA [000Fh]
+; b := y
+	LDA [004Dh]
+	STA [004Fh]
+	LDA [004Eh]
+	STA [0050h]
+; z := 0
+	LDA 0
+	STA [0027h]
+	STA [0028h]
+; WHILE b > 0 DO
+@label1371:
+	LDA 0
+	LDBL
+	STC 0
+	LDA [004Fh]
+	CMP
+	JA @label1373
+	LDA [0050h]
+	CMP
+	JA @label1373
+	JMP @label1372
+@label1373:
+; IF ODD b THEN
+	LDA 1
+	LDBL
+	LDA [004Fh]
+	AND
+	JZ @label1374
+; z := z + a;
+; $SYS6 = $SYS6 ADD $SYS0
+	LDA [000Eh]
+	LDBL
+	LDA [0027h]
+	STC 0
+	ADD
+	STA [0027h]
+	LDA [000Fh]
+	LDBL
+	LDA [0028h]
+	ADD
+	STA [0028h]
+@label1374:
+; a := 2 * a;
+	STC 0
+	LDA [000Eh]
+	SHL
+	STA [000Eh]
+	LDA [000Fh]
+	SHL
+	STA [000Fh]
+; b := b / 2;
+	STC 0
+	LDA [0050h]
+	SHR
+	STA [0050h]
+	LDA [004Fh]
+	SHR
+	STA [004Fh]
+	JMP @label1371
+@label1372:
+; free [004Dh]
+	LDA [0027h]
+	STA [001Ch]
+	LDA [0028h]
+	STA [001Dh]
+	LDA 0
+	STA [001Eh]
+	STA [001Fh]
+; free [0027h]
+; $SYS3 = year ADD $SYS4
+	LDA [001Ch]
+	LDBL
+	LDA [009Ah]
+	STC 0
+	ADD
+	STA [0018h]
+	LDA [001Dh]
+	LDBL
+	LDA [009Bh]
+	ADD
+	STA [0019h]
+	LDA [001Eh]
+	LDBL
+	LDA [009Ch]
+	ADD
+	STA [001Ah]
+	LDA [001Fh]
+	LDBL
+	LDA [009Dh]
+	ADD
+	STA [001Bh]
+; free [001Ch]
+	LDA [0018h]
+	STA [009Ah]
+	LDA [0019h]
+	STA [009Bh]
+	LDA [001Ah]
+	STA [009Ch]
+	LDA [001Bh]
+	STA [009Dh]
+; free [0018h]
+	LDA [006Dh]
+	STA [0000h]
+	LDA [006Eh]
+	STA [0001h]
+	LDA 0Ch
+	STA [0025h]
+	JMP @proc_PrintChar
+@label1375:
+	LDA 09h
+	STA [00B8h]
+	JMP @proc_ReadNumkey
+@label1376:
+	LDA [009Fh]
+	STA [0018h]
+	LDA [00A0h]
+	STA [0019h]
+	LDA 0
+	STA [001Ah]
+	STA [001Bh]
+; $SYS4 = year ADD $SYS3
+	LDA [0018h]
+	LDBL
+	LDA [009Ah]
+	STC 0
+	ADD
+	STA [001Ch]
+	LDA [0019h]
+	LDBL
+	LDA [009Bh]
+	ADD
+	STA [001Dh]
+	LDA [001Ah]
+	LDBL
+	LDA [009Ch]
+	ADD
+	STA [001Eh]
+	LDA [001Bh]
+	LDBL
+	LDA [009Dh]
+	ADD
+	STA [001Fh]
+; free [0018h]
+	LDA [001Ch]
+	STA [009Ah]
+	LDA [001Dh]
+	STA [009Bh]
+	LDA [001Eh]
+	STA [009Ch]
+	LDA [001Fh]
+	STA [009Dh]
+; free [001Ch]
+	LDA [006Dh]
+	STA [0000h]
+	LDA [006Eh]
+	STA [0001h]
+	LDA 0Dh
+	STA [0025h]
+	JMP @proc_PrintChar
+@label1377:
+	JMP @proc_DisableCursor
+@label1378:
+	LDA 02h
+	STA [0024h]
+	JMP @proc_ClearScreen
+@label1379:
+	LDA 00h
+	STA [00A4h]
+	JMP @proc_DisplayLargeTime
+@label1380:
+	LDA 00h
+	STA [00A9h]
+	JMP @proc_CalcWeekday
+@label1381:
+	LDA 01h
+	STA [00A8h]
+	JMP @proc_DisplayDate
+@label1382:
+	JMP @label1417
+; endproc SetTime
+@proc_RunClock:
+	LDA 03h
+	STA [0024h]
+	JMP @proc_ClearScreen
+@label1383:
+	LDA 02h
+	STA [001Ch]
+	LDA 0Eh
+	STA [001Dh]
+	LDA 07h
+	STA [001Eh]
+	LDA 00h
+	STA [001Fh]
+	LDA [001Ch]
+	STA [009Ah]
+	LDA [001Dh]
+	STA [009Bh]
+	LDA [001Eh]
+	STA [009Ch]
+	LDA [001Fh]
+	STA [009Dh]
+; free [001Ch]
+	LDA 0Ch
+	STA [0098h]
+	LDA 0
+	STA [0099h]
+	LDA 01h
+	STA [0096h]
+	LDA 0
+	STA [0097h]
+	LDA 0Ch
+	STA [0093h]
+	LDA 0
+	STA [0094h]
+	LDA 00h
+	STA [0091h]
+	LDA 0
+	STA [0092h]
+	LDA 00h
+	STA [008Fh]
+	LDA 0
+	STA [0090h]
+	LDA 00h
+	STA [0095h]
+	LDA 01h
+	STA [00A9h]
+	JMP @proc_CalcWeekday
+@label1384:
+	LDA 02h
+	STA [00A8h]
+	JMP @proc_DisplayDate
+@label1385:
+@label1386:
+	LDA 00h
+	STA [0022h]
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [0022h]
+	CMP
+	JE @label1393
+	JMP @label1388
+@label1393:
+; free [0022h]
+@label1387:
+	JMP @proc_WaitForNextSecond
+@label1394:
+	JMP @proc_AdvanceTime
+@label1395:
+	LDA 01h
+	STA [00A4h]
+	JMP @proc_DisplayLargeTime
+@label1396:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0095h]
+	CMP
+	JA @label1397
+	JMP @label1399
+@label1397:
+	LDA 00h
+	STA [0095h]
+	JMP @proc_AdvanceDate
+@label1404:
+	LDA 02h
+	STA [00A9h]
+	JMP @proc_CalcWeekday
+@label1405:
+	LDA 03h
+	STA [00A8h]
+	JMP @proc_DisplayDate
+@label1406:
+@label1399:
+	LDA 01h
+	STA [0076h]
+	JMP @proc_ReadKey
+@label1407:
+	LDA 0Ah
+	STA [0027h]
+	LDA 0
+	STA [0028h]
+	STC 0
+	LDBL
+	LDA [006Eh]
+	CMP
+	JE @label1415
+	JMP @label1410
+@label1415:
+	LDA [0027h]
+	LDBL
+	LDA [006Dh]
+	CMP
+	JE @label1416
+	JMP @label1410
+@label1416:
+; free [0027h]
+@label1408:
+	JMP @proc_SetTime
+@label1417:
+@label1410:
+	JMP @label1386
+@label1388:
+	JMP @label1555
+; endproc RunClock
+@proc_InitScrollWindow:
+	LDA 04h
+	STA [0024h]
+	JMP @proc_ClearScreen
+@label1418:
+	LDA 00h
+	STA [00BCh]
+	LDA 00h
+	STA [00BDh]
+	LDA 00h
+	STA [00BFh]
+	LDA 0
+	STA [00C0h]
+@label1419:
+	LDA 04h
+	STA [0027h]
+	LDA 01h
+	STA [0028h]
+	STC 0
+	LDBL
+	LDA [00C0h]
+	CMP
+	JB @label1420
+	JA @label1421
+	LDA [0027h]
+	LDBL
+	LDA [00BFh]
+	CMP
+	JB @label1420
+	JA @label1421
+	JMP @label1421
+; free [0027h]
+@label1420:
+	LDA 00h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+	LDA [00BFh]
+	STA [004Dh]
+	LDA [00C0h]
+	STA [004Eh]
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [0027h]
+	BNK 1
+	STA [B]0300h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [0028h]
+	BNK 1
+	STA [B]0300h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+; free [0027h]
+	LDA 00h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+	LDA [00BFh]
+	STA [004Dh]
+	LDA [00C0h]
+	STA [004Eh]
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [0027h]
+	BNK 1
+	STA [B]0400h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [0028h]
+	BNK 1
+	STA [B]0400h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+; free [0027h]
+	LDA 00h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+	LDA [00BFh]
+	STA [004Dh]
+	LDA [00C0h]
+	STA [004Eh]
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [0027h]
+	BNK 1
+	STA [B]0500h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [0028h]
+	BNK 1
+	STA [B]0500h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+; free [0027h]
+	LDA 00h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+	LDA [00BFh]
+	STA [004Dh]
+	LDA [00C0h]
+	STA [004Eh]
+	STC 0
+	LDA [004Dh]
+	SHL
+	STA [004Dh]
+	LDA [004Eh]
+	SHL
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [0027h]
+	BNK 1
+	STA [B]0600h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+	LDA [004Dh]
+	LDBL
+	LDA [004Eh]
+	LDBH
+	LDA [0028h]
+	BNK 1
+	STA [B]0600h
+	BNK 0
+	STC 1
+	LDA 0
+	LDBL
+	LDA [004Dh]
+	ADD
+	STA [004Dh]
+	LDA [004Eh]
+	ADD
+	STA [004Eh]
+; free [0027h]
+	STC 1
+	LDA 0
+	LDBL
+	LDA [00BFh]
+	ADD
+	STA [00BFh]
+	LDA [00C0h]
+	ADD
+	STA [00C0h]
+	JMP @label1419
+@label1421:
+	JMP @label1513
+; endproc InitScrollWindow
+@proc_PrintLinePos:
+	LDA 00h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [00BBh]
+	CMP
+	JE @label1435
+	JMP @label1429
+@label1435:
+@label1428:
+	LDA 08h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+@label1436:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	SUB
+	STA [0027h]
+	LDA [0028h]
+	SUB
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0300h
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0027h]
+	CMP
+	JA @label1436
+	LDA [0028h]
+	CMP
+	JA @label1436
+@label1437:
+	JMP @label1430
+@label1429:
+	LDA 01h
+	STC 0
+	LDBL
+	LDA [00BBh]
+	CMP
+	JE @label1445
+	JMP @label1439
+@label1445:
+@label1438:
+	LDA 08h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+@label1446:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	SUB
+	STA [0027h]
+	LDA [0028h]
+	SUB
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0400h
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0027h]
+	CMP
+	JA @label1446
+	LDA [0028h]
+	CMP
+	JA @label1446
+@label1447:
+	JMP @label1440
+@label1439:
+	LDA 02h
+	STC 0
+	LDBL
+	LDA [00BBh]
+	CMP
+	JE @label1455
+	JMP @label1449
+@label1455:
+@label1448:
+	LDA 08h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+@label1456:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	SUB
+	STA [0027h]
+	LDA [0028h]
+	SUB
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0500h
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0027h]
+	CMP
+	JA @label1456
+	LDA [0028h]
+	CMP
+	JA @label1456
+@label1457:
+	JMP @label1450
+@label1449:
+	LDA 08h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+@label1458:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	SUB
+	STA [0027h]
+	LDA [0028h]
+	SUB
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0600h
+	BNK 1
+	STA [B]0000h
+	BNK 0
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0027h]
+	CMP
+	JA @label1458
+	LDA [0028h]
+	CMP
+	JA @label1458
+@label1459:
+@label1450:
+@label1440:
+@label1430:
+	LDA 04h
+	STA [0027h]
+	LDA 01h
+	STA [0028h]
+	LDA [0027h]
+	STA [0004h]
+	LDA [0028h]
+	STA [0005h]
+; free [0027h]
+	LDA 07h
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label1460:
+	JMP @label1512
+; endproc PrintLinePos
+@proc_SetWindowLine:
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [00BBh]
+	CMP
+	JE @label1468
+	JMP @label1462
+@label1468:
+@label1461:
+	LDA 08h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+@label1469:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	SUB
+	STA [0027h]
+	LDA [0028h]
+	SUB
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0000h
+	BNK 1
+	STA [B]0300h
+	BNK 0
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0027h]
+	CMP
+	JA @label1469
+	LDA [0028h]
+	CMP
+	JA @label1469
+@label1470:
+	JMP @label1463
+@label1462:
+	LDA 01h
+	STC 0
+	LDBL
+	LDA [00BBh]
+	CMP
+	JE @label1478
+	JMP @label1472
+@label1478:
+@label1471:
+	LDA 08h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+@label1479:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	SUB
+	STA [0027h]
+	LDA [0028h]
+	SUB
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0000h
+	BNK 1
+	STA [B]0400h
+	BNK 0
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0027h]
+	CMP
+	JA @label1479
+	LDA [0028h]
+	CMP
+	JA @label1479
+@label1480:
+	JMP @label1473
+@label1472:
+	LDA 02h
+	STC 0
+	LDBL
+	LDA [00BBh]
+	CMP
+	JE @label1488
+	JMP @label1482
+@label1488:
+@label1481:
+	LDA 08h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+@label1489:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	SUB
+	STA [0027h]
+	LDA [0028h]
+	SUB
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0000h
+	BNK 1
+	STA [B]0500h
+	BNK 0
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0027h]
+	CMP
+	JA @label1489
+	LDA [0028h]
+	CMP
+	JA @label1489
+@label1490:
+	JMP @label1483
+@label1482:
+	LDA 08h
+	STA [0027h]
+	LDA 02h
+	STA [0028h]
+@label1491:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [0027h]
+	SUB
+	STA [0027h]
+	LDA [0028h]
+	SUB
+	STA [0028h]
+	LDA [0027h]
+	LDBL
+	LDA [0028h]
+	LDBH
+	BNK 1
+	LDA [B]0000h
+	BNK 1
+	STA [B]0600h
+	BNK 0
+	STC 0
+	LDA 0
+	LDBL
+	LDA [0027h]
+	CMP
+	JA @label1491
+	LDA [0028h]
+	CMP
+	JA @label1491
+@label1492:
+@label1483:
+@label1473:
+@label1463:
+	STC 0
+	LDA 1
+	LDBL
+	LDA [00C2h]
+	SUB
+	JB @label1501
+	JMP @label1503
+; endproc SetWindowLine
+@proc_PrintWindowLine:
+	LDA 04h
+	STC 0
+	LDBL
+	LDA [00BCh]
+	CMP
+	JB @label1493
+	JA @label1494
+	JMP @label1494
+@label1493:
+; $SYS14 = windowOffset ADD currWindowLine
+	LDA [00BCh]
+	LDBL
+	LDA [00BDh]
+	STC 0
+	ADD
+	STA [00B7h]
+	LDA 03h
+; $SYS15 = $SYS14 AND $SYS5
+	LDBL
+	LDA [00B7h]
+	AND
+; free [00B7h]
+	STA [00BBh]
+	LDA 00h
+	STA [00C2h]
+	JMP @proc_SetWindowLine
+@label1501:
+	LDA 00h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA [00BCh]
+	STA [0006h]
+	LDA 04h
+	STA [0027h]
+	LDA 01h
+	STA [0028h]
+	LDA [0027h]
+	STA [0004h]
+	LDA [0028h]
+	STA [0005h]
+; free [0027h]
+	LDA 08h
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label1502:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [00BCh]
+	ADD
+	STA [00BCh]
+	JMP @label1495
+@label1494:
+	LDA 01h
+; $SYS5 = windowOffset ADD $SYS15
+	LDBL
+	LDA [00BDh]
+	STC 0
+	ADD
+	STA [0022h]
+	LDA 03h
+; $SYS14 = $SYS5 AND $SYS15
+	LDBL
+	LDA [0022h]
+	AND
+; free [0022h]
+	STA [00BDh]
+	LDA 03h
+; $SYS15 = windowOffset ADD $SYS14
+	LDBL
+	LDA [00BDh]
+	STC 0
+	ADD
+	STA [00C5h]
+	LDA 03h
+; $SYS5 = $SYS15 AND $SYS14
+	LDBL
+	LDA [00C5h]
+	AND
+; free [00C5h]
+	STA [00BBh]
+	LDA 01h
+	STA [00C2h]
+	JMP @proc_SetWindowLine
+@label1503:
+	LDA 00h
+	STA [00C4h]
+@label1504:
+	LDA 04h
+	STC 0
+	LDBL
+	LDA [00C4h]
+	CMP
+	JB @label1505
+	JA @label1506
+	JMP @label1506
+@label1505:
+; $SYS5 = windowOffset ADD i
+	LDA [00C4h]
+	LDBL
+	LDA [00BDh]
+	STC 0
+	ADD
+	STA [0022h]
+	LDA 03h
+; $SYS15 = $SYS5 AND $SYS14
+	LDBL
+	LDA [0022h]
+	AND
+; free [0022h]
+	STA [00BBh]
+	LDA [00C4h]
+	STA [0006h]
+	JMP @proc_PrintLinePos
+@label1512:
+	STC 1
+	LDA 0
+	LDBL
+	LDA [00C4h]
+	ADD
+	STA [00C4h]
+	JMP @label1504
+@label1506:
+@label1495:
+	JMP @label1531
+; endproc PrintWindowLine
+@proc_ShowScancodes:
+	JMP @proc_InitScrollWindow
+@label1513:
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 02h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+@label1514:
+	LDA 00h
+	STA [00C5h]
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [00C5h]
+	CMP
+	JE @label1521
+	JMP @label1516
+@label1521:
+; free [00C5h]
+@label1515:
+	LDA 02h
+	STA [006Fh]
+	JMP @proc_ReadScancode
+@label1522:
+	STC 0
+	LDA 0
+	LDBL
+	LDA [006Bh]
+	CMP
+	JA @label1523
+	LDA [006Ch]
+	CMP
+	JA @label1523
+	JMP @label1525
+@label1523:
+	LDA [006Bh]
+	STA [0044h]
+	LDA [006Ch]
+	STA [0045h]
+	JMP @proc_ByteToHexStr
+@label1530:
+	JMP @proc_PrintWindowLine
+@label1531:
+@label1525:
+	JMP @label1514
+@label1516:
+	JMP @label1565
+; endproc ShowScancodes
+@proc_MainMenu:
+	JMP @proc_LoadCustomDigits
+@label1532:
+	LDA 00h
+	STA [0027h]
+	LDA 01h
+	STA [0028h]
+	LDA [0027h]
+	STA [0004h]
+	LDA [0028h]
+	STA [0005h]
+; free [0027h]
+	LDA 00h
+	STA [0007h]
+	LDA 0
+	STA [0008h]
+	LDA 00h
+	STA [0006h]
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 01h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 0Dh
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 0Ch
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 0Fh
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 0Bh
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	LDA 09h
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label1533:
+	LDA 01h
+	STA [0006h]
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 02h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 0Dh
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 01h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 0Eh
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 03h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 0Fh
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 04h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 05h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	LDA 0Ah
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label1534:
+	LDA 02h
+	STA [0006h]
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 03h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	LDA 0Bh
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label1535:
+	LDA 03h
+	STA [0006h]
+	BNK 1
+	LDA 00h
+	LDBL
+	LDA 00h
+	LDBH
+	LDA 04h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 03h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 00h
+	LDBL
+	LDA 01h
+	LDBH
+	LDA 00h
+	STA [B]0000h
+	LDA 01h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 02h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 03h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 04h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 05h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 06h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 07h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 08h
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 09h
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ah
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Bh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Ch
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Dh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	LDA 0Eh
+	LDBL
+	LDA 00h
+	STA [B]0000h
+	LDA 0Fh
+	LDBL
+	LDA 02h
+	STA [B]0000h
+	BNK 0
+	LDA 0Ch
+	STA [002Eh]
+	JMP @proc_PrintStringPos
+@label1536:
+@label1537:
+	LDA 00h
+	STA [00B7h]
+	LDA 00h
+	STC 0
+	LDBL
+	LDA [00B7h]
+	CMP
+	JE @label1544
+	JMP @label1539
+@label1544:
+; free [00B7h]
+@label1538:
+	LDA 01h
+	STA [0077h]
+	JMP @proc_WaitForKey
+@label1545:
+	LDA 01h
+	STA [0027h]
+	LDA 03h
+	STA [0028h]
+	STC 0
+	LDBL
+	LDA [006Eh]
+	CMP
+	JE @label1553
+	JMP @label1547
+@label1553:
+	LDA [0027h]
+	LDBL
+	LDA [006Dh]
+	CMP
+	JE @label1554
+	JMP @label1547
+@label1554:
+; free [0027h]
+@label1546:
+	JMP @proc_RunClock
+@label1555:
+	JMP @label1548
+@label1547:
+	LDA 02h
+	STA [0027h]
+	LDA 03h
+	STA [0028h]
+	STC 0
+	LDBL
+	LDA [006Eh]
+	CMP
+	JE @label1563
+	JMP @label1558
+@label1563:
+	LDA [0027h]
+	LDBL
+	LDA [006Dh]
+	CMP
+	JE @label1564
+	JMP @label1558
+@label1564:
+; free [0027h]
+@label1556:
+	JMP @proc_ShowScancodes
+@label1565:
+@label1558:
+@label1548:
+	JMP @label1537
+@label1539:
+	JMP @label1568
+; endproc MainMenu
+@main:
+	JMP @proc_InitDisplay
+@label1566:
+	JMP @proc_ShowBootScreen
+@label1567:
+	JMP @proc_MainMenu
+@label1568:
+
+	HLT

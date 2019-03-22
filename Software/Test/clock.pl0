@@ -3,8 +3,8 @@ var
   day: byte, month: byte, year: word,
   weekday: nibble;
 
-#include display.inc
-#include utils.inc
+#include ..\lib\display.inc
+#include ..\lib\utils.inc
 
 // -----------------------------------------------------------------------------
 

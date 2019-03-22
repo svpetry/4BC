@@ -1,6 +1,6 @@
-#include display.inc
-#include utils.inc
-#include keyboard.inc
+#include ..\lib\display.inc
+#include ..\lib\utils.inc
+#include ..\lib\keyboard.inc
 
 #include bootscreen.inc
 #include clock.inc

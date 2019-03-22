@@ -1,5 +1,6 @@
 var
-  numByte: byte, numWord: word;
+  numByte: byte, numWord: word,
+  str: byte[20];
 
 // -----------------------------------------------------------------------------
 

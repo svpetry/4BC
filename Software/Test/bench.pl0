@@ -2,8 +2,8 @@ var
   p5: nibble,
   kips: word;
 
-#include display.inc
-#include utils.inc
+#include ..\lib\display.inc
+#include ..\lib\utils.inc
 
 // -----------------------------------------------------------------------------
 
