@@ -18,15 +18,15 @@ statement = [ ident ":=" expression | "call" ident
 	      | "outp" number "," expression 
 	      | "inp" ident "," number ].
 
-conditiongroup = conjunction { "or" conjunction}.
+conditiongroup = conjunction { "or" conjunction }.
 
-conjunction = condition { "and" condition}
+conjunction = condition { "and" condition }.
 
 condition = expression ("="|"#"|"<"|"<="|">"|">=") expression | "{" conditiongroup "}".
 
-expression = [ "+"|"-"] term { ("+"|"-") term}.
+expression = ["+"|"-"] term { ("+"|"-") term }.
 
-term = factor {("*"|"/"|"%"|"&"|"|"|"^") factor}.
+term = factor { ("*"|"/"|"%"|"&"|"|"|"^") factor }.
 
 factor = ident | number | "(" expression ")" | "lo(" ident ")" | "hi(" ident ")".
 
