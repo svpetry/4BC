@@ -755,14 +755,20 @@ namespace _4BCC
                             // array variable
                             var length = ParseNumber(Expect(TokenType.Number).Value);
                             Expect(TokenType.CloseBracket);
-                            variables.Add(varName, _varProvider.DefineArray(varName, dataType, length, blockName));
-                            localVars.Add(varName);
+                            if (!variables.ContainsKey(varName))
+                            {
+                                variables.Add(varName, _varProvider.DefineArray(varName, dataType, length, blockName));
+                                localVars.Add(varName);
+                            }
                         }
                         else
                         {
-                            // normal variable
-                            variables.Add(varName, _varProvider.DefineVar(varName, dataType, blockName));
-                            localVars.Add(varName);
+                            if (!variables.ContainsKey(varName))
+                            {
+                                // normal variable
+                                variables.Add(varName, _varProvider.DefineVar(varName, dataType, blockName));
+                                localVars.Add(varName);
+                            }
                         }
 
                     } while (Accept(TokenType.Comma));

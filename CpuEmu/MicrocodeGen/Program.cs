@@ -21,7 +21,7 @@ namespace MicrocodeGen
         {
             if (!File.Exists(FileName))
             {
-                Console.WriteLine("File not found.");
+                Console.WriteLine($"{FileName} not found.");
                 return;
             }
 

@@ -243,6 +243,8 @@ namespace _4BCC
             if (!File.Exists(fileName))
                 throw new FileNotFoundException($"Include file {fileName} not found");
 
+            var path = Path.GetDirectoryName(fileName);
+
             var lines = File.ReadAllLines(fileName);
             foreach (var line in lines)
             {
@@ -250,7 +252,7 @@ namespace _4BCC
                 {
                     var parts = line.Split(new[] { ' ' }, 2);
                     if (parts.Length == 2)
-                        tokens.AddRange(Tokenize(parts[1]));
+                        tokens.AddRange(Tokenize(Path.Combine(path, parts[1])));
 
                     lineNo++;
                     continue;
