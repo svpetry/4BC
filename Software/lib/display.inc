@@ -89,13 +89,13 @@ begin
   outp 2, %0000;
   call LcdDelayLong;
 
-  cmd := %00000001;
+  cmd := %00000001; // clear display, cursor to 0
   call LcdCmd;
-  cmd := %00000110;
+  cmd := %00000110; // cursor direction right, shift off
   call LcdCmd;
-  cmd := %00001100;
+  cmd := %00001100; // display on, cursor off
   call LcdCmd;
-  cmd := %00101000;
+  cmd := %00101000; // 4 bit interface, two rows 
   call LcdCmd;
 end;
 
