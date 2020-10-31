@@ -6,3 +6,5 @@ CpuEmu/bin/*.config
 CpuEmu/bin/*.pl0
 CpuEmu/bin/*.inc
 Documents/Parts/
+*.user
+CpuEmu/bin/
